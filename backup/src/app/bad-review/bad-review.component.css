@@ -1,0 +1,25 @@
+.sidebar-collapsed {
+    width: 5rem;
+}
+
+.sidebar-expanded {
+    width: 16rem;
+}
+
+nav a span {
+    opacity: 0;
+    white-space: nowrap;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar-expanded nav a span {
+    opacity: 1;
+}
+
+.nav-element {
+    text-decoration: none;
+}
+
+.nav-element:hover::after {
+    background-color: grey;
+}

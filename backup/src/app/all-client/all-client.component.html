@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="h-screen overflow-hidden text-white bg-gray-900">
+    <div class="flex h-full">
+        <div id="sidebar" class="h-full p-4 transition-all duration-300 bg-gray-800 sidebar-collapsed">
+            <button id="toggleSidebar" class="mt-4 mb-3 ml-4 text-2xl font-semibold focus:outline-none"
+                (click)="toggleSidebar()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav>
+                <a [routerLink]="['/admin']"
+                    class="nav-element flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
+                    <i class="fas fa-tachometer-alt fa-xl"></i>
+                    <span class="ml-3">Dashboard</span>
+                </a>
+                <a routerLink="/all-client"
+                    class=" nav-element flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 mt-2">
+                    <i class="fas fa-users fa-xl"></i>
+                    <span class="ml-3">User Management</span>
+                </a>
+                <a [routerLink]="['/reports']"
+                    class="nav-element flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 mt-2">
+                    <i class="fas fa-chart-line fa-xl"></i>
+                    <span class="ml-3">Reports</span>
+                </a>
+                <a class="nav-element flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 mt-2"
+                    (click)="logout()">
+                    <i class="fa-solid fa-right-from-bracket fa-xl"></i>
+                    <span class="ml-3">Log Out</span>
+                </a>
+            </nav>
+        </div>
+        <div class="flex flex-col flex-grow h-full">
+            <div class="flex items-center justify-end p-5 bg-gray-800 h-[10%]">
+                <div class="relative">
+                    <div class="flex items-center" (click)="toggleDropdown()">
+                        <img src="assets/user.png" alt="Profile" class="w-8 h-8 rounded-full">
+                        <div class="flex flex-col items-center justify-center">
+                            <h1 class="font-bold text-green-600">ADMIN</h1>
+                            <span class="ml-3 text-sm">{{ username }}</span>
+                        </div>
+                        <i class="relative ml-2 -top-2 -left-4 fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div *ngIf="isDropdownOpen" class="absolute right-0 z-20 w-48 mt-2 bg-white rounded-md shadow-lg">
+                        <ul class="py-1 text-gray-700">
+                            <li>
+                                <a routerLink="/all-client" class="block px-4 py-2 nav-element ">Profile</a>
+                            </li>
+                            <li>
+                                <a routerLink="/all-client" class="block px-4 py-2 nav-element ">Settings</a>
+                            </li>
+                            <li>
+                                <a onclick="logout()" class="block px-4 py-2 nav-element ">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- for user Management -->
+            <div class="flex-grow p-6 overflow-y-auto" style="max-height: 90vh;">
+                <h1 class="mb-2 text-3xl font-bold">All User</h1>
+                <p class="mb-4 text-gray-400">TABS &gt; ALL USER</p>
+                <div class="flex items-center justify-between mb-4">
+                    <!-- <div class="relative w-1/2">
+                        <input type="text" placeholder="Search anything"
+                            class="w-[50%] p-2 text-black border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600">
+                        <button class="relative text-white rounded-lg -left-6">
+                            <i class="fa-solid fa-magnifying-glass" style="color:rgb(21, 0, 0)"></i>
+                        </button>
+                    </div> -->
+                    <!-- <button class="px-4 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">Download All
+                        Reviews</button> -->
+                </div>
+
+                <div class="overflow-y-auto" style="max-height: 70vh;">
+                    <table class="min-w-full bg-gray-800">
+                        <thead class="bg-gray-700">
+                            <tr>
+                                <th class="w-1/12 p-4 text-left text-white">S.No</th>
+                                <th class="w-3/12 p-4 text-left text-white">Username</th>
+                                <th class="w-3/12 p-4 text-left text-white">Business Name</th>
+                                <th class="w-3/12 p-4 text-left text-white">Client Name</th>
+                                <th class="w-3/12 p-4 text-left text-white">Client Contact</th>
+                                <th class="w-3/12 p-4 text-left text-white">Password</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let user of users; let i = index" class="border-b border-gray-700">
+                                <td class="p-4">{{ i + 1 + pageNumber * elementSizeInPage}}</td>
+                                <td class="p-4">{{ user.owner_name }}</td>
+                                <td class="p-4">{{ user.businessname }}</td>
+                                <td class="p-4">{{ user.owner_name }}</td>
+                                <td class="p-4">{{ user.owner_name }}</td>
+                                <td class="p-4">123</td>
+                            </tr>
+                            <tr *ngIf="!users.length">
+                                <td colspan="6" class="p-4 text-center text-white">No reviews found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="relative bottom-0 flex items-center justify-center p-4 bg-gray-800 ">
+                <button class="px-3 py-1 text-white rounded"
+                    [ngClass]="{'bg-gray-700': pageNumber > 0, 'bg-gray-500 cursor-not-allowed': pageNumber === 0}"
+                    (click)="previousPage()" [disabled]="pageNumber === 0">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <span class="px-3 py-1 text-white bg-gray-800 rounded">{{ pageNumber + 1 }}</span>
+                <button class="px-3 py-1 text-white rounded"
+                    [ngClass]="{'bg-gray-700': pageNumber < totalPages - 1, 'bg-gray-500 cursor-not-allowed': pageNumber >= totalPages - 1}"
+                    (click)="nextPage()" [disabled]="pageNumber >= totalPages - 1">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+
+nav a span {
+    opacity: 0;
+    white-space: nowrap;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar-expanded nav a span {
+    opacity: 1;
+}
+
+.nav-element {
+    text-decoration: none !important;
+}
+
+.nav-element:hover {
+    background-color: #9ca3af;
+    color: white !important;
+}
+
+/* From Uiverse.io by Samalander0 */
+.card {
+    margin-top: 1em;
+    width: 230px;
+    height: 140px;
+    background: #efefef;
+    color: black;
+    position: relative;
+    border-radius: 2.5em;
+    padding: 2em;
+    transition: transform 0.4s ease;
+}
+
+.card .card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    transition: transform 0.4s ease;
+}
+
+.card .card-top {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.card .card-top p,
+.card .card-top {
+    margin: 0;
+}
+
+.card .card-top p {
+    font-weight: 600;
+}
+
+.card:hover {
+    cursor: pointer;
+    transform: scale(0.97);
+}
+
+.card:hover .card-content {
+    transform: scale(0.96);
+}
+
+.card:active {
+    transform: scale(0.9);
+}

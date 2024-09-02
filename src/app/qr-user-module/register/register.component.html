@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Register</title>
+    <style>
+        .custom-select {
+            width: 30%;
+            margin-right: 8px;
+
+        }
+
+        .custom-select-plan {
+            width: 80%;
+            margin-right: 8px;
+        }
+
+        .custom-input {
+            width: 80%;
+        }
+
+        .radio-group {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 20px;
+        }
+
+        .radio-item {
+            margin-right: 1rem;
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center">
+
+    <div class="main">
+        <!-- Sign up form -->
+        <section class="mb-6 signup">
+            <div class="container ">
+                <div class="signup-content">
+                    <div class="flex items-center justify-center signup-image sm:mb-11">
+                        <figure><img src="../../../assets/Images/hero-img.png" alt="sing up image"></figure>
+                    </div>
+                    <div class="signup-form">
+                        <h2 class="form-title text-nowrap">Create your QR</h2>
+                        <form class="register-form" id="register-form" [formGroup]="registerForm"
+                            (ngSubmit)="onSubmit()">
+                            <div *ngIf="errorMessage" class="error">
+                                {{ errorMessage }}
+                            </div>
+                            <div class="form-group">
+                                <label for="business-name"><i class="fa-solid fa-briefcase"></i></label>
+                                <input type="text" name="business-name" id="business-name"
+                                    placeholder="Enter your Business Name" formControlName="business_name" />
+                                <div *ngIf="registerForm.get('business_name')?.invalid && registerForm.get('business_name')?.touched"
+                                    class="text-xs italic text-red-500">
+                                    Business Name is required.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="owner-email"><i class="fa-solid fa-envelope"></i></label>
+                                <input type="email" name="owner-email" id="owner-email" placeholder="Enter your Email"
+                                    formControlName="owner_email" />
+                                <div *ngIf="registerForm.get('owner_email')?.invalid && registerForm.get('owner_email')?.touched"
+                                    class="text-xs italic text-red-500">
+                                    Enter a valid email.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="business-link"><i class="fa-solid fa-paperclip"></i></label>
+                                <input type="text" name="business-link" id="business-link"
+                                    placeholder="Enter your Business Link" formControlName="business_link" />
+                                <div *ngIf="registerForm.get('business_link')?.invalid && registerForm.get('business_link')?.touched"
+                                    class="text-xs italic text-red-500">
+                                    <span *ngIf="registerForm.controls['business_link'].errors?.['required']">Review
+                                        link is
+                                        required.</span>
+                                    <span *ngIf="registerForm.controls['business_link'].errors?.['pattern']">Review
+                                        link must
+                                        start with "https://".</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-number"><i class="fa-solid fa-phone"></i></label>
+                                <input type="test" name="contact-number" id="contact-number"
+                                    placeholder="Enter Your Contact Number" formControlName="contact" />
+                                <div *ngIf="registerForm.get('contact')?.invalid && registerForm.get('contact')?.touched"
+                                    class="text-xs italic text-red-500">
+                                    Contact number must be 10 digits.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="d-flex align-items-center">
+                                    <label for="serialId"></label>
+                                    <div class="relative inline-flex">
+                                        <select formControlName="dropdownvalue"
+                                            class="h-10 text-gray-600 bg-white border sm:w-[50%] w-[40%] border-gray-300 rounded-full appearance-none hover:border-gray-400 focus:outline-none"
+                                            [ngClass]="{'input-error': registerForm.get('dropdownvalue')?.invalid && registerForm.get('dropdownvalue')?.touched}">
+                                            <option class="font-bold " value="" disabled selected>Select a SerialID
+                                            </option>
+                                            <option value="MBGP">MBGP</option>
+                                            <option value="MBGD">MBGD</option>
+                                        </select>
+
+                                        <input type="text" class="custom-input form-control" name="serialId"
+                                            id="serialId" placeholder="Serial Id Must Start With MBG"
+                                            formControlName="serialId" required />
+                                    </div>
+                                </div>
+                                <div *ngIf="registerForm.get('serialId')?.invalid && registerForm.get('serialId')?.touched"
+                                    class="text-xs italic text-red-500 w-100">
+                                    Serial Id Must Start With MBG.
+                                </div>
+                            </div>
+
+                            <div [formGroup]="registerForm" class="form-container">
+                                <div class="flex items-center justify-start space-x-4">
+                                    <div *ngIf="showAdditionalInput" class="flex items-center justify-center">
+                                        <input type="checkbox" [(ngModel)]="showAdditionalInput"
+                                            name="additional-checkbox" class="text-indigo-600"
+                                            [ngModelOptions]="{standalone: true}" (change)="onCheckboxChange($event)">
+                                        <span>Coupon</span>
+                                        <input *ngIf="showAdditionalInput" type="text" name="additional-input"
+                                            id="additional-input" placeholder="Enter Your Coupon Code"
+                                            formControlName="additional_input"
+                                            class="w-full mt-2 ml-2 rounded-md form-input focus:outline-none focus:ring focus:border-blue-300"
+                                            [ngClass]="{'coupon-error': registerForm.get('additional_input')?.invalid && registerForm.get('additional_input')?.touched}" />
+                                    </div>
+                                    <div *ngIf="!showAdditionalInput" class="relative inline-flex w-full">
+                                        <select formControlName="planValue"
+                                            class="w-full h-10 text-gray-600 bg-white border border-gray-300 rounded-full appearance-none hover:border-gray-400 focus:outline-none">
+                                            <option value="" disabled selected class="font-semibold">
+                                                Select Your Prefered Plan
+                                            </option>
+                                            <option value="1">1180 /- Basic</option>
+                                            <option value="1">3540 /- Pro</option>
+                                        </select>
+                                        <div *ngIf="registerForm.get('planValue')?.invalid && registerForm.get('planValue')?.touched"
+                                            class="text-xs italic text-red-500">
+                                            Please select a plan.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="w-[100%] form-group form-button">
+                                <button class=" w-[100%]" name=" signup" id="signup" class="form-submit"
+                                    value="Register">Register</button>
+                            </div>
+                            <div class="flex items-center justify-end">
+                                <input type="checkbox" class="text-indigo-600 privacy-checkbox">
+                                <span>Our Privacy Policy <a class="text-blue-600"
+                                        [routerLink]="['/guest/privacy-policy']">Privacy-Policy</a> </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+</body>
+
+</html>

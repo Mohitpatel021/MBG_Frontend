@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        integrity="sha512-Fo3rlrQkz6VrQl6K0AWo7el2+ql4SV0+1fNZz0WpI3z0zwB1+Tj4oN40Mkg0wK0Q4R5t8Q29h+0uT5FPLg7N3Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <app-sidebar></app-sidebar>
+    <div class="flex max-h-screen h-screen overflow-auto bg-[#DFDFDF] md:pl-72 sm:pt-10 pt-20 ">
+        <div *ngIf="!isUserdashbaord" class=" bottom-container">
+            <div class="">
+                <h1 class="pl-3 text-3xl font-bold">Admin Dashboard</h1>
+                <p class="pl-3 text-black">TABS > DASHBOARD</p>
+            </div>
+            <div class="flex flex-col items-center justify-center gap-3 sm:justify-center sm:flex-row sm:items-center">
+                <div class="card ">
+                    <div class="card-content">
+                        <div class="card-top">
+                            <span class="text-2xl font-bold">Total User</span>
+                        </div>
+                        <div>
+                            <p class="text-3xl font-bold text-center ">{{totalClientCount}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-top">
+                            <span class="text-2xl font-bold">Bad Reviews</span>
+                        </div>
+                        <div>
+                            <p class="text-3xl font-bold text-center ">{{totalBadReviews}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

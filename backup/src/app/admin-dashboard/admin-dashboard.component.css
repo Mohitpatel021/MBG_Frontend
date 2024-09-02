@@ -1,0 +1,26 @@
+.sidebar-collapsed {
+    width: 5rem;
+}
+
+.sidebar-expanded {
+    width: 20rem;
+}
+
+nav a span {
+    opacity: 0;
+    white-space: nowrap;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar-expanded nav a span {
+    opacity: 1;
+}
+
+.nav-element {
+    text-decoration: none !important;
+}
+
+.nav-element:hover {
+    background-color: #9ca3af;
+    color: white !important;
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Template</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@^2.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="overflow-hidden bg-gray-100">
+    <div class="flex flex-col items-center justify-center min-h-screen px-4 md:flex-row">
+        <div class="flex flex-col w-full px-4 py-2 md:w-3/4">
+            <p class="mb-4 text-lg font-bold text-center">Select a template:</p>
+            <div class="overflow-auto">
+                <div class="grid grid-cols-1 gap-16 md:grid-cols-2 lg:grid-cols-3">
+                    <div *ngFor="let template of templates; let i = index" class="relative">
+                        <label for="template{{ i }}" class="block cursor-pointer">
+                            <img [src]="template.imgSrc" alt="Template {{ i+1 }}"
+                                class="object-cover h-auto max-w-full">
+                            <input type="radio" id="template{{ i }}" name="template" [(ngModel)]="selectedTemplate"
+                                [value]="template" class="hidden" (change)="selectTemplate()">
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="w-full p-4 md:w-1/4">
+            <div class="flex items-center justify-center p-4 bg-white rounded-lg shadow-lg ">
+                <img *ngIf="qrCodeImage" [src]="qrCodeImage" alt="QR Code" class="h-auto max-w-full">
+                <p *ngIf="!qrCodeImage && errorMessage" class="text-xl text-center text-gray-700">No QR code generated
+                    yet.</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

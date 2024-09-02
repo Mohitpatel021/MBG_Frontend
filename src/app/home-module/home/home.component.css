@@ -1,0 +1,12 @@
+.nav-element,
+.nav-elements {
+    text-decoration: none;
+}
+
+.nav-element:hover {
+    color: blue;
+}
+
+.nav-elements:hover {
+    color: black;
+}

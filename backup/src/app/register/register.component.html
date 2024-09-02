@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
+
+<body class="flex items-center justify-center">
+
+    <div class="main">
+        <!-- Sign up form -->
+        <section class="signup">
+            <div class="container">
+                <div class="signup-content">
+                    <div class="signup-image">
+                        <figure><img src="../../assets/Images/hero-img.png" alt="sing up image"></figure>
+                    </div>
+                    <div class="signup-form">
+                        <h2 class="form-title">Create your QR</h2>
+                        <form class="register-form" id="register-form" [formGroup]="registerForm"
+                            (ngSubmit)="onSubmit()">
+                            <div *ngIf="errorMessage" class="error">
+                                {{ errorMessage }}
+                            </div>
+                            <div class="form-group">
+                                <label for="business-name"><i class="fa-solid fa-briefcase"></i></label>
+                                <input type="text" name="business-name" id="business-name"
+                                    placeholder="Enter your Business Name" formControlName="business_name" />
+                                <div *ngIf="registerForm.get('business_name')?.invalid && registerForm.get('business_name')?.touched"
+                                    class="text-xs italic text-red-500">
+                                    Business Name is required.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="owner-email"><i class="fa-solid fa-envelope"></i></label>
+                                <input type="email" name="owner-email" id="owner-email" placeholder="Enter your Email"
+                                    formControlName="owner_email" />
+                                <div *ngIf="registerForm.get('owner_email')?.invalid && registerForm.get('owner_email')?.touched"
+                                    class="text-xs italic text-red-500">
+                                    Enter a valid email.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="business-link"><i class="fa-solid fa-paperclip"></i></label>
+                                <input type="text" name="business-link" id="business-link"
+                                    placeholder="Enter your Business Link" formControlName="business_link" />
+                                <div *ngIf="registerForm.get('business_link')?.invalid && registerForm.get('business_link')?.touched"
+                                    class="text-xs italic text-red-500">
+                                    <span *ngIf="registerForm.controls['business_link'].errors?.['required']">Review
+                                        link is
+                                        required.</span>
+                                    <span *ngIf="registerForm.controls['business_link'].errors?.['pattern']">Review
+                                        link must
+                                        start with "https://".</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-number"><i class="fa-solid fa-phone"></i></label>
+                                <input type="test" name="contact-number" id="contact-number"
+                                    placeholder="Enter Your Contact Number" formControlName="contact" />
+                                <div *ngIf="registerForm.get('contact')?.invalid && registerForm.get('contact')?.touched"
+                                    class="text-xs italic text-red-500">
+                                    Contact number must be 10 digits.
+                                </div>
+                            </div>
+                            <div class="w-[100%] form-group form-button">
+                                <button class=" w-[100%]" name=" signup" id="signup" class="form-submit"
+                                    value="Register">Register</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </div>
+
+</body>
+
+</html>

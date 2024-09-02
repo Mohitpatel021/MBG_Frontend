@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customize and Download Your Template</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+
+<body class="flex items-start justify-center h-screen bg-gray-100">
+
+    <div *ngIf="!emailSendSucessfully" class="w-full p-3 lg:max-w-6xl">
+        <div class="flex flex-col overflow-auto bg-white shadow-lg lg:flex-row rounded-3xl">
+            <div class="flex items-center justify-center w-full bg-white md:p-2 lg:p-2 lg:w-4/12">
+                <canvas #htmlCanvas></canvas>
+            </div>
+            <div class="logo w-[10%] h-[10%] flex justify-center items-center relative top-5 left-6">
+                <img class="w-full h-full" src="../../../assets/Images/mbg logo.png" alt="">
+            </div>
+            <div class="container flex flex-col items-center justify-between px-5 pt-3 pb-5">
+                <div class=" w-[75%] h-[75%] pt-5">
+                    <img class="" src="../../../assets/Images/Logos.png" alt="">
+                </div>
+                <div class="relative bottom-0 flex flex-col w-full gap-4">
+                    <button (click)="downloadImage()"
+                        class="w-full font-bold text-white bg-black h-11 rounded-3xl hover:bg-blue-600">Download
+                        Now</button>
+                    <button [routerLink]="['/register/login']"
+                        class="w-full font-bold text-white bg-black h-11 rounded-3xl hover:bg-blue-600" id="submit">Sign
+                        In</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="emailSendSucessfully" class="overlay">
+        <div class="card">
+            <img class="w-10 h-10" src="../../../assets/Images/emailsend.gif" alt="">
+            <p class="cookieHeading">Email Sent Successfully !!</p>
+            <p class="cookieDescription">We Have Successfully Sent Your Magical QR to your email. Please Check Your
+                Email and Grow your Google Ranking with the Magical QR</p>
+            <div class="buttonContainer">
+                <button class="acceptButton" (click)="changeEmailPopupVisibility()">OK</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

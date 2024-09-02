@@ -1,0 +1,24 @@
+body {
+    background-image: url(../../assets/Images/login-bg.jpg) !important;
+    background-size: cover;
+    height: 100vh;
+    overflow: auto;
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+    min-height: 20px;
+}
+
+.input-error {
+    border-bottom: 3px solid red;
+}
+
+.error {
+    color: red;
+    font-size: medium;
+    text-align: center;
+    min-height: 20px;
+}

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        integrity="sha512-Fo3rlrQkz6VrQl6K0AWo7el2+ql4SV0+1fNZz0WpI3z0zwB1+Tj4oN40Mkg0wK0Q4R5t8Q29h+0uT5FPLg7N3Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+
+<body class="text-white bg-gray-900">
+    <div class="flex min-h-screen">
+        <div id="sidebar" class="transition-all duration-300 bg-gray-800 sidebar-collapsed">
+            <button id="toggleSidebar" class="mt-4 mb-3 ml-6 text-2xl font-semibold focus:outline-none"
+                (click)="toggleSidebar()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav>
+                <a [routerLink]="['/dashboard']" [state]="{username:username,businessName:form.businessName}"
+                    class="nav-element flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
+                    <i class="fas fa-tachometer-alt fa-xl "></i>
+                    <span class="ml-3">Dashboard</span>
+                </a>
+                <a [routerLink]="['/bad-review']" [state]="{username:username,businessName:form.businessName}"
+                    class=" nav-element flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 mt-2">
+                    <i class="fas fa-thumbs-down fa-xl"></i>
+                    <span class="ml-3">Bad Reviews</span>
+                </a>
+                <a routerLink="/qr"
+                    class="nav-element flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 mt-2">
+                    <i class="fas fa-qrcode fa-xl"></i>
+                    <span class="ml-3">My QR</span>
+                </a>
+                <a class="nav-element flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 mt-2"
+                    (click)="logout()">
+                    <i class="fa-solid fa-right-from-bracket fa-xl"></i>
+                    <span class="ml-3">Log Out</span>
+                </a>
+            </nav>
+        </div>
+        <div class="w-full">
+            <div class="flex items-center justify-end pr-3 bg-slate-800 h-[10%] top-container">
+                <div class="relative ">
+                    <div class="flex items-center ">
+                        <img src="assets/user.png" alt="Profile" class="w-8 h-8 rounded-full">
+                        <div class="flex flex-col items-center justify-center ">
+                            <h1 class="font-bold text-green-600">{{ form.businessName }}</h1>
+                            <span class="ml-2 text-sm">{{ username }}</span>
+                        </div>
+                        <i (click)="toggleDropdown($event)"
+                            class="relative ml-2 top-2.5 -left-0 fa-solid fa-chevron-down cursor-pointer border-transparent"></i>
+                    </div>
+                    <div *ngIf="isDropdownOpen" class="absolute right-0 z-20 w-48 mt-2 bg-white rounded-md shadow-lg">
+                        <ul class="py-1 text-gray-700">
+                            <li>
+                                <a (click)="toggleProfileSidebar($event)"
+                                    class="block px-4 py-2 cursor-pointer hover:bg-gray-100">Profile</a>
+                            </li>
+                            <li>
+                                <a (click)="logout()"
+                                    class="block px-4 py-2 cursor-pointer hover:bg-gray-100">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="p-12 bottom-container">
+                <div>
+                    <h1 class="text-3xl font-bold">Dashboard</h1>
+                    <p class="text-gray-400">TABS > DASHBOARD</p>
+                </div>
+                <div class="grid grid-cols-1 gap-6 mt-6 md:grid-cols-2">
+                    <div class="p-6 bg-gray-800 rounded-lg">
+                        <h2 class="text-xl font-semibold">Bad Reviews</h2>
+                        <p class="mt-4 text-3xl">{{form.totalBadReviews}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div [class.hidden]="!isProfileSidebarVisible"
+            class="fixed right-0 w-1/3 h-full transition-transform transform bg-gray-800 shadow-lg top-16 profile-sidebar">
+            <div class="p-4">
+                <h2 class="text-2xl font-semibold text-center">Update Profile</h2>
+                <form [formGroup]="updateProfileForm" (ngSubmit)="updateProfile()">
+                    <div class="mt-4">
+                        <label for="businessName" class="block">Business Name</label>
+                        <input type="text" id="businessName" name="businessName"
+                            class="w-full p-2 mt-1 text-black rounded" placeholder="Business Name ..."
+                            formControlName="businessName">
+                    </div>
+                    <div class="mt-4">
+                        <label for="owner_email" class="block">Owner Email</label>
+                        <input type="text" id="owner_email" name="owner_email"
+                            class="w-full p-2 mt-1 text-black rounded" placeholder="Owner Email..."
+                            formControlName="owner_email">
+                    </div>
+                    <div class="mt-4">
+                        <label for="business_link" class="block">Google Review URL || It must include (https://) in the
+                            beginning.</label>
+                        <input type="text" id="business_link" name="business_link"
+                            class="w-full p-2 mt-1 text-black rounded" placeholder="Business Link"
+                            formControlName="businessLink">
+                    </div>
+                    <div class="mt-4">
+                        <label for="contact" class="block">Contact</label>
+                        <input type="text" id="contact" name="contact" class="w-full p-2 mt-1 text-black rounded"
+                            placeholder="Contact.." formControlName="contact">
+                    </div>
+                    <button type="submit"
+                        class="px-4 py-2 mt-6 font-semibold text-white bg-blue-500 rounded">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

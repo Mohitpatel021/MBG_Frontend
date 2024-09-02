@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body class="flex items-center justify-center min-h-screen"
+    style="background-image: url(../../assets/Images/login-bg.jpg);">
+    <div class=" text-center flex justify-center min-h-screen items-center flex-col  rounded-lg shadow-md w-[100%]">
+        <div class="flex justify-center items-center mb-4 h-[50%] w-[50%]">
+            <img src="../../../assets/Images/failed.gif" alt="">
+        </div>
+        <h1 class="mb-2 text-2xl font-semibold text-gray-800">Payment Failed</h1>
+        <p class="mb-4 text-gray-600">Please go back and try again.</p>
+        <p class="mb-6 text-gray-600">If you encounter any further difficulties, please contact our customer support
+            for
+            assistance.</p>
+        <div class="space-y-2 ">
+            <a [routerLink]="['/register']"
+                class="block w-full px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600">Try
+                Again</a>
+        </div>
+    </div>
+</body>
+
+</html>

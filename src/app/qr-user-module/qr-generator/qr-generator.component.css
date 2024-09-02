@@ -1,0 +1,24 @@
+body {
+    background-image: url(../../../assets/Images/login-bg.jpg) !important;
+}
+
+.template-card {
+    min-width: 28%;
+    min-height: 30%;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.template-card {
+    transition: transform 0.3s ease-in-out;
+}
+
+.template-card:hover {
+    transform: scale(1.05);
+}
+
+.input[type="radio"]:checked+img {
+    border: 2px solid blue;
+}

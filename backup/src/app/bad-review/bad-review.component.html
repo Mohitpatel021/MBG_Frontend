@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="h-screen overflow-hidden text-white bg-gray-900">
+    <div class="flex h-full">
+        <div id="sidebar" class="h-full p-4 transition-all duration-300 bg-gray-800 sidebar-collapsed">
+            <button id="toggleSidebar" class="mb-3 text-2xl font-semibold focus:outline-none" (click)="toggleSidebar()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav>
+                <a [routerLink]="['/dashboard']" [state]="{username:username,businessName:businessName}"
+                    class="flex nav-element items-center py-2.5  rounded transition duration-200 ">
+                    <i class="fas fa-tachometer-alt fa-xl"></i>
+                    <span class="ml-3">Dashboard</span>
+                </a>
+                <a [routerLink]="['/bad-review']" [state]="{username:username,businessName:businessName}"
+                    class="flex nav-element items-center py-2.5  rounded transition duration-200  mt-2">
+                    <i class="fas fa-thumbs-down fa-xl"></i>
+                    <span class="ml-3">Bad Reviews</span>
+                </a>
+                <a routerLink="/qr" class="flex nav-element items-center py-2.5 rounded transition duration-200  mt-2">
+                    <i class="fas fa-qrcode fa-xl"></i>
+                    <span class="ml-3">My QR</span>
+                </a>
+                <a class="flex cursor-pointer nav-element items-center py-2.5 rounded transition duration-200  mt-2"
+                    (click)="logout()">
+                    <i class="fa-solid fa-right-from-bracket fa-xl"></i>
+                    <span class="ml-3">Log Out</span>
+                </a>
+            </nav>
+        </div>
+        <div class="flex flex-col flex-grow h-full">
+            <div class="flex items-center justify-end pr-4 bg-gray-800 h-[10%]">
+                <div class="relative">
+                    <div class="flex items-center">
+                        <img src="assets/user.png" alt="Profile" class="w-8 h-8 rounded-full">
+                        <div class="flex flex-col items-center justify-center">
+                            <h1 class="font-bold text-green-600">{{ businessName }}</h1>
+                            <span class="ml-3 text-sm">{{ username }}</span>
+                        </div>
+                    </div>
+                    <div *ngIf="isDropdownOpen" class="absolute right-0 z-20 w-48 mt-2 bg-white rounded-md shadow-lg">
+                        <ul class="py-1 text-gray-700">
+                            <li>
+                                <a routerLink="/bad-review" class="block px-4 py-2 hover:bg-gray-100">Profile</a>
+                            </li>
+                            <!-- <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100">Settings</a>
+                            </li> -->
+                            <li>
+                                <a onclick="logout()" class="block px-4 py-2 hover:bg-gray-100">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- <div class="flex flex-col items-center space-x-4">
+                    <h1 class="font-bold text-green-600">{{ businessName }}</h1>
+                    <span class="text-sm">{{ username }}</span>
+                </div> -->
+            </div>
+            <div class="flex-grow p-6 overflow-y-auto">
+                <h1 class="mb-2 text-3xl font-bold">All Bad-Reviews</h1>
+                <p class="text-gray-400 ">TABS &gt; ALL BAD-REVIEWS</p>
+                <div class="flex items-center justify-between mb-4">
+                    <!-- <div class="relative w-1/2">
+                        <input type="text" placeholder="Search anything"
+                            class="w-[50%] p-2 text-black border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600">
+                        <button class="relative text-white rounded-lg -left-6">
+                            <i class="fa-solid fa-magnifying-glass" style="color:rgb(21, 0, 0)"></i>
+                        </button>
+                    </div> -->
+                    <!-- <button class="px-4 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">Download All
+                        Reviews</button> -->
+                </div>
+                <div>
+                    <table class="min-w-full bg-gray-800">
+                        <thead class="bg-gray-700">
+                            <tr>
+                                <th class="w-1/12 p-3 text-left text-white">#</th>
+                                <th class="w-4/12 p-3 text-left text-white">Business Name</th>
+                                <th class="w-4/12 p-3 text-left text-white">Reviewer Name</th>
+                                <th class="w-4/12 p-3 text-left text-white">Reviewer Contact</th>
+                                <th class="w-3/12 p-3 text-left text-white">Rating</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let review of reviews; let i = index" class="border-b border-gray-700">
+                                <td class="p-2">{{ i + 1 + pageNumber * elementSize}}</td>
+                                <td class="p-2">{{ review.businessName }}</td>
+                                <td class="p-2">{{ review.reviewerName }}</td>
+                                <td class="p-2">{{ review.contact }}</td>
+                                <td class="p-2">{{ review.rating }}</td>
+                            </tr>
+                            <tr *ngIf="!reviews.length">
+                                <td colspan="4" class="p-3 text-center text-white">No reviews found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="flex items-center justify-center p-3 bg-gray-800">
+                <button class="px-3 py-1 mx-1 text-white rounded"
+                    [ngClass]="{'bg-gray-700': pageNumber > 0, 'bg-gray-500 cursor-not-allowed': pageNumber === 0}"
+                    (click)="previousPage()" [disabled]="pageNumber === 0"><i
+                        class="fa-solid fa-chevron-left"></i></button>
+                <span class="px-3 py-1 mx-1 text-white bg-gray-800 rounded">{{ pageNumber + 1 }}</span>
+                <button class="px-3 py-1 mx-1 text-white rounded"
+                    [ngClass]="{'bg-gray-700': pageNumber < totalPages - 1, 'bg-gray-500 cursor-not-allowed': pageNumber >= totalPages - 1}"
+                    (click)="nextPage()" [disabled]="pageNumber >= totalPages - 1"><i
+                        class="fa-solid fa-chevron-right"></i> </button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
