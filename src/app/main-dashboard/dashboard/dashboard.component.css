@@ -354,7 +354,7 @@ body {
 
 .content main {
     width: 83%;
-    padding: 36px 24px;
+    padding: 15px 24px 36px;
     max-height: calc(100vh - 56px);
 }
 
@@ -790,6 +790,5 @@ body {
     .content main .bottom-data .reminders .task-list {
         min-width: 340px;
     }
-
 
 }

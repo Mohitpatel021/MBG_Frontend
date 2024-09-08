@@ -58,32 +58,25 @@ export class DownloadComponent implements OnInit, AfterViewInit {
     private router: Router,
     private sharedService: ShareServiceService,
     private loginService: LoginService,
-
     private ngxLoader: NgxUiLoaderService
-
   ) {
-    const routerState = this.router.getCurrentNavigation()?.extras
-      .state as QrData;
-    if (routerState) {
-      this.qrCodeImage = routerState.qrCodeImage;
-      this.template = routerState.template;
-      this.businessName = routerState.businessName;
-      this.username = routerState.username;
-      this.email = routerState.email;
-    } else {
-      this.username = this.sharedService.getItem('username');
-      this.businessName = this.sharedService.getItem('business_name');
-      this.business_link = this.sharedService.getItem('business_link');
-      this.email = this.sharedService.getItem('email');
-    }
+    this.initialiseProperty();
   }
 
+  initialiseProperty() {
+    const routerState = this.router.getCurrentNavigation()?.extras
+      .state as QrData;
+    this.template = routerState?.template;
+    this.businessName = routerState?.businessName || this.sharedService.getItem('business_name');
+    this.username = routerState?.username || this.sharedService.getItem('username');
+    this.email = routerState?.email || this.sharedService.getItem('email');
+    this.qrCodeImage = routerState?.qrCodeImage || this.sharedService.getItem('image');
+  }
   ngOnInit(): void {
     if (!this.template || !this.qrCodeImage) {
       return;
     }
   }
-
   ngAfterViewInit(): void {
     if (this.htmlCanvas) {
       this.initializeCanvas();
@@ -99,7 +92,6 @@ export class DownloadComponent implements OnInit, AfterViewInit {
         if (!img) {
           return;
         }
-
         const canvasWidth = this.htmlCanvas.nativeElement.clientWidth;
         const canvasHeight = this.htmlCanvas.nativeElement.clientHeight;
         this.htmlCanvas.nativeElement.width = canvasWidth;
@@ -117,7 +109,6 @@ export class DownloadComponent implements OnInit, AfterViewInit {
           canvasWidth / img.width!,
           canvasHeight / img.height!
         );
-
         img.set({
           scaleX: scale,
           scaleY: scale,
@@ -210,14 +201,12 @@ export class DownloadComponent implements OnInit, AfterViewInit {
     });
 
     this.canvas.add(textBox);
-
     // Adjust font size if text overflows the maximum height
     while (textBox.getScaledHeight() > template.boxHeight && fontSize > 10) {
       fontSize -= 2;
       textBox.set({ fontSize });
       textBox.setCoords();
     }
-
     // Adjust the top position based on the height of the text box
     const textBoxHeight = textBox.getScaledHeight();
     textBox.set({
@@ -226,7 +215,6 @@ export class DownloadComponent implements OnInit, AfterViewInit {
 
     this.canvas.renderAll();
   }
-
 
   public async downloadImage(): Promise<void> {
     this.ngxLoader.start();
@@ -277,6 +265,5 @@ export class DownloadComponent implements OnInit, AfterViewInit {
     this.emailSendSucessfully = false;
     // this.sharedService.clear();
     this.router.navigate(['/register/login']);
-
   }
 }

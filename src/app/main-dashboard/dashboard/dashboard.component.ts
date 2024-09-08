@@ -8,13 +8,13 @@ import { ShareServiceService } from '../../share-service.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AdminService } from '../../admin.service';
 import { of, switchMap } from 'rxjs';
-import { log } from 'node:util';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })
-export class DashboardComponent implements OnInit, AfterViewInit {
+export class DashboardComponent implements OnInit {
   username: string = '';
   uuid: string = '';
   businessId: string = '';
@@ -47,7 +47,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       businessLink: ['', Validators.required],
       contact: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
     });
-    console.log("initialise");
 
     this.initialisationProperty();
   }
@@ -57,19 +56,18 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.form.businessName = navigation?.extras?.state?.['businessName'] || this.sharedService.getItem('business_name');
     this.username = navigation?.extras?.state?.['username'] || this.sharedService.getItem('username');
     if (!this.form.businessName && !this.username) {
-      console.log("chaking");
       this.router.navigate(['/register/login']);
       this.logout();
       this.sharedService.clear();
     }
-    console.log("done");
 
   }
-  ngChanges(changes: SimpleChanges): void {
-    this.initialisationProperty();
-  }
 
-  ngAfterViewInit(): void {
+
+  ngOnInit(): void {
+    this.uuid = this.loginService.generateRandomUUID();
+    this.getAllBadReviewsAndRecentReviewers();
+    this.populateUserDetails();
     const sideLinks = document.querySelectorAll('.sidebar .side-menu li a:not(.logout)');
     sideLinks.forEach(item => {
       const li = item.parentElement;
@@ -122,12 +120,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       }
     });
   }
-
-  ngOnInit(): void {
-    this.uuid = this.loginService.generateRandomUUID();
-    this.getAllBadReviewsAndRecentReviewers();
-    this.populateUserDetails();
-  }
   getAllBadReviewsAndRecentReviewers() {
     const token = this.sharedService.getItem('token');
     this.ngxLodder.start();
@@ -173,19 +165,19 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         (error) => {
           this.ngxLodder.stop();
           this.errorMessage = error.error.message;
-          // console.error('Error occurred:', error);
+
           if (error.status === HttpStatusCode.Unauthorized) {
-            // console.error('Unauthorized access - maybe the token has expired.');
+
             this.errorMessage = error.error.message || 'Unauthorized access - please login again.';
-            this.router.navigate(['/register/login']);  // Redirect to login if unauthorized
+            this.router.navigate(['/register/login']);
           } else if (error.status === HttpStatusCode.Forbidden) {
-            // console.error('Forbidden - you do not have permission to perform this action.');
+            ;
             this.errorMessage = error.error.message || 'You do not have permission to perform this action.';
           } else if (error.status === HttpStatusCode.NotFound) {
-            // console.error('User not found.');
+
             this.errorMessage = error.error.message || 'The user you are trying to manage does not exist.';
           } else if (error.status === HttpStatusCode.InternalServerError) {
-            // console.error('Internal server error.');
+
             this.errorMessage = error.error.message || 'An unexpected error occurred. Please try again later.';
           } else {
             console.error('An unexpected error occurred.');
@@ -218,8 +210,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       businessLink: businessLink,
       contact: contact,
     });
-
-    // Disable the form to prevent editing
     this.updateProfileForm.disable();
   }
 
@@ -229,7 +219,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     const isClickInsideDropdown = targetElement.closest('.dropdown') != null;
     const isClickInsideProfileSidebar =
       targetElement.closest('.profile-sidebar') != null;
-
     if (!isClickInsideDropdown) {
       this.isDropdownOpen = false;
     }
@@ -240,8 +229,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
 
   setSessionForm(response: any) {
-    const expirationDate = new Date().getTime() + 12 * 60 * 60 * 1000; // Expiration time in milliseconds
-
+    const expirationDate = new Date().getTime() + 12 * 60 * 60 * 1000;
     this.sharedService.setItem('username', response.contact);
     this.sharedService.setItem('business_name', response.business_name);
     this.sharedService.setItem('business_link', response.business_link);
@@ -250,8 +238,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   logout(): void {
+    this.ngxLodder.start()
+    this.router.navigate(['/register/login'], {
+      queryParams: { loggedOut: 'true' },
+      replaceUrl: true
+    });
     this.sharedService.clear()
-    localStorage.clear();
-    this.router.navigate(['/register/login']);
+    this.ngxLodder.stop()
   }
 }

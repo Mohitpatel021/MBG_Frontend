@@ -6,13 +6,12 @@ import { LoginService } from '../../login.service';
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-
 @Component({
   selector: 'app-bad-review',
   templateUrl: './bad-review.component.html',
   styleUrls: ['./bad-review.component.css'],
 })
-export class BadReviewComponent implements OnInit, OnChanges, AfterViewInit {
+export class BadReviewComponent implements OnInit, AfterViewInit {
   username: string = '';
   businessName: string = '';
   reviews: any[] = [];
@@ -25,6 +24,7 @@ export class BadReviewComponent implements OnInit, OnChanges, AfterViewInit {
   isProfileSidebarVisible: boolean = false;
   updateProfileForm: FormGroup;
   uuid: string = '';
+  searchParam: string = ''
 
   constructor(
     private router: Router,
@@ -41,15 +41,14 @@ export class BadReviewComponent implements OnInit, OnChanges, AfterViewInit {
     });
     this.uuid = loginService.generateRandomUUID();
     const navigation = this.router.getCurrentNavigation();
-    if (navigation?.extras.state) {
-      this.username = navigation?.extras.state['username'];
-      this.businessName = navigation?.extras.state['businessName'];
+    this.username = navigation?.extras?.state?.['username'] || this.sharedService.getItem('username');
+    this.businessName = navigation?.extras?.state?.['businessName'] || this.sharedService.getItem('business_name');
+    if (!this.businessName && !this.username) {
+      this.router.navigate(['/register/login']);
+      this.logout();
+      this.sharedService.clear();
     }
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    this.fetchBadReviews()
-  }
-
   ngOnInit(): void {
     this.fetchBadReviews();
   }
@@ -119,6 +118,8 @@ export class BadReviewComponent implements OnInit, OnChanges, AfterViewInit {
       }
     }
   }
+
+
   //Fetch all the bad reviewers
   fetchBadReviews() {
     const token = this.sharedService.getItem('token');
@@ -130,7 +131,8 @@ export class BadReviewComponent implements OnInit, OnChanges, AfterViewInit {
         this.username,
         this.pageNumber,
         this.elementSize,
-        token
+        token,
+        this.searchParam
       )
       .subscribe(
         (response) => {

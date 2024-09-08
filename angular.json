@@ -37,7 +37,8 @@
             "styles": [
               "src/styles.css",
               "src/assets/Css/bootstrap.min.css",
-              "src/assets/Css/fontawsom-all.min.css"
+              "src/assets/Css/fontawsom-all.min.css",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [],
             "allowedCommonJsDependencies": [

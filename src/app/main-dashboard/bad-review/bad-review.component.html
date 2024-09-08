@@ -12,7 +12,8 @@
 <body>
     <div class="sidebar">
         <div class="flex items-center justify-between">
-            <a [routerLink]="['/d/dashboard',uuid]" class=" logo">
+            <a [routerLink]="['/d/dashboard',uuid]" [state]="{username:username,businessName:this.businessName}"
+                class=" logo">
                 <i class='bx bx-code-alt'></i>
                 <div class="logo-name"><span>Review</span>Us</div>
             </a>
@@ -64,8 +65,9 @@
             <i class='bx bx-menu'></i>
             <form action="#">
                 <div class="form-input ">
-                    <input type="search" placeholder="Search...">
-                    <button class="search-btn" type="submit"><i class='bx bx-search'></i></button>
+                    <input type="search" [(ngModel)]="searchParam" name="searchParam" placeholder=" Search...">
+                    <button (click)="fetchBadReviews()" class="search-btn" type="submit"><i
+                            class='bx bx-search'></i></button>
                 </div>
             </form>
             <!-- <input type="checkbox" id="theme-toggle" hidden>
@@ -81,6 +83,22 @@
             </a>
         </nav>
         <main class="h-[85vh]">
+            <div class="header">
+                <div class="left">
+                    <h1>Dashboard</h1>
+                    <ul class="breadcrumb">
+                        <!-- <li><a href="#">
+                                            Analytics
+                                        </a></li> -->
+                        <!-- / -->
+                        <!-- <li><a href="#" class="active">Shop</a></li> -->
+                    </ul>
+                </div>
+                <a href="#" class="report">
+                    <i class='bx bx-cloud-download'></i>
+                    <span>Download</span>
+                </a>
+            </div>
             <table
                 class="w-full text-sm text-left text-gray-500 border rtl:text-right dark:text-gray-400 sm:scroll-m-0">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

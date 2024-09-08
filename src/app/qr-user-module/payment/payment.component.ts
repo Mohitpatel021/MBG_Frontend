@@ -7,7 +7,6 @@ import Swal from 'sweetalert2';
 
 import { WindowRefService } from '../../window-ref.service';
 import { ShareServiceService } from '../../share-service.service';
-declare var Razorpay: any;
 
 @Component({
   selector: 'app-payment',
@@ -36,25 +35,21 @@ export class PaymentComponent implements OnInit {
     private winRef: WindowRefService,
     private ngxLodder: NgxUiLoaderService
   ) {
+    this.initializeProperty();
+  }
+  initializeProperty() {
     this.token = this.sharedService.getItem('token');
     const navigation = this.router.getCurrentNavigation();
-    this.uuid = loginService.generateRandomUUID();
-    if (navigation?.extras.state) {
-      this.business_link = navigation?.extras.state['business_link'];
-      this.businessName = navigation.extras.state['businessName'];
-      this.username = navigation.extras.state['username'];
-      this.email = navigation.extras.state['email'];
-      this.serialId = navigation.extras.state['serialId'];
-      this.identity = navigation.extras.state['id'];
-      this.paymentId = navigation.extras.state['paymentId'];
-      this.orderId = navigation.extras.state['orderId'];
-      this.amount = navigation.extras.state['amount'];
-    } else {
-      this.business_link = this.sharedService.getItem('business_link');
-      this.businessName = this.sharedService.getItem('businessName');
-      this.username = this.sharedService.getItem('username');
-      this.email = this.sharedService.getItem('email');
-    }
+    this.uuid = this.loginService.generateRandomUUID();
+    this.business_link = navigation?.extras?.state?.['business_link'] || this.sharedService.getItem('business_link');
+    this.businessName = navigation?.extras?.state?.['businessName'] || this.sharedService.getItem('businessName');
+    this.username = navigation?.extras?.state?.['username'] || this.sharedService.getItem('username');
+    this.email = navigation?.extras?.state?.['email'] || this.sharedService.getItem('email');
+    this.serialId = navigation?.extras?.state?.['serialId'] || this.sharedService.getItem('serialId');
+    this.identity = navigation?.extras?.state?.['id'] || this.sharedService.getItem('clientId');
+    this.paymentId = navigation?.extras?.state?.['paymentId'];
+    this.orderId = navigation?.extras?.state?.['orderId'];
+    this.amount = navigation?.extras?.state?.['amount'];
   }
 
   ngOnInit(): void {
@@ -95,7 +90,6 @@ export class PaymentComponent implements OnInit {
       modal: {
         ondismiss: () => {
           const uuid = this.loginService.generateRandomUUID();
-          console.log('payment cancelled');
           this.router.navigate(['/register/failed', uuid]);
         },
         escape: false,
@@ -164,5 +158,6 @@ export class PaymentComponent implements OnInit {
       this.errorMessage = 'An unexpected error occurred. Please try again later.';
     }
     this.router.navigate(['/register']);
+    this.sharedService.clear();
   }
 }

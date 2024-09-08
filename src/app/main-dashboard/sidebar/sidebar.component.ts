@@ -18,7 +18,6 @@ export class SidebarComponent implements OnInit {
   constructor(private sharedService: ShareServiceService, private router: Router, private adminService: AdminService) {
     this.uuid = adminService.generateRandomUUID();
     this.username = this.sharedService.getItem('username')
-    console.log("useranem getting form session storhae", this.username);
     this.ownerEmail = this.sharedService.getItem('email')
     this.businessName = this.sharedService.getItem('business_name')
     this.role = this.sharedService.getItem('role')

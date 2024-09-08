@@ -127,6 +127,8 @@ export class RegisterComponent {
   }
   private processRegistrationResponse(response: any, formValues: any) {
     this.setSessionForm(response);
+    this.sharedService.setItem('clientId', response.client.id);
+    this.sharedService.setItem('serialId', formValues.dropdownvalue + formValues.serialId)
     const navigateTo = this.showAdditionalInput && (formValues.additional_input === 'THEMAGICALQRCODE') ? '/register/qr' : '/register/checkout';
     this.router.navigate([navigateTo, this.uuid], {
       state: {
@@ -165,7 +167,6 @@ export class RegisterComponent {
 
       this.errorMessage = `An error occurred: ${error.error.message}`;
     } else {
-
       switch (error.status) {
         case HttpStatusCode.BadRequest:
 

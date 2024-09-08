@@ -1,18 +1,19 @@
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { LoginService } from '../../login.service';
 import { ShareServiceService } from '../../share-service.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   uuid: string = '';
   user: User = {
     username: '',
@@ -31,12 +32,25 @@ export class LoginComponent {
     private loginService: LoginService,
     private fb: FormBuilder,
     private router: Router,
+    private toastr: ToastrService,
     private sharedService: ShareServiceService,
-    private ngxLoder: NgxUiLoaderService
+    private ngxLoder: NgxUiLoaderService,
+    private routes: ActivatedRoute
   ) {
     this.uuid = loginService.generateRandomUUID();
   }
-
+  ngOnInit(): void {
+    this.routes.queryParams.subscribe((param) => {
+      if (param['loggedOut'] === 'true') {
+        this.toastr.success("Logged Out Successfull !! ", 'Logout')
+        this.router.navigate([], {
+          queryParams: { loggedOut: null },
+          queryParamsHandling: 'merge',
+          replaceUrl: true
+        })
+      }
+    })
+  }
   onSubmit() {
     if (this.loginForm.valid) {
       this.user.username = this.loginForm.value.username;
@@ -48,10 +62,6 @@ export class LoginComponent {
           if (HttpStatusCode.Ok) {
             this.ngxLoder.stop();
             this.setLoginSession(response);
-            this.sharedService.setUsername(this.user.username);
-            this.sharedService.setBusinessName(response.businessName);
-            this.sharedService.setToken(response.token);
-            this.sharedService.setIsAuth(response.isAuth);
             this.loginForm.reset();
             // console.log("login response ", response);
             if (response.role === 'ADMIN') {

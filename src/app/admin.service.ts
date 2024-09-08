@@ -23,18 +23,20 @@ export class AdminService {
     pageNumber: number,
     elementSizeInPage: number,
     token: string,
-    username: string
+    username: string,
+    searchParam: string
   ): Observable<any> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const params = new HttpParams()
-      .set('pageNumber', pageNumber.toString())
-      .set('pageSize', elementSizeInPage.toString())
-      .set('username', username);
 
-    return this.http.get<any>(`${this.API_URL}/dashboard/admin`, {
-      headers,
-      params,
-    });
+    if (searchParam && searchParam.trim() !== '') {
+      return this.http.get<any>(`${this.API_URL}/dashboard/admin?username=${username}&pageNumber=${pageNumber.toString()}&PageSize=${elementSizeInPage.toString()}&searchParam=${searchParam}`, {
+        headers,
+      });
+    } else {
+      return this.http.get<any>(`${this.API_URL}/dashboard/admin?username=${username}&pageNumber=${pageNumber.toString()}&PageSize=${elementSizeInPage.toString()}`, {
+        headers,
+      });
+    }
   }
 
   accountEnableAndDisableOperation(username: string, adminUsername: string, token: string): Observable<any> {

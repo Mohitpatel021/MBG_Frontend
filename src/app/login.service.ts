@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { LoginResponse } from './login-response';
 import { RegisterResponse } from './register-response';
 import { Feedback } from './feedback';
-import { v4 as uuidv4 } from 'uuid';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { QrCodeCreationDataRequest } from './qr-code-creation-data-request';
 import { environment } from '../environments/environment.dev';
@@ -29,6 +28,7 @@ export class LoginService {
     this.username = this.shareService.getItem('username');
 
   }
+
   isTokenExpired(token: string): boolean {
     return this.jwtHelper.isTokenExpired(token);
   }
@@ -136,13 +136,17 @@ export class LoginService {
     username: string,
     page: number,
     elementSize: number,
-    token: string
+    token: string,
+    searchParam: string
   ): Observable<any> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     const params = new HttpParams()
       .set('username', username)
       .set('pageNumber', page.toString())
       .set('pageSize', elementSize.toString());
+    if (searchParam && searchParam.trim() !== '') {
+      params.set('searchParam', searchParam)
+    }
     return this.http.get<any>(
       `${this.apiServerUrl}/dashboard/user/all/reviewer`,
       {

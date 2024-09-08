@@ -8,8 +8,8 @@
 </head>
 
 <body>
-    <nav class="fixed top-0 z-50 w-full dark:bg-gray-800 ">
-        <div class="px-3 py-3 lg:px-5 lg:pl-3">
+    <nav class="fixed top-0 bg-[#DFDFDF] w-full z-50">
+        <div class="px-3 py-2 lg:px-5 lg:pl-3">
             <div class="flex items-center justify-between">
                 <div class="flex items-center justify-start rtl:justify-end">
                     <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar"
@@ -23,13 +23,13 @@
                             </path>
                         </svg>
                     </button>
-                    <a [routerLink]="['/d/admin',uuid]" class="flex ms-2 md:me-24">
+                    <a [routerLink]="['/d/admin',uuid]" [state]="{username:this.username}" class="flex ms-2 md:me-24">
                         <img src="../../../assets/Images/Logo.png" class="h-8 me-3" alt="ReviewUs Logo" />
                         <span
                             class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white ">ReviewUs</span>
                     </a>
                 </div>
-                <div *ngIf="isUserdashbaord" class="flex items-center mr-3">
+                <div class="flex items-center mr-3">
                     <div class="flex items-center ms-3">
                         <div>
                             <button type="button"
@@ -52,7 +52,7 @@
                             </div>
                             <ul class="py-1" role="none">
                                 <li>
-                                    <a [routerLink]="['/d/admin',uuid]"
+                                    <a [routerLink]="['/d/admin',uuid]" [state]="{username:this.username}"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                                         role="menuitem">Dashboard</a>
                                 </li>
@@ -80,12 +80,12 @@
     </nav>
 
     <aside id="logo-sidebar"
-        class="bg-[#FFFFFF] fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full border-r border-gray-200  sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+        class="bg-[#DFDFDF] fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full border-r border-gray-200  sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
         aria-label="Sidebar">
         <div class="flex flex-col justify-between h-full px-3 pb-4 overflow-y-auto dark:bg-gray-800">
             <ul class="space-y-2 font-medium">
                 <li>
-                    <a [routerLink]="['/d/admin',uuid]"
+                    <a [routerLink]="['/d/admin',uuid]" [state]="{username:this.username}"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                             aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -127,7 +127,7 @@
                     </a>
                 </li>
                 <li>
-                    <a [routerLink]="['/d/all-client',uuid]"
+                    <a [routerLink]="['/d/all-client',uuid]" [state]="{username:this.username}"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                             aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -169,7 +169,7 @@
                     <div class="notiborderglow"></div>
                     <div class="notititle">© 2023 MBG Card India Pvt. Ltd. All rights reserved.</div>
                     <div class="notibody">
-                        <a [routerLink]="['/privacy-policy']">Our Privacy Policy</a>
+                        <a [routerLink]="['/guest/privacy-policy']">Our Privacy Policy</a>
                     </div>
                 </div>
                 <a (click)="logout()"

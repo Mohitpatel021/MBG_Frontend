@@ -15,6 +15,8 @@ import { NotFoundModalComponent } from './not-found-modal/not-found-modal.compon
 import { MainDashboardModule } from './main-dashboard/main-dashboard.module';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +31,14 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MainDashboardModule,
     HttpClientModule,
     FormsModule,
-    
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      progressAnimation: 'decreasing',
+      progressBar: true,
+      timeOut: 3000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true
+    }),
     ReactiveFormsModule,
     NgxUiLoaderModule.forRoot({
       "bgsColor": "#4bb1c8",

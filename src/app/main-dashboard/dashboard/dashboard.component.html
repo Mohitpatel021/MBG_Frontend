@@ -13,7 +13,8 @@
     <div class=" main-container min-w-screen">
         <div class="sidebar">
             <div class="flex items-center justify-between">
-                <a [routerLink]="['/d/dashboard',uuid]" class=" logo">
+                <a [routerLink]="['/d/dashboard',uuid]" [state]="{username:username,businessName:form.businessName}"
+                    class=" logo">
                     <i class='bx bx-code-alt'></i>
                     <div class="logo-name"><span>Review</span>Us</div>
                 </a>
@@ -104,10 +105,7 @@
                             <!-- <li><a href="#" class="active">Shop</a></li> -->
                         </ul>
                     </div>
-                    <a href="#" class="report">
-                        <i class='bx bx-cloud-download'></i>
-                        <span>Download CSV</span>
-                    </a>
+                   
                 </div>
 
                 <!-- Insights -->

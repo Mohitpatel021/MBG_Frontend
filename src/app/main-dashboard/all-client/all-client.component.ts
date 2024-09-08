@@ -1,5 +1,5 @@
 import { HttpStatusCode } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { AdminService } from '../../admin.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
@@ -26,7 +26,9 @@ export class AllClientComponent implements OnInit {
   pageNumber = 0;
   isButtonDisabled: boolean = true;
   uuid: string = '';
-  // isEnable: boolean = true;
+  isFirstPage: boolean = false
+  isLastPage: boolean = true
+  searchParam: string = ''
 
   constructor(
     private adminService: AdminService,
@@ -36,38 +38,98 @@ export class AllClientComponent implements OnInit {
   ) {
     this.uuid = adminService.generateRandomUUID();
     const navigation = this.router.getCurrentNavigation();
-    if (navigation?.extras.state) {
-      this.username = navigation.extras.state['username'];
-    } else {
-      this.username = sharedService.getItem('username');
+    this.username = navigation?.extras?.state?.['username'] || sharedService.getItem('username');
+    if (!this.username) {
+      this.router.navigate(['/register/login']);
+      this.logout();
+      this.sharedService.clear();
     }
   }
 
   ngOnInit(): void {
     this.fetchUsers();
+    this.setupSideBar();
+  }
+
+  setupSideBar() {
+    const sideLinks = document.querySelectorAll('.sidebar .side-menu li a:not(.logout)');
+    sideLinks.forEach(item => {
+      const li = item.parentElement;
+      item.addEventListener('click', () => {
+        sideLinks.forEach(i => {
+          i.parentElement?.classList.remove('active');
+        });
+        li?.classList.add('active');
+      });
+    });
+
+    const menuBar = document.querySelector('.content nav .bx.bx-menu');
+    const sideBar = document.querySelector('.sidebar');
+    const content = document.querySelector('.content');
+    const sideBarToggle = document.querySelector('.sidebar-toggle');
+    if (window.innerWidth > 1015) {
+      sideBarToggle?.classList.add('hidden');
+    }
+    sideBarToggle?.addEventListener('click', () => {
+      if (window.innerWidth <= 1015) {
+        sideBar?.classList.toggle('open');
+        content?.classList.toggle('blur');
+      }
+    });
+    menuBar?.addEventListener('click', () => {
+      if (window.innerWidth <= 1015) {
+        sideBar?.classList.toggle('open');
+        content?.classList.toggle('blur');
+      }
+    });
+    const searchBtn = document.querySelector('.content nav form .form-input button');
+    const searchBtnIcon = document.querySelector('.content nav form .form-input button .bx');
+    const searchForm = document.querySelector('.content nav form');
+
+    searchBtn?.addEventListener('click', function (e) {
+      if (window.innerWidth < 576) {
+        e.preventDefault();
+        searchForm?.classList.toggle('show');
+        if (searchForm?.classList.contains('show')) {
+          searchBtnIcon?.classList.replace('bx-search', 'bx-x');
+        } else {
+          searchBtnIcon?.classList.replace('bx-x', 'bx-search');
+        }
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 1015) {
+        sideBar?.classList.remove('open');
+        content?.classList.remove('blur');
+      }
+    });
   }
 
   fetchUsers(): void {
     const token = this.sharedService.getItem('token');
     this.ngxLodder.start();
-    // console.log("data that i'm sending ", this.pageNumber, this.elementSizeInPage, this.username);
+    console.log("search Parameter dekh lwde ", this.searchParam);
+
     this.adminService
       .getAllUsersForAdmin(
         this.pageNumber,
         this.elementSizeInPage,
         token,
-        this.username
+        this.username,
+        this.searchParam
       )
       .subscribe({
         next: (response) => {
           this.ngxLodder.stop();
           console.log('Response:', response);
           this.users = response.allUser;
+          this.isFirstPage = response.isFirstPage;
+          this.isLastPage = response.isLastPage;
           this.totalElements = response.totalElement;
           this.elementSizeInPage = response.totalElementInPage;
           this.totalPages = response.totalPageNumber;
           this.isButtonDisabled = response.isLastPage;
-
           // console.log('Total pages:', this.totalPages);
         },
         error: (err) => {
@@ -79,17 +141,14 @@ export class AllClientComponent implements OnInit {
   }
 
   nextPage(): void {
-    if (!this.isButtonDisabled) {
+    if (!this.isLastPage) {
       this.pageNumber++;
-      // console.log('Next page:', this.pageNumber);
       this.fetchUsers();
     }
   }
-
   previousPage(): void {
     if (this.pageNumber > 0) {
       this.pageNumber--;
-      // console.log('Previous page:', this.pageNumber);
       this.fetchUsers();
     }
   }
@@ -126,12 +185,15 @@ export class AllClientComponent implements OnInit {
     });
   }
 
-  logout() {
-    this.sharedService.clear();
-    localStorage.clear();
-    this.router.navigate(['/register/login']);
+  logout(): void {
+    this.ngxLodder.start()
+    this.router.navigate(['/register/login'], {
+      queryParams: { loggedOut: 'true' },
+      replaceUrl: true
+    });
+    this.sharedService.clear()
+    this.ngxLodder.stop()
   }
-
   accountEnableOrDisable(username: string, adminUsername: string) {
     const token = this.sharedService.getItem('token');
     this.ngxLodder.start();

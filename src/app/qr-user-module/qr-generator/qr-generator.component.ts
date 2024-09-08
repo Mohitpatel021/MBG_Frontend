@@ -1,13 +1,11 @@
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Router } from '@angular/router';
 import { LoginService } from '../../login.service';
 
 import { HttpStatusCode } from '@angular/common/http';
 import { QrCodeCreationDataRequest } from '../../qr-code-creation-data-request';
 import { ShareServiceService } from '../../share-service.service';
-import { filter } from 'rxjs';
-declare var Razorpay: any;
 @Component({
   selector: 'app-qr-generator',
   templateUrl: './qr-generator.component.html',
@@ -37,32 +35,25 @@ export class QrGeneratorComponent implements OnInit {
     private router: Router,
     private sharedService: ShareServiceService,
     private ngxLoader: NgxUiLoaderService
-
   ) {
-    // this.token = this.sharedService.getItem('token');
+    this.initiliseProperty();
+  }
+
+  initiliseProperty() {
     this.uuid = this.loginService.generateRandomUUID();
     const navigation = this.router.getCurrentNavigation();
-    if (navigation?.extras.state) {
-      this.business_link = navigation?.extras.state['business_link'];
-      this.businessName = navigation.extras.state['businessName'];
-      this.username = navigation.extras.state['username'];
-      this.email = navigation.extras.state['email'];
-      this.serialId = navigation.extras.state['serialId'];
-      this.clientId = navigation.extras.state['id']
-    } else {
-      this.business_link = this.sharedService.getItem('business_link');
-      this.businessName = this.sharedService.getItem('businessName');
-      this.username = this.sharedService.getItem('username');
-      this.email = this.sharedService.getItem('email');
-    }
-    console.log(this.serialId);
-
+    this.business_link = navigation?.extras?.state?.['business_link'] || this.sharedService.getItem('business_link');
+    this.businessName = navigation?.extras?.state?.['businessName'] || this.sharedService.getItem('businessName');
+    this.username = navigation?.extras?.state?.['username'] || this.sharedService.getItem('username');
+    this.email = navigation?.extras?.state?.['email'] || this.sharedService.getItem('email');
+    this.serialId = navigation?.extras?.state?.['serialId'] || this.sharedService.getItem('serialId');
+    this.clientId = navigation?.extras?.state?.['id'] || this.sharedService.getItem('clientId');
     const encodedBusinessName = encodeURIComponent(this.businessName);
     const encodedBusinessLink = encodeURIComponent(this.business_link);
     const encodedId = encodeURIComponent(this.clientId);
-
-    // this.textToBeEncode = `http://localhost:4200/rate-us?business_name=${encodedBusinessName}&business_link=${encodedBusinessLink}&businessId=${encodedId}`;
-    this.textToBeEncode = `https://app.reviewus.in/rate-us?business_name=${encodedBusinessName}&business_link=${encodedBusinessLink}&businessId=${encodedId}`;
+    console.log("Data for checking ", this.business_link, this.businessName, this.username, this.email, this.serialId, this.clientId);
+    this.textToBeEncode = `http://localhost:4200/rate-us?business_name=${encodedBusinessName}&business_link=${encodedBusinessLink}&businessId=${encodedId}`;
+    // this.textToBeEncode = `https://app.reviewus.in/rate-us?business_name=${encodedBusinessName}&business_link=${encodedBusinessLink}&businessId=${encodedId}`;
   }
 
   ngOnInit(): void {
@@ -74,7 +65,6 @@ export class QrGeneratorComponent implements OnInit {
       this.errorMessage = 'No Qr Generated Yet !!';
     }
   }
-
   selectTemplate(): void {
     if (this.selectedTemplate) {
       this.loadQrCode(() => {
@@ -90,37 +80,42 @@ export class QrGeneratorComponent implements OnInit {
       });
     }
   }
-
-
-  loadQrCode(callback: () => void): void {
+  private async loadQrCode(callback: () => void): Promise<void> {
     const data: QrCodeCreationDataRequest = {
       urlToBeEncoded: this.textToBeEncode,
       businessName: this.businessName,
       username: this.username,
       serialId: this.serialId
-    }
+    };
     this.ngxLoader.start();
-    // console.log("qr code creating");
-    const token = this.sharedService.getItem('token');
-    this.loginService.getQrCode(data, token).subscribe(
-      (response) => {
-        // console.log("qr code creating with this response is getting");
-        if (response.successfull && response.image && HttpStatusCode.Ok) {
-          this.ngxLoader.stop();
-          this.qrCodeImage = response.image;
+    try {
+      const response = await this.loginService.getQrCode(data, this.token).toPromise();
 
-          callback();
-        } else if (HttpStatusCode.NotFound) {
-          this.errorMessage = response.message;
-        } else {
-          this.errorMessage = "Failed to generate QR code"
-        }
-      },
-      (err) => {
-        this.ngxLoader.stop();
-        // console.log("error getting ", err.error.message);
-        this.errorMessage = err.error.message || 'Error loading QR code';
-      },
-    );
+      if (response.successfull && response.image) {
+        this.qrCodeImage = response.image;
+        this.sharedService.setItem('image', response.image);
+        callback();
+      } else {
+        this.handleError(response.message || 'Failed to generate QR code');
+      }
+    } catch (error) {
+      this.handleError(error);
+    } finally {
+      this.ngxLoader.stop();
+    }
   }
+
+  private handleError(error: unknown): void {
+    if (typeof error === 'string') {
+      this.errorMessage = error;
+    } else if (error instanceof Error) {
+      this.errorMessage = error.message;
+    } else if (error && typeof error === 'object' && 'message' in error) {
+      this.errorMessage = (error as { message: string }).message;
+    } else {
+      this.errorMessage = 'An unexpected error occurred';
+    }
+    console.error(this.errorMessage);
+  }
+
 }
