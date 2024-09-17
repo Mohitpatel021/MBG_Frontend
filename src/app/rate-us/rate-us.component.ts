@@ -136,6 +136,10 @@ export class RateUsComponent implements OnInit {
       this.errorMessage = 'Please select a star rating!';
       return;
     }
+    if (this.rating >= 4) {
+      this.errorMessage = "Please select rating Appropriately !!Thankyou ";
+      return;
+    }
 
     // Check if the feedback form is valid
     if (this.feedbackData.valid) {

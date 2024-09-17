@@ -13,8 +13,8 @@ import { NoCacheInterceptor } from '../no-cache.interceptor';
 import { LoginService } from '../login.service';
 import { ShareServiceService } from '../share-service.service';
 import { AdminService } from '../admin.service';
-import { SidebarComponent } from './sidebar/sidebar.component';
 import 'boxicons';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -22,11 +22,11 @@ import 'boxicons';
     AllClientComponent,
     BadReviewComponent,
     AdminDashboardComponent,
-    SidebarComponent
+    ProfileComponent
+
   ],
   imports: [
     CommonModule,
-
     MainDashboardRoutingModule,
     RouterModule,
     HttpClientModule,

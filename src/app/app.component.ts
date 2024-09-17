@@ -1,7 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
-
+import {  initModals } from 'flowbite';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -16,7 +16,9 @@ export class AppComponent implements OnInit {
   ) {
     sessionStorage.removeItem('isReloading');
   }
-  ngOnInit() { }
+  ngOnInit(): void {
+    // initModals();
+  }
 
   @HostListener("window:unload', ['$event']")
   private handleBeforeUnload(event: Event): any {

@@ -33,9 +33,9 @@
                 <li><a [routerLink]="['/d/bad-review',uuid]"
                         [state]="{username:username,businessName:form.businessName}"><i class='bx bx-grid-alt'></i>My
                         Negative Reviews</a></li>
-                <li><a [routerLink]="['/d/dashboard',uuid]"
+                <li><a [routerLink]="['/d/profile',uuid]"
                         [state]="{username:username,businessName:form.businessName}"><i
-                            class='bx bx-message-square-dots'></i>Order History</a></li>
+                            class='bx bx-message-square-dots'></i>Profile Overview</a></li>
                 <li><a [routerLink]="['/d/dashboard',uuid]"
                         [state]="{username:username,businessName:form.businessName}"><i class='bx bx-cog'></i>Account
                         Settings</a></li>
@@ -105,7 +105,7 @@
                             <!-- <li><a href="#" class="active">Shop</a></li> -->
                         </ul>
                     </div>
-                   
+
                 </div>
 
                 <!-- Insights -->
@@ -157,21 +157,22 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>User</th>
-                                    <th>Review Date</th>
-                                    <th>Rating</th>
-                                    <th>Status</th>
+                                    <th scope="col" class="px-2">User</th>
+                                    <th scope="col" class="px-2 ">Review Date</th>
+                                    <th scope="col" class="px-2 ">Rating</th>
+                                    <th scope="col" class="px-2">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let recent of recentReview ;let i=index ">
-                                    <td>
+                                    <td class="sm:w-28 w-40">
                                         <img src="../../../assets/man (1).png">
-                                        <p>{{recent.reviewerName}}</p>
+                                        <p>{{recent.reviewerName | slice:0:10}} <span
+                                                *ngIf="recent.reviewerName.length> 10 ">...</span> </p>
                                     </td>
-                                    <td>{{recent.formattedCreatedDate}}</td>
-                                    <td>{{recent.rating}}</td>
-                                    <td><span class="status completed">Negative</span></td>
+                                    <td class="">{{recent.formattedCreatedDate}}</td>
+                                    <td class="sm:pl-2">{{recent.rating}}</td>
+                                    <td class=""><span class="status completed">Negative</span></td>
                                 </tr>
                                 <!-- <tr *ngIf="recentReview?.length === 0 || recentReview === null"
                                     class="flex items-center justify-start">

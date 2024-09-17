@@ -240,6 +240,9 @@ body {
     padding-left: 0;
 }
 
+main {
+    height: calc(100vh-56px);
+}
 
 .content nav {
     height: 56px;
@@ -821,7 +824,7 @@ body {
     }
 
     .content main .bottom-data .orders table {
-        min-width: 400px;
+        min-width: 340px;
     }
 
     .content main .bottom-data .reminders .task-list {

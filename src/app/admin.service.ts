@@ -18,7 +18,6 @@ export class AdminService {
     return uuidv4();  // Generates a random UUID
   }
 
-
   getAllUsersForAdmin(
     pageNumber: number,
     elementSizeInPage: number,
@@ -85,5 +84,22 @@ export class AdminService {
       'Authorization': `Bearer ${token}`
     });
     return this.http.get(`${this.API_URL}/dashboard/user/last-month/count?username=${username}&clientId=${clientId}`, { headers });
+  }
+
+  recentClientsForAdmin(username: string, token: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get(`${this.API_URL}/dashboard/admin/recent/client?username=${username}`, { headers });
+  }
+  deleteAllTheUserInformation(username: string, token: string, clientId: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.delete(`${this.API_URL}/login/delete?username=${username}&clientId=${clientId}`, { headers });
   }
 }

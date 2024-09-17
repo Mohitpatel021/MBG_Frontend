@@ -106,18 +106,7 @@ export class BadReviewComponent implements OnInit, AfterViewInit {
       }
     });
   }
-  toggleSidebar() {
-    const sidebar = document.getElementById('sidebar');
-    if (sidebar) {
-      if (sidebar.classList.contains('sidebar-collapsed')) {
-        sidebar.classList.remove('sidebar-collapsed');
-        sidebar.classList.add('sidebar-expanded');
-      } else {
-        sidebar.classList.remove('sidebar-expanded');
-        sidebar.classList.add('sidebar-collapsed');
-      }
-    }
-  }
+
 
 
   //Fetch all the bad reviewers
@@ -172,11 +161,13 @@ export class BadReviewComponent implements OnInit, AfterViewInit {
   }
 
   logout(): void {
-    this.ngxLodder.start();
-    this.sharedService.clear();
-    localStorage.clear();
+    this.ngxLodder.start()
+    this.router.navigate(['/register/login'], {
+      queryParams: { loggedOut: 'true' },
+      replaceUrl: true
+    });
+    this.sharedService.clear()
     this.ngxLodder.stop();
-    this.router.navigate(['/register/login']);
   }
   toggleDropdown(event: Event) {
     event.stopPropagation();

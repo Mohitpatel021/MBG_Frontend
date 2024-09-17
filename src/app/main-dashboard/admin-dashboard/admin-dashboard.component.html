@@ -45,7 +45,7 @@
                     <i class='bx bxs-chevron-right'></i>
                 </div>
             </div> -->
-            <div class="flex justify-center items-center relative top-52">
+            <div class="flex justify-center items-center relative top-32">
                 <button (click)="logout()" class="cssbuttons-io-button w-full h-full justify-center items-center ">
                     <i class='bx bx-log-out-circle'></i>
                     <span class="text-lg">Logout</span>
@@ -143,21 +143,23 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>User</th>
-                                    <th>Review Date</th>
-                                    <th>Rating</th>
-                                    <th>Status</th>
+                                    <th scope="col" class="px-2  ">Username</th>
+                                    <th scope="col" class="px-2 ">Business Name</th>
+                                    <th scope="col" class="px-2 ">Email</th>
+                                    <th scope="col" class="px-2">TimeStamp</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <!-- <td>
+                                <tr *ngFor="let user of users; let i = index">
+                                    <td class="pr-5">
                                         <img src="../../../assets/man (1).png">
-                                        <p>{{recent.reviewerName}}</p>
-                                    </td> -->
-                                    <!-- <td>{{recent.formattedCreatedDate}}</td> -->
-                                    <!-- <td>{{recent.rating}}</td> -->
-                                    <!-- <td><span class="status completed">Negative</span></td> -->
+                                        <p>{{user.contact}}</p>
+                                    </td>
+                                    <td class="pr-5 ">{{user.businessname | slice:0:15}} <span
+                                            *ngIf="user.businessname.length> 10 ">...</span></td>
+                                    <td class="pr-5">{{user.owner_email |slice:0:12}} <span
+                                            *ngIf="user.businessname.length> 10 ">...</span> </td>
+                                    <td class="">{{user.created_at}}</td>
                                 </tr>
                                 <!-- <tr *ngIf="recentReview?.length === 0 || recentReview === null"
                                     class="flex items-center justify-start">

@@ -3,7 +3,8 @@ import { AfterViewInit, Component, OnChanges, OnInit } from '@angular/core';
 import { AdminService } from '../../admin.service';
 import { Router } from '@angular/router';
 import { ShareServiceService } from '../../share-service.service';
-import { firstValueFrom } from 'rxjs';
+import { catchError, firstValueFrom, Observable, throwError } from 'rxjs';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -43,8 +44,8 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.fetchTotalClientCount();
+    this.fetchRecentThreeClient();
     const sideLinks = document.querySelectorAll('.sidebar .side-menu li a:not(.logout)');
     sideLinks.forEach(item => {
       const li = item.parentElement;
@@ -98,9 +99,6 @@ export class AdminDashboardComponent implements OnInit {
       }
     });
   }
-  ngAfterViewInit(): void {
-
-  }
   async fetchTotalClientCount(): Promise<void> {
     try {
       // Start the loader before making the API call
@@ -113,9 +111,6 @@ export class AdminDashboardComponent implements OnInit {
       this.totalClientCount = response.totalClient;
       this.totalBadReviews = response.totalBadReviewCount;
       this.message = response.message;
-
-      console.log('Total bad reviews:', this.totalBadReviews);
-
     } catch (error: any) {
       // Stop the loader in case of error
       this.ngxLodder.stop();
@@ -128,9 +123,6 @@ export class AdminDashboardComponent implements OnInit {
       } else {
         this.message = 'Failed to load total client count. Please check your connection or try again later.';
       }
-
-      // Optionally log the error to the console for debugging
-      console.error('Error fetching client count:', error);
 
     } finally {
       // Ensure the loader is stopped in any case (whether success or error)
@@ -150,6 +142,40 @@ export class AdminDashboardComponent implements OnInit {
       }
     }
   }
+  fetchRecentThreeClient() {
+    const token = this.sharedService.getItem('token');
+    this.ngxLodder.start();  // Start the loader
+
+    this.adminService.recentClientsForAdmin(this.username, token).pipe(
+      catchError((error: HttpErrorResponse) => {
+        this.ngxLodder.stop();  // Stop the loader on error
+        let errorMessage = '';
+        if (error.error instanceof ErrorEvent) {
+          // Client-side error
+          errorMessage = `Client-side error: ${error.error.message}`;
+        } else {
+          // Server-side error
+          errorMessage = `Server error: ${error.status}\nMessage: ${error.message}`;
+        }
+
+        // Display the error (you could also display a user-friendly message)
+        console.error('HTTP Error: ', errorMessage);
+        return throwError(() => new Error(errorMessage));
+      })
+    ).subscribe({
+      next: (response) => {
+        // Handle successful response
+        if (response) {
+          this.ngxLodder.stop();  // Stop the loader on success
+          this.users = response;
+        }
+      },
+      error: (error) => {
+
+        this.ngxLodder.stop();  // Ensure loader is stopped
+      }
+    });
+  }
 
   logout(): void {
     this.ngxLodder.start()
@@ -161,11 +187,6 @@ export class AdminDashboardComponent implements OnInit {
     this.ngxLodder.stop()
   }
 
-  toggleDropdown() {
-    this.isDropdownOpen = !this.isDropdownOpen;
-  }
 
-  userDashboard() {
-    this.isUserdashbaord = !this.isUserdashbaord;
-  }
+
 }

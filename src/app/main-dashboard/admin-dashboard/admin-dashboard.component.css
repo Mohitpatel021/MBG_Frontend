@@ -16,10 +16,10 @@
 }
 
 .side-menu .pic {
-    margin-top: 15px;
-    margin-left: 40px;
-    height: 150px;
-    width: 150px;
+    margin-top: 10px;
+    margin-left: 20px;
+    height: 198px;
+    width: 216px;
     mix-blend-mode: multiply;
 }
 
@@ -230,8 +230,6 @@ body {
     padding-bottom: 10px;
 }
 
-
-
 /* Content */
 .content {
     position: relative;
@@ -272,8 +270,6 @@ body {
 .content nav a {
     color: var(--dark);
 }
-
-
 
 .content nav .bx.bx-menu {
     position: fixed;
@@ -354,7 +350,7 @@ body {
 
 .content main {
     width: 83%;
-    padding: 36px 24px;
+    padding: 15px 24px 36px;
     max-height: calc(100vh - 56px);
 }
 
@@ -514,7 +510,7 @@ body {
 }
 
 .content main .bottom-data .orders table td {
-    padding: 16px 0;
+    padding: 8px 0;
 }
 
 .content main .bottom-data .orders table tr td:first-child {
@@ -605,8 +601,63 @@ body {
     margin-bottom: 0;
 }
 
-@media screen and (max-width:896px) {
+@media screen and (min-width: 897px) {
+    .content {
+        position: relative;
+        width: calc(100% - 250px);
+        margin-left: 250px;
+        overflow-x: auto;
+        transition: all 0.3s ease;
+        padding-left: 0;
+    }
 
+    .content main {
+        width: 100%;
+        padding: 15px 24px 36px;
+        max-height: calc(100vh - 56px);
+    }
+
+    .content nav {
+        height: 56px;
+        width: 100%;
+        background: var(--light);
+        display: flex;
+        align-items: center;
+        grid-gap: 24px;
+        position: sticky;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+    }
+
+    .side-menu {
+        margin-top: -12px;
+        margin-bottom: -23px;
+    }
+
+    .sidebar .side-menu li a.logout {
+        padding-left: 55px;
+        background-color: #1976D2;
+        color: var(--dark);
+    }
+
+    .sidebar .side-menu li a.icon {
+        background-color: #28A745;
+        padding-left: 65px;
+        color: var(--light);
+    }
+
+    .buttonContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        top: 12rem;
+    }
+
+}
+
+@media screen and (max-width:896px) {
     .content {
         position: relative;
         margin-left: 0px;
@@ -622,6 +673,7 @@ body {
         padding: 10px;
         padding-top: 5rem;
         margin-bottom: 10px;
+        overflow: auto;
     }
 
 
@@ -660,15 +712,18 @@ body {
         color: var(--dark);
     }
 
+    .side-menu .pic {
+        margin-left: 20px;
+        mix-blend-mode: multiply;
+    }
+
     .sidebar {
         transform: translateX(-250px);
         opacity: 0;
-        /* Keep sidebar hidden */
     }
 
     .sidebar.open {
         transform: translateX(0);
-        /* Show sidebar when opened */
         opacity: 1;
         z-index: 3000;
     }
@@ -698,10 +753,9 @@ body {
     }
 
     .sidebar .side-menu .pic {
-        margin-top: 15px;
-        margin-left: 75px;
-        width: 100px;
-        height: 100px;
+        margin-left: 45px;
+        width: 180px;
+        height: 165px;
     }
 
     .sidebar-toggle {
@@ -709,7 +763,6 @@ body {
         cursor: pointer;
     }
 }
-
 
 /* @media screen and (max-width: 768px) {
     .sidebar {
@@ -779,17 +832,16 @@ body {
     }
 
     .content main .bottom-data .header {
-        min-width: 340px;
+        min-width: 400px;
     }
 
     .content main .bottom-data .orders table {
-        min-width: 340px;
+        min-width: 430px;
     }
 
     .content main .bottom-data .reminders .task-list {
         min-width: 340px;
     }
-
 
 }
 
@@ -807,7 +859,6 @@ body {
             rgba(77, 54, 208, 1) 0%,
             rgba(132, 116, 254, 1) 100%);
     border: none;
-
     letter-spacing: 0.05em;
     border-radius: 20em;
 }

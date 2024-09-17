@@ -1,10 +1,11 @@
-import { HttpStatusCode } from '@angular/common/http';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { AdminService } from '../../admin.service';
-import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { ShareServiceService } from '../../share-service.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { initModals } from 'flowbite';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-all-client',
@@ -29,12 +30,15 @@ export class AllClientComponent implements OnInit {
   isFirstPage: boolean = false
   isLastPage: boolean = true
   searchParam: string = ''
+  isModalOpen: boolean = false
+  clientId: string = ''
 
   constructor(
     private adminService: AdminService,
     private sharedService: ShareServiceService,
     private router: Router,
-    private ngxLodder: NgxUiLoaderService
+    private ngxLodder: NgxUiLoaderService,
+    private toastr: ToastrService,
   ) {
     this.uuid = adminService.generateRandomUUID();
     const navigation = this.router.getCurrentNavigation();
@@ -45,7 +49,6 @@ export class AllClientComponent implements OnInit {
       this.sharedService.clear();
     }
   }
-
   ngOnInit(): void {
     this.fetchUsers();
     this.setupSideBar();
@@ -109,8 +112,6 @@ export class AllClientComponent implements OnInit {
   fetchUsers(): void {
     const token = this.sharedService.getItem('token');
     this.ngxLodder.start();
-    console.log("search Parameter dekh lwde ", this.searchParam);
-
     this.adminService
       .getAllUsersForAdmin(
         this.pageNumber,
@@ -122,7 +123,6 @@ export class AllClientComponent implements OnInit {
       .subscribe({
         next: (response) => {
           this.ngxLodder.stop();
-          console.log('Response:', response);
           this.users = response.allUser;
           this.isFirstPage = response.isFirstPage;
           this.isLastPage = response.isLastPage;
@@ -130,12 +130,10 @@ export class AllClientComponent implements OnInit {
           this.elementSizeInPage = response.totalElementInPage;
           this.totalPages = response.totalPageNumber;
           this.isButtonDisabled = response.isLastPage;
-          // console.log('Total pages:', this.totalPages);
         },
         error: (err) => {
           this.ngxLodder.stop();
           this.errorMessage = 'Error fetching users';
-          console.error('Error fetching users:', err);
         },
       });
   }
@@ -151,6 +149,9 @@ export class AllClientComponent implements OnInit {
       this.pageNumber--;
       this.fetchUsers();
     }
+  }
+  deleteCliendId(id: string) {
+    this.clientId = id;
   }
 
   toggleSidebar() {
@@ -231,17 +232,74 @@ export class AllClientComponent implements OnInit {
       },
       complete: () => {
         this.ngxLodder.stop();
-        console.log('Enable/Disable operation completed.');
+      }
+    });
+  }
+
+  deleteUser() {
+    const token = this.sharedService.getItem('token');
+    this.ngxLodder.start();
+    console.log("Sending client ID and username:", this.clientId, this.username);
+    this.adminService.deleteAllTheUserInformation(this.username, token, this.clientId).subscribe({
+      next: (response) => {
+        if (HttpStatusCode.Ok) {
+          console.log("Response after deleting the user:", response);
+          this.fetchUsers();
+          this.errorMessage = '';
+          this.toastr.success("Client Deleted SuccesFully !!", "Deleted ")
+        }
+      },
+      error: (error: HttpErrorResponse) => {
+
+        this.ngxLodder.stop();
+        this.toastr.error("Unable to Delete Client", "Error !!");
+        console.error('Error occurred while deleting user:', error);
+        switch (error.status) {
+          case HttpStatusCode.Unauthorized:
+            console.error('Unauthorized access - maybe the token has expired.');
+            this.errorMessage = 'Unauthorized access - please login again.';
+            this.router.navigate(['/register/login']);
+            break;
+          case HttpStatusCode.Forbidden:
+            console.error('Forbidden - you do not have permission to perform this action.');
+            this.errorMessage = 'You do not have permission to perform this action.';
+            break;
+          case HttpStatusCode.NotFound:
+            console.error('User or client not found.');
+            this.errorMessage = 'The user or client you are trying to delete does not exist.';
+            break;
+          case HttpStatusCode.InternalServerError:
+            console.error('Internal server error.');
+            this.errorMessage = 'An unexpected error occurred. Please try again later.';
+            break;
+          default:
+            console.error('An unexpected error occurred.');
+            this.errorMessage = 'An unexpected error occurred. Please try again later.';
+        }
+      },
+      complete: () => {
+        this.ngxLodder.stop();  // Ensure loader is stopped after completion
       }
     });
   }
 
 
-  toggleDropdown() {
-    this.isDropdownOpen = !this.isDropdownOpen;
+  openModal() {
+    this.isModalOpen = true;
+    const modal = document.getElementById('authentication-modal');
+    if (modal) {
+      modal.classList.remove('hidden')
+
+    }
   }
 
-  userDashboard() {
-    this.isUserdashbaord = !this.isUserdashbaord;
+  // Function to close the modal
+  closeModal() {
+    this.isModalOpen = false;
+    const modal = document.getElementById('authentication-modal');
+    if (modal) {
+      modal.classList.add('hidden');
+
+    }
   }
 }

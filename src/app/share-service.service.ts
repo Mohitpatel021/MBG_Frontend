@@ -16,9 +16,9 @@ export class ShareServiceService {
   private isAuth: boolean = false;
   private uqerENCRYPTahdshs: string = environment.encryptionKey;
   private fowrndsDECRYPTfirsjt: string = '';
+  private sideBarState: boolean = false;
 
   constructor() {
-
     this.fowrndsDECRYPTfirsjt = this.uqerENCRYPTahdshs;
   }
 
@@ -70,6 +70,12 @@ export class ShareServiceService {
     this.isAuth = isAuth;
   }
 
+  getSideBarState(): boolean {
+    return this.sideBarState;
+  }
+  setSideBarState(sidebarState: boolean): void {
+    this.sideBarState = sidebarState;
+  }
 
   setItem(key: string, value: any): void {
     const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(value), this.fowrndsDECRYPTfirsjt).toString();

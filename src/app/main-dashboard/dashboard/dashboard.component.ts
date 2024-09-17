@@ -30,7 +30,6 @@ export class DashboardComponent implements OnInit {
   isDropdownOpen: boolean = false;
   isProfileSidebarVisible: boolean = false;
   updateProfileForm: FormGroup;
-  isButtonDisabled: boolean = true;
 
   constructor(
     private sharedService: ShareServiceService,
@@ -141,7 +140,6 @@ export class DashboardComponent implements OnInit {
         }),
         switchMap((response) => {
           if (response && HttpStatusCode.Ok) {
-            // console.log("recent three reviews response----->", response);
             this.recentReview = response.reviews;
             this.recentReviewTotalElement = response.totalElements;
             return this.adminService.lastMonthReview(this.username, this.businessId, token);
@@ -212,22 +210,6 @@ export class DashboardComponent implements OnInit {
     });
     this.updateProfileForm.disable();
   }
-
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent) {
-    const targetElement = event.target as HTMLElement;
-    const isClickInsideDropdown = targetElement.closest('.dropdown') != null;
-    const isClickInsideProfileSidebar =
-      targetElement.closest('.profile-sidebar') != null;
-    if (!isClickInsideDropdown) {
-      this.isDropdownOpen = false;
-    }
-    if (!isClickInsideProfileSidebar) {
-      this.isProfileSidebarVisible = false;
-    }
-  }
-
-
   setSessionForm(response: any) {
     const expirationDate = new Date().getTime() + 12 * 60 * 60 * 1000;
     this.sharedService.setItem('username', response.contact);

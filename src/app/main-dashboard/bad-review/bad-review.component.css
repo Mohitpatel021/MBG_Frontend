@@ -230,8 +230,6 @@ body {
     padding-bottom: 10px;
 }
 
-
-
 /* Content */
 .content {
     position: relative;
@@ -272,8 +270,6 @@ body {
 .content nav a {
     color: var(--dark);
 }
-
-
 
 .content nav .bx.bx-menu {
     position: fixed;
@@ -605,8 +601,53 @@ body {
     margin-bottom: 0;
 }
 
-@media screen and (max-width:896px) {
+@media screen and (min-width: 897px) {
+    .content {
+        position: relative;
+        width: calc(100% - 250px);
+        margin-left: 250px;
+        overflow-x: auto;
+        transition: all 0.3s ease;
+        padding-left: 0;
+    }
 
+    .content main {
+        width: 100%;
+        padding: 15px 24px 36px;
+        max-height: calc(100vh - 56px);
+    }
+
+    .content nav {
+        height: 56px;
+        width: 100%;
+        background: var(--light);
+        display: flex;
+        align-items: center;
+        grid-gap: 24px;
+        position: sticky;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+    }
+
+    .side-menu {
+        margin-top: -10px;
+    }
+
+    .sidebar .side-menu li a.logout {
+        padding-left: 55px;
+        background-color: #1976D2;
+        color: var(--dark);
+    }
+
+    .sidebar .side-menu li a.icon {
+        background-color: #28A745;
+        padding-left: 65px;
+        color: var(--light);
+    }
+}
+
+@media screen and (max-width:896px) {
     .content {
         position: relative;
         margin-left: 0px;
@@ -663,12 +704,10 @@ body {
     .sidebar {
         transform: translateX(-250px);
         opacity: 0;
-        /* Keep sidebar hidden */
     }
 
     .sidebar.open {
         transform: translateX(0);
-        /* Show sidebar when opened */
         opacity: 1;
         z-index: 3000;
     }
@@ -703,9 +742,7 @@ body {
         width: 100px;
         height: 100px;
     }
-}
 
-@media screen and (max-width: 896px) {
     .sidebar-toggle {
         display: inline-block;
         cursor: pointer;
@@ -790,6 +827,5 @@ body {
     .content main .bottom-data .reminders .task-list {
         min-width: 340px;
     }
-
 
 }
