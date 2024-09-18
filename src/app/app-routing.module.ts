@@ -11,7 +11,7 @@ import { ResponseRecordedComponent } from './response-recorded/response-recorded
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/register',  // Redirect root path to /r
+    redirectTo: '/register',
     pathMatch: 'full',
   },
   {
