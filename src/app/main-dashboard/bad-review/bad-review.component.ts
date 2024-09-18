@@ -11,7 +11,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './bad-review.component.html',
   styleUrls: ['./bad-review.component.css'],
 })
-export class BadReviewComponent implements OnInit, AfterViewInit {
+export class BadReviewComponent implements OnInit {
   username: string = '';
   businessName: string = '';
   reviews: any[] = [];
@@ -52,62 +52,6 @@ export class BadReviewComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.fetchBadReviews();
   }
-  ngAfterViewInit(): void {
-    const sideLinks = document.querySelectorAll('.sidebar .side-menu li a:not(.logout)');
-    sideLinks.forEach(item => {
-      const li = item.parentElement;
-      item.addEventListener('click', () => {
-        sideLinks.forEach(i => {
-          i.parentElement?.classList.remove('active');
-        });
-        li?.classList.add('active');
-      });
-    });
-
-    const menuBar = document.querySelector('.content nav .bx.bx-menu');
-    const sideBar = document.querySelector('.sidebar');
-    const content = document.querySelector('.content');
-    const sideBarToggle = document.querySelector('.sidebar-toggle');
-    if (window.innerWidth > 896) {
-      sideBarToggle?.classList.add('hidden');
-    }
-    sideBarToggle?.addEventListener('click', () => {
-      if (window.innerWidth <= 896) {
-        sideBar?.classList.toggle('open');
-        content?.classList.toggle('blur');
-      }
-    });
-    menuBar?.addEventListener('click', () => {
-      if (window.innerWidth <= 896) {
-        sideBar?.classList.toggle('open');
-        content?.classList.toggle('blur');
-      }
-    });
-    const searchBtn = document.querySelector('.content nav form .form-input button');
-    const searchBtnIcon = document.querySelector('.content nav form .form-input button .bx');
-    const searchForm = document.querySelector('.content nav form');
-
-    searchBtn?.addEventListener('click', function (e) {
-      if (window.innerWidth < 576) {
-        e.preventDefault();
-        searchForm?.classList.toggle('show');
-        if (searchForm?.classList.contains('show')) {
-          searchBtnIcon?.classList.replace('bx-search', 'bx-x');
-        } else {
-          searchBtnIcon?.classList.replace('bx-x', 'bx-search');
-        }
-      }
-    });
-
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 896) {
-        sideBar?.classList.remove('open');
-        content?.classList.remove('blur');
-      }
-    });
-  }
-
-
 
   //Fetch all the bad reviewers
   fetchBadReviews() {

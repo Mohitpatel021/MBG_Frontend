@@ -4,39 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Admin Dashboard</title>
 </head>
 
 <body>
     <div class="sidebar">
-        <div class="flex items-center justify-between">
-            <a [routerLink]="['/d/dashboard',uuid]" [state]="{username:username,businessName:this.businessName}"
-                class=" logo">
-                <i class='bx bx-code-alt'></i>
-                <div class="logo-name"><span>Review</span>Us</div>
-            </a>
-            <svg class="relative -top-1 sidebar-toggle" xmlns="http://www.w3.org/2000/svg" width="48" height="48"
-                viewBox="0 0 24 24" style="fill: rgb(205, 24, 24);">
-                <path
-                    d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z">
-                </path>
-            </svg>
-        </div>
+        <a [routerLink]="['/d/dashboard',uuid]" [state]="{username:username,businessName:this.businessName}"
+            class="logo">
+            <i class='bx bx-code-alt'></i>
+            <div class="logo-name"><span>Review</span>Us</div>
+        </a>
         <ul class="side-menu">
             <li><a [routerLink]="['/d/dashboard',uuid]" [state]="{username:username,businessName:this.businessName}"><i
                         class='bx bxs-dashboard'></i>Dashboard</a></li>
-            <li><a [routerLink]="['/d/bad-review',uuid]" [state]="{username:username,businessName:this.businessName}"><i
-                        class='bx bx-grid-alt'></i>My Negative Reviews</a></li>
+            <li class="active"><a [routerLink]="['/d/bad-review',uuid]"
+                    [state]="{username:username,businessName:this.businessName}"><i class='bx bx-grid-alt'></i>Bad
+                    Reviews
+                </a></li>
             <li><a [routerLink]="['/d/profile',uuid]" [state]="{username:username,businessName:this.businessName}"><i
                         class='bx bx-message-square-dots'></i>Profile Overview</a></li>
             <li><a [routerLink]="['/d/dashboard',uuid]" [state]="{username:username,businessName:this.businessName}"><i
-                        class='bx bx-cog'></i>Account Settings</a></li>
-            <img class="pic " src="../../../assets/pro.png">
+                        class='bx bx-cog'></i>Account
+                    Settings</a></li>
+            <li><img class="pic " src="../../../assets/pro.png"></li>
         </ul>
-
-        <div class="relative -bottom-5 upgrade">
+        <div class="relative top-40 upgrade">
             <h5>Upgrade Your Plan</h5>
             <div class="link">
                 <a [routerLink]="['/d/dashboard',uuid]" [state]="{username:username,businessName:this.businessName}">Go
@@ -44,52 +37,50 @@
                 <i class='bx bxs-chevron-right'></i>
             </div>
         </div>
-
-        <ul class="side-menu">
-            <li>
-                <a href="https://forms.gle/K2UGTXiZLTGj8zK79" class="icon">
-                    <i class="ri-question-line"></i>
+        <ul class="side-menu relative top-36">
+            <li class="flex ">
+                <a href="https://forms.gle/K2UGTXiZLTGj8zK79" class="icon justify-center items-center">
+                    <i class="ri-question-line bg-[#28A745]"></i>
                     Support Form
                 </a>
             </li>
-            <li>
-                <a (click)="logout()" class="logout ">
+            <li class="flex">
+                <a (click)="logout()" class="logout justify-center items-center ">
                     <i class='bx bx-log-out-circle'></i>
                     Logout
                 </a>
             </li>
         </ul>
     </div>
+
     <div class="content">
         <nav>
             <i class='bx bx-menu'></i>
             <form action="#">
-                <div class="form-input ">
-                    <input type="search" [(ngModel)]="searchParam" name="searchParam" placeholder=" Search...">
-                    <button (click)="fetchBadReviews()" class="search-btn" type="submit"><i
-                            class='bx bx-search'></i></button>
+                <div class="form-input">
+                    <input type="search" class=" border border-blue-700" placeholder="Search...">
+                    <button class="search-btn" type="submit"><i class='bx bx-search'></i></button>
                 </div>
             </form>
-            <!-- <input type="checkbox" id="theme-toggle" hidden>
-            <label for="theme-toggle" class="theme-toggle"></label>-->
-            <a [routerLink]="['/d/dashboard',uuid]" [state]="{username:username,businessName:this.businessName}"
-                class="notif">
+            <a [routerLink]="['/d/admin',uuid]" [state]="{username:username}" class="notif">
                 <i class='bx bx-bell'></i>
-                <span class="count">12</span>
+                <!-- <span class="count">12</span> -->
             </a>
-            <a [routerLink]="['/d/dashboard',uuid]" [state]="{username:username,businessName:this.businessName}"
-                class="profile">
+            <a [routerLink]="['/d/admin',uuid]" [state]="{username:username}" class="profile">
                 <img src="../../../assets/man (1).png">
             </a>
         </nav>
+
+        <!-- End of Navbar -->
+
         <main class="h-[85vh]">
             <div class="header">
                 <div class="left">
                     <h1>Dashboard</h1>
                     <ul class="breadcrumb">
                         <!-- <li><a href="#">
-                                            Analytics
-                                        </a></li> -->
+                                                    Analytics
+                                                </a></li> -->
                         <!-- / -->
                         <!-- <li><a href="#" class="active">Shop</a></li> -->
                     </ul>
@@ -105,10 +96,10 @@
                     <tr>
                         <th scope="col" class="p-4">
                             <!-- <div class="flex items-center">
-                                 <input id="checkbox-all-search" type="checkbox"
-                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="checkbox-all-search" class="sr-only">checkbox</label> 
-                            </div> -->
+                                         <input id="checkbox-all-search" type="checkbox"
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="checkbox-all-search" class="sr-only">checkbox</label> 
+                                    </div> -->
                             S.NO
                         </th>
                         <th scope="col" class="px-6 py-3 font-bold ">
@@ -132,12 +123,12 @@
                     <tr *ngFor="let review of reviews; let i = index"
                         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <!-- <td class="w-3 p-4">
-                            <div class="flex items-center">
-                                <input id="checkbox-table-search-1" type="checkbox"
-                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                            </div>
-                        </td> -->
+                                    <div class="flex items-center">
+                                        <input id="checkbox-table-search-1" type="checkbox"
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                                    </div>
+                                </td> -->
                         <td class="w-3 p-4">{{ i + 1 + pageNumber * elementSize}}</td>
 
                         <th scope="row"
@@ -199,6 +190,7 @@
         </main>
 
     </div>
+
 </body>
 
 </html>

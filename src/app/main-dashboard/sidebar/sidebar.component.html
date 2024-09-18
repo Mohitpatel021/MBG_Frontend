@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Admin Dashboard</title>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <a [routerLink]="['/d/admin',uuid]" [state]="{username:username}" class="logo">
+            <i class='bx bx-code-alt'></i>
+            <div class="logo-name"><span>Review</span>Us</div>
+        </a>
+        <ul class="side-menu">
+            <li><a [routerLink]="['/d/admin',uuid]" [state]="{username:username}"><i
+                        class='bx bxs-dashboard'></i>Dashboard</a></li>
+            <li class="active"><a [routerLink]="['/d/all-client',uuid]" [state]="{username:username}"><i
+                        class='bx bx-grid-alt'></i>Our Clients</a></li>
+            <li><a [routerLink]="['/d/admin',uuid]" [state]="{username:username}"><i
+                        class='bx bx-message-square-dots'></i>Order History</a></li>
+            <li><a [routerLink]="['/d/admin',uuid]" [state]="{username:username}"><i class='bx bx-cog'></i>Account
+                    Settings</a></li>
+            <li><img class="pic" src="../../../assets/Images/DealLogo.png"></li>
+        </ul>
+
+        <!-- <div class="upgrade">
+            <h5>Upgrade Your Plan</h5>
+            <div class="link">
+                <a href="#">Go to <b>PRO</b></a>
+                <i class='bx bxs-chevron-right'></i>
+            </div>
+        </div> -->
+
+        <ul class="side-menu">
+            <!-- <li>
+                <a href="#" class="icon">
+                    <i class="ri-question-line"></i>
+                    Help
+                </a>
+            </li> -->
+            <li>
+                <div class="flex justify-center items-center relative top-32">
+                    <button (click)="logout()" class="cssbuttons-io-button w-full h-full justify-center items-center ">
+                        <i class='bx bx-log-out-circle'></i>
+                        <span class="text-lg">Logout</span>
+                    </button>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <!-- End of Sidebar -->
+
+    <!-- Main Content -->
+    <div class="content">
+        <!-- Navbar -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            <form action="#">
+                <div class="form-input">
+                    <input type="search" placeholder="Search...">
+                    <button class="search-btn" type="submit"><i class='bx bx-search'></i></button>
+                </div>
+            </form>
+            <!-- <input type="checkbox" id="theme-toggle" hidden> -->
+            <!-- <label for="theme-toggle" class="theme-toggle"></label> -->
+            <a [routerLink]="['/d/admin',uuid]" [state]="{username:username}" class="notif">
+                <i class='bx bx-bell'></i>
+                <!-- <span class="count">12</span> -->
+            </a>
+            <a [routerLink]="['/d/admin',uuid]" [state]="{username:username}" class="profile">
+                <img src="../../../assets/man (1).png">
+            </a>
+        </nav>
+
+        <!-- End of Navbar -->
+    </div>
+
+</body>
+
+</html>

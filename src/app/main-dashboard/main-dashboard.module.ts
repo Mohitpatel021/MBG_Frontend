@@ -15,6 +15,7 @@ import { ShareServiceService } from '../share-service.service';
 import { AdminService } from '../admin.service';
 import 'boxicons';
 import { ProfileComponent } from './profile/profile.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ProfileComponent } from './profile/profile.component';
     AllClientComponent,
     BadReviewComponent,
     AdminDashboardComponent,
-    ProfileComponent
+    ProfileComponent,
+    SidebarComponent
 
   ],
   imports: [

@@ -51,63 +51,9 @@ export class AllClientComponent implements OnInit {
   }
   ngOnInit(): void {
     this.fetchUsers();
-    this.setupSideBar();
+ 
   }
 
-  setupSideBar() {
-    const sideLinks = document.querySelectorAll('.sidebar .side-menu li a:not(.logout)');
-    sideLinks.forEach(item => {
-      const li = item.parentElement;
-      item.addEventListener('click', () => {
-        sideLinks.forEach(i => {
-          i.parentElement?.classList.remove('active');
-        });
-        li?.classList.add('active');
-      });
-    });
-
-    const menuBar = document.querySelector('.content nav .bx.bx-menu');
-    const sideBar = document.querySelector('.sidebar');
-    const content = document.querySelector('.content');
-    const sideBarToggle = document.querySelector('.sidebar-toggle');
-    if (window.innerWidth > 1015) {
-      sideBarToggle?.classList.add('hidden');
-    }
-    sideBarToggle?.addEventListener('click', () => {
-      if (window.innerWidth <= 1015) {
-        sideBar?.classList.toggle('open');
-        content?.classList.toggle('blur');
-      }
-    });
-    menuBar?.addEventListener('click', () => {
-      if (window.innerWidth <= 1015) {
-        sideBar?.classList.toggle('open');
-        content?.classList.toggle('blur');
-      }
-    });
-    const searchBtn = document.querySelector('.content nav form .form-input button');
-    const searchBtnIcon = document.querySelector('.content nav form .form-input button .bx');
-    const searchForm = document.querySelector('.content nav form');
-
-    searchBtn?.addEventListener('click', function (e) {
-      if (window.innerWidth < 576) {
-        e.preventDefault();
-        searchForm?.classList.toggle('show');
-        if (searchForm?.classList.contains('show')) {
-          searchBtnIcon?.classList.replace('bx-search', 'bx-x');
-        } else {
-          searchBtnIcon?.classList.replace('bx-x', 'bx-search');
-        }
-      }
-    });
-
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 1015) {
-        sideBar?.classList.remove('open');
-        content?.classList.remove('blur');
-      }
-    });
-  }
 
   fetchUsers(): void {
     const token = this.sharedService.getItem('token');
@@ -201,8 +147,11 @@ export class AllClientComponent implements OnInit {
     this.adminService.accountEnableAndDisableOperation(username, adminUsername, token).subscribe({
       next: (response) => {
         if (HttpStatusCode.Ok) {
-          console.log(response);
           this.fetchUsers();
+          console.log(response);
+          const action = response.Enable ? 'enabled' : 'disabled';
+          const message = `Account ${action} successfully!`;
+          this.toastr.success(message);
         }
       },
       error: (error) => {
@@ -239,11 +188,10 @@ export class AllClientComponent implements OnInit {
   deleteUser() {
     const token = this.sharedService.getItem('token');
     this.ngxLodder.start();
-    console.log("Sending client ID and username:", this.clientId, this.username);
+
     this.adminService.deleteAllTheUserInformation(this.username, token, this.clientId).subscribe({
       next: (response) => {
         if (HttpStatusCode.Ok) {
-          console.log("Response after deleting the user:", response);
           this.fetchUsers();
           this.errorMessage = '';
           this.toastr.success("Client Deleted SuccesFully !!", "Deleted ")

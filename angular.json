@@ -40,7 +40,7 @@
               "src/assets/Css/fontawsom-all.min.css",
               "node_modules/ngx-toastr/toastr.css"
             ],
-            "scripts": [],
+            "scripts": ["src/assets/js/index.js"],
             "allowedCommonJsDependencies": [
               "raf",
               "rgbcolor",
@@ -126,7 +126,7 @@
             "tsConfig": "tsconfig.spec.json",
             "assets": ["src/assets/favicon.png", "src/assets"],
             "styles": ["src/styles.css"],
-            "scripts": []
+            "scripts": ["src/assets/js/index.js"]
           }
         }
       }

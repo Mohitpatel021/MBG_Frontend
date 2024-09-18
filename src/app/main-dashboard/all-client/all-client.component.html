@@ -4,73 +4,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-
-
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Admin Dashboard</title>
 </head>
 
 <body>
+
+    <!-- Sidebar -->
     <div class="sidebar">
-        <div class="flex items-center justify-between">
-            <a [routerLink]="['/d/admin',uuid]" [state]="{username:username}" class=" logo">
-                <i class='bx bx-code-alt'></i>
-                <div class="logo-name"><span>Review</span>Us</div>
-            </a>
-            <svg class="relative -top-1 sidebar-toggle" xmlns="http://www.w3.org/2000/svg" width="48" height="48"
-                viewBox="0 0 24 24" style="fill: rgb(205, 24, 24);">
-                <path
-                    d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z">
-                </path>
-            </svg>
-        </div>
+        <a [routerLink]="['/d/admin',uuid]" [state]="{username:username}" class="logo">
+            <i class='bx bx-code-alt'></i>
+            <div class="logo-name"><span>Review</span>Us</div>
+        </a>
         <ul class="side-menu">
             <li><a [routerLink]="['/d/admin',uuid]" [state]="{username:username}"><i
                         class='bx bxs-dashboard'></i>Dashboard</a></li>
-            <li><a [routerLink]="['/d/all-client',uuid]" [state]="{username:username}"><i class='bx bx-grid-alt'></i>Our
-                    Clients</a></li>
+            <li class="active"><a [routerLink]="['/d/all-client',uuid]" [state]="{username:username}"><i
+                        class='bx bx-grid-alt'></i>Our Clients</a></li>
             <li><a [routerLink]="['/d/admin',uuid]" [state]="{username:username}"><i
                         class='bx bx-message-square-dots'></i>Order History</a></li>
             <li><a [routerLink]="['/d/admin',uuid]" [state]="{username:username}"><i class='bx bx-cog'></i>Account
                     Settings</a></li>
-            <img class="pic " src="../../../assets/Images/DealLogo.png">
+            <li><img class="pic" src="../../../assets/Images/DealLogo.png"></li>
         </ul>
 
-        <!-- <div class="relative -bottom-5 upgrade">
-            <h5>Upgrade Your Plan</h5>
-            <div class="link">
-                <a [routerLink]="['/d/all-client',uuid]" [state]="{username:username}">Go
-                    to <b>PRO</b></a>
-                <i class='bx bxs-chevron-right'></i>
-            </div>
-        </div> -->
-
-        <div class="flex justify-center items-center relative buttonContainer">
-            <button (click)="logout()" class="cssbuttons-io-button w-full h-full justify-center items-center ">
-                <i class='bx bx-log-out-circle'></i>
-                <span class="text-lg">Logout</span>
-            </button>
-        </div>
+        <ul class="side-menu">
+            <li>
+                <div class="flex justify-center items-center relative top-72">
+                    <button (click)="logout()" class="cssbuttons-io-button w-full h-full justify-center items-center ">
+                        <i class='bx bx-log-out-circle'></i>
+                        <span class="text-lg">Logout</span>
+                    </button>
+                </div>
+            </li>
+        </ul>
     </div>
-    <div class="content md:flex md:flex-wrap">
+    <!-- End of Sidebar -->
+
+    <!-- Main Content -->
+    <div class="content">
+        <!-- Navbar -->
         <nav>
             <i class='bx bx-menu'></i>
             <form action="#">
-                <div class="form-input ">
-                    <input type="search" [(ngModel)]="searchParam" name="searchParam" placeholder=" Search...">
+                <div class="form-input">
+                    <input class="border border-blue-400" type="search" [(ngModel)]="searchParam" name="searchParam"
+                        placeholder=" Search...">
                     <button class="search-btn" (click)="fetchUsers()" type="submit"><i
                             class='bx bx-search'></i></button>
                 </div>
             </form>
-            <!-- <input type="checkbox" id="theme-toggle" hidden>
-            <label for="theme-toggle" class="theme-toggle"></label>-->
-            <a [routerLink]="['/d/all-client',uuid]" [state]="{username:username}" class="notif">
+            <!-- <input type="checkbox" id="theme-toggle" hidden> -->
+            <!-- <label for="theme-toggle" class="theme-toggle"></label> -->
+            <a [routerLink]="['/d/admin',uuid]" [state]="{username:username}" class="notif">
                 <i class='bx bx-bell'></i>
-                <span class="count">12</span>
+                <!-- <span class="count">12</span> -->
             </a>
-            <a [routerLink]="['/d/all-client',uuid]" [state]="{username:username}" class="profile">
+            <a [routerLink]="['/d/admin',uuid]" [state]="{username:username}" class="profile">
                 <img src="../../../assets/man (1).png">
             </a>
         </nav>
+
+        <!-- End of Navbar -->
         <main>
             <div class="mb-2 flex justify-end items-center ">
                 <button class="cssbuttons-io-button shadow-custom" (click)="downloadExcel(username)">

@@ -5,214 +5,195 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <!-- <title>Responsive Dashboard Design #2 | AsmrProg</title> -->
+    <title>Admin Dashboard</title>
 </head>
 
 <body>
-    <!-- Sidebar -->
-    <div class=" main-container min-w-screen">
-        <div class="sidebar">
-            <div class="flex items-center justify-between">
-                <a [routerLink]="['/d/dashboard',uuid]" [state]="{username:username,businessName:businessName}"
-                    class=" logo">
-                    <i class='bx bx-code-alt'></i>
-                    <div class="logo-name"><span>Review</span>Us</div>
-                </a>
-                <svg class="relative -top-1 sidebar-toggle" xmlns="http://www.w3.org/2000/svg" width="48" height="48"
-                    viewBox="0 0 24 24" style="fill: rgb(205, 24, 24);">
-                    <path
-                        d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z">
-                    </path>
-                </svg>
+    <div class="sidebar">
+        <a [routerLink]="['/d/dashboard',uuid]" [state]="{username:username,businessName:businessName}" class="logo">
+            <i class='bx bx-code-alt'></i>
+            <div class="logo-name"><span>Review</span>Us</div>
+        </a>
+        <ul class="side-menu">
+            <li><a [routerLink]="['/d/dashboard',uuid]" [state]="{username:username,businessName:businessName}"><i
+                        class='bx bxs-dashboard'></i>Dashboard</a></li>
+            <li class="active"><a [routerLink]="['/d/bad-review',uuid]"
+                    [state]="{username:username,businessName:businessName}"><i class='bx bx-grid-alt'></i>Bad
+                    Reviews
+                </a></li>
+            <li><a [routerLink]="['/d/profile',uuid]" [state]="{username:username,businessName:businessName}"><i
+                        class='bx bx-message-square-dots'></i>Profile Overview</a></li>
+            <li><a [routerLink]="['/d/dashboard',uuid]" [state]="{username:username,businessName:businessName}"><i
+                        class='bx bx-cog'></i>Account
+                    Settings</a></li>
+            <li><img class="pic " src="../../../assets/pro.png"></li>
+        </ul>
+        <div class="relative top-40 upgrade">
+            <h5>Upgrade Your Plan</h5>
+            <div class="link">
+                <a [routerLink]="['/d/dashboard',uuid]" [state]="{username:username,businessName:businessName}">Go
+                    to <b>PRO</b></a>
+                <i class='bx bxs-chevron-right'></i>
             </div>
-
-            <ul class="side-menu">
-                <li><a [routerLink]="['/d/dashboard',uuid]" [state]="{username:username,businessName:businessName}"><i
-                            class='bx bxs-dashboard'></i>Dashboard</a></li>
-                <li><a [routerLink]="['/d/bad-review',uuid]" [state]="{username:username,businessName:businessName}"><i
-                            class='bx bx-grid-alt'></i>My
-                        Negative Reviews</a></li>
-                <li><a [routerLink]="['/d/profile',uuid]" [state]="{username:username,businessName:businessName}"><i
-                            class='bx bx-message-square-dots'></i>Profile Overview</a></li>
-                <li><a [routerLink]="['/d/dashboard',uuid]" [state]="{username:username,businessName:businessName}"><i
-                            class='bx bx-cog'></i>Account
-                        Settings</a></li>
-                <img class="pic " src="../../../assets/pro.png">
-            </ul>
-
-            <div class="relative -bottom-5 upgrade">
-                <h5>Upgrade Your Plan</h5>
-                <div class="link">
-                    <a [routerLink]="['/d/dashboard',uuid]" [state]="{username:username,businessName:businessName}">Go
-                        to <b>PRO</b></a>
-                    <i class='bx bxs-chevron-right'></i>
-                </div>
-            </div>
-
-            <ul class="side-menu">
-                <li>
-                    <a href="https://forms.gle/K2UGTXiZLTGj8zK79" class="icon">
-                        <i class="ri-question-line"></i>
-                        Support Form
-                    </a>
-                </li>
-                <li>
-                    <a (click)="logout()" class="logout ">
-                        <i class='bx bx-log-out-circle'></i>
-                        Logout
-                    </a>
-                </li>
-            </ul>
         </div>
-        <!-- End of Sidebar -->
+        <ul class="side-menu relative top-36">
+            <li class="flex ">
+                <a href="https://forms.gle/K2UGTXiZLTGj8zK79" class="icon justify-center items-center">
+                    <i class="ri-question-line bg-[#28A745]"></i>
+                    Support Form
+                </a>
+            </li>
+            <li class="flex">
+                <a (click)="logout()" class="logout justify-center items-center ">
+                    <i class='bx bx-log-out-circle'></i>
+                    Logout
+                </a>
+            </li>
+        </ul>
+    </div>
 
-        <!-- Main Content -->
-        <div class="content ">
-            <!-- Navbar -->
-            <nav class="">
-                <i class='bx bx-menu'></i>
-                <form action="#">
-                    <div class="form-input ">
-                        <input type="search" placeholder="Search...">
-                        <button class="search-btn" type="submit"><i class='bx bx-search'></i></button>
+    <div class="content">
+        <nav>
+            <i class='bx bx-menu'></i>
+            <form action="#">
+                <div class="form-input">
+                    <input type="search" class=" border border-blue-700" placeholder="Search...">
+                    <button class="search-btn" type="submit"><i class='bx bx-search'></i></button>
+                </div>
+            </form>
+            <a [routerLink]="['/d/admin',uuid]" [state]="{username:username}" class="notif">
+                <i class='bx bx-bell'></i>
+                <!-- <span class="count">12</span> -->
+            </a>
+            <a [routerLink]="['/d/admin',uuid]" [state]="{username:username}" class="profile">
+                <img src="../../../assets/man (1).png">
+            </a>
+        </nav>
+
+        <!-- End of Navbar -->
+
+        <main class="flex justify-between items-center">
+            <div class="h-full w-[50%] flex justify-center items-center">
+                <img class="h-[50%] w-[50%]" src="../../../assets/Template 3.png" alt="">
+            </div>
+            <div class="h-full w-[50%] flex justify-center ">
+                <form [formGroup]="detailsForm " class="w-full h-full space-y-7 mt-5">
+                    <!-- Name Input -->
+                    <div class="relative mb-6">
+                        <label class="flex items-center mb-2 text-gray-600 text-sm font-medium">Business Name
+                            <svg width="7" height="7" class="ml-1" viewBox="0 0 7 7" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M3.11222 6.04545L3.20668 3.94744L1.43679 5.08594L0.894886 4.14134L2.77415 3.18182L0.894886 2.2223L1.43679 1.2777L3.20668 2.41619L3.11222 0.318182H4.19105L4.09659 2.41619L5.86648 1.2777L6.40838 2.2223L4.52912 3.18182L6.40838 4.14134L5.86648 5.08594L4.09659 3.94744L4.19105 6.04545H3.11222Z"
+                                    fill="#EF4444" />
+                            </svg>
+                        </label>
+                        <div class="relative text-gray-500 focus-within:text-gray-900">
+                            <!-- <div class="absolute inset-y-0 left-0 flex items-center pl-3">
+                                            <svg class="stroke-current ml-1" width="24" height="24" viewBox="0 0 24 24"
+                                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M20 21V20.1429C20 19.0805 20 18.5493 19.8997 18.1099C19.5578 16.6119 18.3881 15.4422 16.8901 15.1003C16.4507 15 15.9195 15 14.8571 15H10C8.13623 15 7.20435 15 6.46927 15.3045C5.48915 15.7105 4.71046 16.4892 4.30448 17.4693C4 18.2044 4 19.1362 4 21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
+                                                    stroke="" stroke-width="1.6" stroke-linecap="round" />
+                                            </svg>
+                                        </div> -->
+                            <!-- Adjust the padding-left here to accommodate the SVG -->
+                            <input type="text" id="name"
+                                class="block w-full h-11 pl-14 pr-5 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-transparent border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                formControlName="businessName" placeholder="Your Business Name">
+                        </div>
+                    </div>
+
+                    <!-- Email Input -->
+                    <div class="relative mb-6">
+                        <label class="flex items-center mb-2 text-gray-600 text-sm font-medium">Email
+                            <svg width="7" height="7" class="ml-1" viewBox="0 0 7 7" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M3.11222 6.04545L3.20668 3.94744L1.43679 5.08594L0.894886 4.14134L2.77415 3.18182L0.894886 2.2223L1.43679 1.2777L3.20668 2.41619L3.11222 0.318182H4.19105L4.09659 2.41619L5.86648 1.2777L6.40838 2.2223L4.52912 3.18182L6.40838 4.14134L5.86648 5.08594L4.09659 3.94744L4.19105 6.04545H3.11222Z"
+                                    fill="#EF4444" />
+                            </svg>
+                        </label>
+                        <div class="relative text-gray-500 focus-within:text-gray-900">
+                            <!-- <div class="absolute inset-y-0 left-0 flex items-center pl-3">
+                                            <svg class="stroke-current ml-1" width="24" height="24" viewBox="0 0 24 24"
+                                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M3.54887 6.73325L7.76737 9.36216C9.82591 10.645 10.8552 11.2864 11.9999 11.2863C13.1446 11.2861 14.1737 10.6443 16.2318 9.36081L20.4611 6.72333M11 20H13C16.7712 20 18.6569 20 19.8284 18.8284C21 17.6569 21 15.7712 21 12C21 8.22876 21 6.34315 19.8284 5.17157C18.6569 4 16.7712 4 13 4H11C7.22876 4 5.34315 4 4.17157 5.17157C3 6.34315 3 8.22876 3 12C3 15.7712 3 17.6569 4.17157 18.8284C5.34315 20 7.22876 20 11 20Z"
+                                                    stroke="" stroke-width="1.6" stroke-linecap="round"
+                                                    stroke-linejoin="round" />
+                                            </svg>
+                                        </div> -->
+                            <input type="email" id="email"
+                                class="block w-full h-11 pl-14 pr-5 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-transparent border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                formControlName="owner_email" placeholder="Your Email Address">
+                        </div>
+                    </div>
+
+                    <!-- Business Link Input -->
+                    <div class="relative mb-6">
+                        <label class="flex items-center mb-2 text-gray-600 text-sm font-medium">Business Link
+                            <svg width="7" height="7" class="ml-1" viewBox="0 0 7 7" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M3.11222 6.04545L3.20668 3.94744L1.43679 5.08594L0.894886 4.14134L2.77415 3.18182L0.894886 2.2223L1.43679 1.2777L3.20668 2.41619L3.11222 0.318182H4.19105L4.09659 2.41619L5.86648 1.2777L6.40838 2.2223L4.52912 3.18182L6.40838 4.14134L5.86648 5.08594L4.09659 3.94744L4.19105 6.04545H3.11222Z"
+                                    fill="#EF4444" />
+                            </svg>
+                        </label>
+                        <div class="relative text-gray-500 focus-within:text-gray-900">
+                            <!-- <div class="absolute inset-y-0 left-0 flex items-center pl-3">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-1" fill="none" height="1em"
+                                                viewBox="0 0 448 512">
+                                                <path
+                                                    d="M48 24C48 10.7 37.3 0 24 0S0 10.7 0 24V64 350.5 400v88c0 13.3 10.7 24 24 24s24-10.7 24-24V388l80.3-20.1c41.1-10.3 84.6-5.5 122.5 13.4c44.2 22.1 95.5 24.8 141.7 7.4l34.7-13c12.5-4.7 20.8-16.6 20.8-30V66.1c0-23-24.2-38-44.8-27.7l-9.6 4.8c-46.3 23.2-100.8 23.2-147.1 0c-35.1-17.6-75.4-22-113.5-12.5L48 52V24zm0 77.5l96.6-24.2c27-6.7 55.5-3.6 80.4 8.8c54.9 27.4 118.7 29.7 175 6.8V334.7l-24.4 9.1c-33.7 12.6-71.2 10.7-103.4-5.4c-48.2-24.1-103.3-30.1-155.6-17.1L48 338.5v-237z"
+                                                    fill="currentColor" />
+                                            </svg>
+                                        </div> -->
+                            <input type="text" id="businessLink"
+                                class="block w-full h-11 pl-14 pr-5 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-transparent border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                formControlName="businessLink" placeholder="Your Google Review Link">
+                        </div>
+                    </div>
+
+                    <!-- Phone Number Input -->
+                    <div class="relative mb-6">
+                        <label class="flex items-center mb-2 text-gray-600 text-sm font-medium">Phone Number
+                            <svg width="7" height="7" class="ml-1" viewBox="0 0 7 7" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M3.11222 6.04545L3.20668 3.94744L1.43679 5.08594L0.894886 4.14134L2.77415 3.18182L0.894886 2.2223L1.43679 1.2777L3.20668 2.41619L3.11222 0.318182H4.19105L4.09659 2.41619L5.86648 1.2777L6.40838 2.2223L4.52912 3.18182L6.40838 4.14134L5.86648 5.08594L4.09659 3.94744L4.19105 6.04545H3.11222Z"
+                                    fill="#EF4444" />
+                            </svg>
+                        </label>
+                        <div class="relative text-gray-500 focus-within:text-gray-900 ">
+                            <!-- <div class="absolute inset-y-0 left-0 flex items-center pl-3">
+                                            <svg class="stroke-current ml-1" width="24" height="24" viewBox="0 0 24 24"
+                                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M5.02623 10.2611L12.7387 17.9736C14.4091 19.6439 17.1173 19.6439 18.7877 17.9736C19.4559 17.3054 19.4559 16.2221 18.7877 15.554L16.6454 13.4116C16.1582 12.9244 15.3683 12.9244 14.8811 13.4116C14.3939 13.8988 13.604 13.8988 13.1168 13.4116L9.23534 9.53015C8.74814 9.04295 8.74814 8.25305 9.23534 7.76585C9.72253 7.27865 9.72253 6.48875 9.23534 6.00155L7.44584 4.21205C6.77768 3.5439 5.69439 3.5439 5.02623 4.21205C3.35584 5.88244 3.35584 8.59067 5.02623 10.2611Z"
+                                                    stroke="" stroke-width="1.6" />
+                                            </svg>
+                                        </div> -->
+                            <input type="text" id="phone"
+                                class="block w-full h-11 pl-14 pr-5 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-transparent border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 "
+                                formControlName="contact" placeholder="Your Phone Number">
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="flex items-center justify-center">
+                        <button (click)="navigateToForm()"
+                            class="w-52 h-12 shadow-sm rounded-full bg-indigo-600 hover:bg-indigo-800 transition-all duration-700 text-white text-base font-semibold leading-7">Fill
+                            out Support Form <i class="fa-solid fa-arrow-right"></i>
+                        </button>
                     </div>
                 </form>
-                <a [routerLink]="['/d/dashboard',uuid]" [state]="{username:username,businessName:businessName}"
-                    class="notif">
-                    <i class='bx bx-bell'></i>
-                    <span class="count">12</span>
-                </a>
-                <a [routerLink]="['/d/dashboard',uuid]" [state]="{username:username,businessName:businessName}"
-                    class="profile">
-                    <img src="../../../assets/man (1).png">
-                </a>
-            </nav>
+            </div>
 
-            <!-- End of Navbar -->
+        </main>
 
-            <main class="flex justify-between items-center">
-                <div class="h-full w-[50%] flex justify-center items-center">
-                    <img class="h-[50%] w-[50%]" src="../../../assets/Template 3.png" alt="">
-                </div>
-                <div class="h-full w-[50%] flex justify-center ">
-                    <form [formGroup]="detailsForm " class="w-full h-full space-y-7 mt-5">
-                        <!-- Name Input -->
-                        <div class="relative mb-6">
-                            <label class="flex items-center mb-2 text-gray-600 text-sm font-medium">Business Name
-                                <svg width="7" height="7" class="ml-1" viewBox="0 0 7 7" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M3.11222 6.04545L3.20668 3.94744L1.43679 5.08594L0.894886 4.14134L2.77415 3.18182L0.894886 2.2223L1.43679 1.2777L3.20668 2.41619L3.11222 0.318182H4.19105L4.09659 2.41619L5.86648 1.2777L6.40838 2.2223L4.52912 3.18182L6.40838 4.14134L5.86648 5.08594L4.09659 3.94744L4.19105 6.04545H3.11222Z"
-                                        fill="#EF4444" />
-                                </svg>
-                            </label>
-                            <div class="relative text-gray-500 focus-within:text-gray-900">
-                                <!-- <div class="absolute inset-y-0 left-0 flex items-center pl-3">
-                                    <svg class="stroke-current ml-1" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M20 21V20.1429C20 19.0805 20 18.5493 19.8997 18.1099C19.5578 16.6119 18.3881 15.4422 16.8901 15.1003C16.4507 15 15.9195 15 14.8571 15H10C8.13623 15 7.20435 15 6.46927 15.3045C5.48915 15.7105 4.71046 16.4892 4.30448 17.4693C4 18.2044 4 19.1362 4 21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
-                                            stroke="" stroke-width="1.6" stroke-linecap="round" />
-                                    </svg>
-                                </div> -->
-                                <!-- Adjust the padding-left here to accommodate the SVG -->
-                                <input type="text" id="name"
-                                    class="block w-full h-11 pl-14 pr-5 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-transparent border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                                    formControlName="businessName" placeholder="Your Business Name">
-                            </div>
-                        </div>
-
-                        <!-- Email Input -->
-                        <div class="relative mb-6">
-                            <label class="flex items-center mb-2 text-gray-600 text-sm font-medium">Email
-                                <svg width="7" height="7" class="ml-1" viewBox="0 0 7 7" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M3.11222 6.04545L3.20668 3.94744L1.43679 5.08594L0.894886 4.14134L2.77415 3.18182L0.894886 2.2223L1.43679 1.2777L3.20668 2.41619L3.11222 0.318182H4.19105L4.09659 2.41619L5.86648 1.2777L6.40838 2.2223L4.52912 3.18182L6.40838 4.14134L5.86648 5.08594L4.09659 3.94744L4.19105 6.04545H3.11222Z"
-                                        fill="#EF4444" />
-                                </svg>
-                            </label>
-                            <div class="relative text-gray-500 focus-within:text-gray-900">
-                                <!-- <div class="absolute inset-y-0 left-0 flex items-center pl-3">
-                                    <svg class="stroke-current ml-1" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M3.54887 6.73325L7.76737 9.36216C9.82591 10.645 10.8552 11.2864 11.9999 11.2863C13.1446 11.2861 14.1737 10.6443 16.2318 9.36081L20.4611 6.72333M11 20H13C16.7712 20 18.6569 20 19.8284 18.8284C21 17.6569 21 15.7712 21 12C21 8.22876 21 6.34315 19.8284 5.17157C18.6569 4 16.7712 4 13 4H11C7.22876 4 5.34315 4 4.17157 5.17157C3 6.34315 3 8.22876 3 12C3 15.7712 3 17.6569 4.17157 18.8284C5.34315 20 7.22876 20 11 20Z"
-                                            stroke="" stroke-width="1.6" stroke-linecap="round"
-                                            stroke-linejoin="round" />
-                                    </svg>
-                                </div> -->
-                                <input type="email" id="email"
-                                    class="block w-full h-11 pl-14 pr-5 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-transparent border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                                    formControlName="owner_email" placeholder="Your Email Address">
-                            </div>
-                        </div>
-
-                        <!-- Business Link Input -->
-                        <div class="relative mb-6">
-                            <label class="flex items-center mb-2 text-gray-600 text-sm font-medium">Business Link
-                                <svg width="7" height="7" class="ml-1" viewBox="0 0 7 7" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M3.11222 6.04545L3.20668 3.94744L1.43679 5.08594L0.894886 4.14134L2.77415 3.18182L0.894886 2.2223L1.43679 1.2777L3.20668 2.41619L3.11222 0.318182H4.19105L4.09659 2.41619L5.86648 1.2777L6.40838 2.2223L4.52912 3.18182L6.40838 4.14134L5.86648 5.08594L4.09659 3.94744L4.19105 6.04545H3.11222Z"
-                                        fill="#EF4444" />
-                                </svg>
-                            </label>
-                            <div class="relative text-gray-500 focus-within:text-gray-900">
-                                <!-- <div class="absolute inset-y-0 left-0 flex items-center pl-3">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-1" fill="none" height="1em"
-                                        viewBox="0 0 448 512">
-                                        <path
-                                            d="M48 24C48 10.7 37.3 0 24 0S0 10.7 0 24V64 350.5 400v88c0 13.3 10.7 24 24 24s24-10.7 24-24V388l80.3-20.1c41.1-10.3 84.6-5.5 122.5 13.4c44.2 22.1 95.5 24.8 141.7 7.4l34.7-13c12.5-4.7 20.8-16.6 20.8-30V66.1c0-23-24.2-38-44.8-27.7l-9.6 4.8c-46.3 23.2-100.8 23.2-147.1 0c-35.1-17.6-75.4-22-113.5-12.5L48 52V24zm0 77.5l96.6-24.2c27-6.7 55.5-3.6 80.4 8.8c54.9 27.4 118.7 29.7 175 6.8V334.7l-24.4 9.1c-33.7 12.6-71.2 10.7-103.4-5.4c-48.2-24.1-103.3-30.1-155.6-17.1L48 338.5v-237z"
-                                            fill="currentColor" />
-                                    </svg>
-                                </div> -->
-                                <input type="text" id="businessLink"
-                                    class="block w-full h-11 pl-14 pr-5 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-transparent border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                                    formControlName="businessLink" placeholder="Your Google Review Link">
-                            </div>
-                        </div>
-
-                        <!-- Phone Number Input -->
-                        <div class="relative mb-6">
-                            <label class="flex items-center mb-2 text-gray-600 text-sm font-medium">Phone Number
-                                <svg width="7" height="7" class="ml-1" viewBox="0 0 7 7" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M3.11222 6.04545L3.20668 3.94744L1.43679 5.08594L0.894886 4.14134L2.77415 3.18182L0.894886 2.2223L1.43679 1.2777L3.20668 2.41619L3.11222 0.318182H4.19105L4.09659 2.41619L5.86648 1.2777L6.40838 2.2223L4.52912 3.18182L6.40838 4.14134L5.86648 5.08594L4.09659 3.94744L4.19105 6.04545H3.11222Z"
-                                        fill="#EF4444" />
-                                </svg>
-                            </label>
-                            <div class="relative text-gray-500 focus-within:text-gray-900 ">
-                                <!-- <div class="absolute inset-y-0 left-0 flex items-center pl-3">
-                                    <svg class="stroke-current ml-1" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M5.02623 10.2611L12.7387 17.9736C14.4091 19.6439 17.1173 19.6439 18.7877 17.9736C19.4559 17.3054 19.4559 16.2221 18.7877 15.554L16.6454 13.4116C16.1582 12.9244 15.3683 12.9244 14.8811 13.4116C14.3939 13.8988 13.604 13.8988 13.1168 13.4116L9.23534 9.53015C8.74814 9.04295 8.74814 8.25305 9.23534 7.76585C9.72253 7.27865 9.72253 6.48875 9.23534 6.00155L7.44584 4.21205C6.77768 3.5439 5.69439 3.5439 5.02623 4.21205C3.35584 5.88244 3.35584 8.59067 5.02623 10.2611Z"
-                                            stroke="" stroke-width="1.6" />
-                                    </svg>
-                                </div> -->
-                                <input type="text" id="phone"
-                                    class="block w-full h-11 pl-14 pr-5 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-transparent border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 "
-                                    formControlName="contact" placeholder="Your Phone Number">
-                            </div>
-                        </div>
-
-                        <!-- Submit Button -->
-                        <div class="flex items-center justify-center">
-                            <button (click)="navigateToForm()"
-                                class="w-52 h-12 shadow-sm rounded-full bg-indigo-600 hover:bg-indigo-800 transition-all duration-700 text-white text-base font-semibold leading-7">Fill
-                                out Support Form <i class="fa-solid fa-arrow-right"></i>
-                            </button>
-                        </div>
-                    </form>
-                </div>
-
-            </main>
-
-
-        </div>
     </div>
+
 </body>
 
 </html>
