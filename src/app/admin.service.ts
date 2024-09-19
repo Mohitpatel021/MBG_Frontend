@@ -94,6 +94,7 @@ export class AdminService {
     });
     return this.http.get(`${this.API_URL}/dashboard/admin/recent/client?username=${username}`, { headers });
   }
+
   deleteAllTheUserInformation(username: string, token: string, clientId: string): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -101,5 +102,16 @@ export class AdminService {
       'Authorization': `Bearer ${token}`
     });
     return this.http.delete(`${this.API_URL}/login/delete?username=${username}&clientId=${clientId}`, { headers });
+  }
+
+  updateUserDetails(username: string, token: string, updateData: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    console.log("data -----> ", updateData, "Username of the admin ", username);
+
+    return this.http.put(`${this.API_URL}/login/update/user?username=${username}`, updateData, { headers });
   }
 }

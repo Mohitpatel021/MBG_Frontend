@@ -6,6 +6,7 @@ import { ShareServiceService } from '../../share-service.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { initModals } from 'flowbite';
 import { ToastrService } from 'ngx-toastr';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-all-client',
@@ -32,6 +33,8 @@ export class AllClientComponent implements OnInit {
   searchParam: string = ''
   isModalOpen: boolean = false
   clientId: string = ''
+  updateUserForm: FormGroup;
+  updatingUsername: string = ''
 
   constructor(
     private adminService: AdminService,
@@ -39,6 +42,7 @@ export class AllClientComponent implements OnInit {
     private router: Router,
     private ngxLodder: NgxUiLoaderService,
     private toastr: ToastrService,
+    private fb: FormBuilder,
   ) {
     this.uuid = adminService.generateRandomUUID();
     const navigation = this.router.getCurrentNavigation();
@@ -48,13 +52,15 @@ export class AllClientComponent implements OnInit {
       this.logout();
       this.sharedService.clear();
     }
+    this.updateUserForm = this.fb.group({
+      username: ['', Validators.required],
+      email: ['', [Validators.email]],
+      serialId: [''],
+    });
   }
   ngOnInit(): void {
     this.fetchUsers();
- 
   }
-
-
   fetchUsers(): void {
     const token = this.sharedService.getItem('token');
     this.ngxLodder.start();
@@ -95,9 +101,6 @@ export class AllClientComponent implements OnInit {
       this.pageNumber--;
       this.fetchUsers();
     }
-  }
-  deleteCliendId(id: string) {
-    this.clientId = id;
   }
 
   toggleSidebar() {
@@ -226,28 +229,87 @@ export class AllClientComponent implements OnInit {
         }
       },
       complete: () => {
-        this.ngxLodder.stop();  // Ensure loader is stopped after completion
+        this.ngxLodder.stop();
       }
     });
   }
 
 
-  openModal() {
+  openModal(username: string) {
+    this.updateUserForm.patchValue({
+      username: username,
+    });
     this.isModalOpen = true;
     const modal = document.getElementById('authentication-modal');
     if (modal) {
       modal.classList.remove('hidden')
-
+      this.updatingUsername = username
     }
   }
 
-  // Function to close the modal
+
   closeModal() {
     this.isModalOpen = false;
     const modal = document.getElementById('authentication-modal');
     if (modal) {
       modal.classList.add('hidden');
-
     }
+  }
+
+  openPopUpModal(id: string) {
+    const popup = document.getElementById('popup-modal');
+    if (popup) {
+      popup.classList.remove('hidden')
+      this.clientId = id;
+    }
+  }
+
+  closePopUpModal() {
+    this.isModalOpen = false;
+    const popup = document.getElementById('popup-modal');
+    if (popup) {
+      popup.classList.add('hidden');
+    }
+  }
+
+  updateUser() {
+    const token = this.sharedService.getItem('token');
+    const username = this.username;
+    this.ngxLodder.start();
+    this.adminService.updateUserDetails(username, token, this.updateUserForm.value)
+      .subscribe(
+        (response) => {
+          if (HttpStatusCode.Ok) {
+            this.ngxLodder.stop();
+            this.toastr.success('User updated successfully!', 'Success');
+            this.updateUserForm.reset();
+            this.closeModal();
+          }
+        },
+        (error) => {
+          this.ngxLodder.stop();
+          switch (error.status) {
+            case 400:
+              this.toastr.error('Bad request - Please check your input.', 'Error 400');
+              break;
+            case 401:
+              this.toastr.error('Unauthorized - Please log in again.', 'Error 401');
+              break;
+            case 403:
+              this.toastr.error('Forbidden - You do not have permission to perform this action.', 'Error 403');
+              break;
+            case 404:
+              this.toastr.error('User not found.', 'Error 404');
+              break;
+            case 500:
+              this.toastr.error('Internal server error. Please try again later.', 'Error 500');
+              break;
+            default:
+              this.toastr.error('An unexpected error occurred.', 'Error');
+              break;
+          }
+          console.error('Error updating user:', error);
+        }
+      );
   }
 }

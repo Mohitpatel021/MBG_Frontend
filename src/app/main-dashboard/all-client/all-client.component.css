@@ -682,3 +682,10 @@ body {
 .cssbuttons-io-button:active {
     box-shadow: 0 0.3em 1em -0.5em #4d36d0be;
 }
+
+.blurred-background {
+    filter: blur(8px);
+    transition: filter 0.3s ease-in-out;
+    pointer-events: none;
+    z-index: 9999;
+}

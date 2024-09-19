@@ -1,13 +1,13 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
-import {  initModals } from 'flowbite';
+import { initModals } from 'flowbite';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent implements OnInit {
+export class AppComponent  {
   title = 'Review_Us_Dashbaord';
   private logoutTimer: any;
   constructor(
@@ -15,9 +15,6 @@ export class AppComponent implements OnInit {
     private router: Router,
   ) {
     sessionStorage.removeItem('isReloading');
-  }
-  ngOnInit(): void {
-    // initModals();
   }
 
   @HostListener("window:unload', ['$event']")

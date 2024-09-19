@@ -26,7 +26,6 @@ export class LoginService {
   ) {
     this.token = this.shareService.getItem('token');
     this.username = this.shareService.getItem('username');
-
   }
 
   isTokenExpired(token: string): boolean {
@@ -65,7 +64,6 @@ export class LoginService {
   //this method for generating qr
   getQrCode(request: QrCodeCreationDataRequest, token: string): Observable<any> {
     let headers = new HttpHeaders();
-
     if (token !== null && token !== undefined) {
       headers = headers.set('Authorization', `Bearer ${token}`);
     } else {
@@ -80,7 +78,6 @@ export class LoginService {
     if (!register) {
       throw new Error('RegisterResponse object is null or undefined');
     }
-
     const apiUrl = `${this.apiServerUrl}/login/register`;
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),

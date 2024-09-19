@@ -66,7 +66,7 @@
         </nav>
 
         <!-- End of Navbar -->
-        <main>
+        <main [ngClass]="{ 'blurred-background': isModalOpen }">
             <div class="mb-2 flex justify-end items-center ">
                 <button class="cssbuttons-io-button shadow-custom" (click)="downloadExcel(username)">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
@@ -129,8 +129,8 @@
                         </td>
                         <td class="px-3 ">
                             <div class="space-x-3 ">
-                                <button data-modal-target="authentication-modal" (click)="openModal()"
-                                    data-modal-toggle="authentication-modal" type="button"
+                                <button data-modal-target="authentication-modal" (click)="openModal(user.contact)"
+                                    data-modal-toggle=" authentication-modal" type="button"
                                     class="hover:text-black transform transition-transform duration-300 hover:scale-125 focus:outline-none">
                                     <i class="fa-solid fa-pen-to-square fa-lg"></i>
                                 </button>
@@ -145,7 +145,7 @@
                                     <i class="fa-solid fa-lock fa-lg"></i>
                                 </button>
                                 <button data-modal-target="popup-modal" data-modal-toggle="popup-modal"
-                                    (click)="deleteCliendId(user.id)"
+                                    (click)="openPopUpModal(user.id)"
                                     class="hover:text-black transform transition-transform duration-300 hover:scale-125 focus:outline-none">
                                     <i class="fa-solid fa-trash fa-lg"></i>
                                 </button>
@@ -153,7 +153,7 @@
                         </td>
                     </tr>
                     <tr *ngIf="!users.length">
-                        <td colspan="6" class="p-3 text-xl font-semibold text-center text-black">No reviews found</td>
+                        <td colspan="6" class="p-3 text-xl font-semibold text-center text-black">No Clients found</td>
                     </tr>
                 </tbody>
             </table>
@@ -185,8 +185,8 @@
             </div>
         </main>
         <div id="authentication-modal" tabindex="-1" aria-hidden="true"
-            class="hidden overflow-y-auto overflow-x-auto fixed -top-20 right-0 left-0 z-50 justify-center items-center w-full md:-top-16 md:left-12 h-full">
-            <div class="relative min-w-[40%] max-w-md max-h-[50%]">
+            class="hidden overflow-y-auto  overflow-x-auto fixed -top-20 right-0 left-0 sm:top-32 z-50 justify-center items-center w-full md:top[70%] md:left-[30%] h-full">
+            <div class="relative min-w-[40%] max-w-md max-h-[50%] border rounded-lg">
                 <!-- Modal content -->
                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                     <!-- Modal header -->
@@ -207,9 +207,9 @@
                     </div>
                     <!-- Modal body -->
                     <div class="px-4 pt-4 md:px-5 md:pt-5">
-                        <form class="space-y-4" action="#">
+                        <form [formGroup]="updateUserForm" (ngSubmit)="updateUser()" class="space-y-4">
                             <div class="relative mb-6">
-                                <label class="flex  items-center mb-2 text-gray-600 text-sm font-medium">Business Name
+                                <label class="flex  items-center mb-2 text-gray-600 text-sm font-medium">Username
                                     <svg width="7" height="7" class="ml-1" viewBox="0 0 7 7" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -225,9 +225,9 @@
                                             stroke="" stroke-width="1.6" stroke-linecap="round" />
                                     </svg>
                                 </div>
-                                <input type="text" id="default-search"
+                                <input formControlName="username" type="text" id="default-search"
                                     class="block w-full h-11 px-5 py-2.5 bg-white leading-7 text-base font-normal shadow-xs text-gray-900 bg-transparent border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none "
-                                    placeholder="Your Business Name">
+                                    placeholder="Update Your UserName">
                             </div>
                             <div class="relative mb-6">
                                 <label class="flex  items-center mb-2 text-gray-600 text-sm font-medium">Email Address
@@ -246,12 +246,12 @@
                                             stroke="" stroke-width="1.5" stroke-linecap="round" />
                                     </svg>
                                 </div>
-                                <input type="text" id="default-search"
+                                <input formControlName="email" type="text" id="default-search"
                                     class="block w-full h-11 px-5 py-2.5 bg-white leading-7 text-base font-normal shadow-xs text-gray-900 bg-transparent border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none "
-                                    placeholder="Your Email Address">
+                                    placeholder="Update Your Email Address">
                             </div>
                             <div class="relative mb-6">
-                                <label class="flex  items-center mb-2 text-gray-600 text-sm font-medium">Business Link
+                                <label class="flex  items-center mb-2 text-gray-600 text-sm font-medium">Serial Id
                                     <svg width="7" height="7" class="ml-1" viewBox="0 0 7 7" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -267,30 +267,9 @@
                                             stroke="#000000" stroke-width="2" stroke-linecap="round" />
                                     </svg>
                                 </div>
-                                <input type="text" id="default-search"
+                                <input formControlName="serialId" type="text" id="default-search"
                                     class="block w-full h-11 px-5 py-2.5 bg-white leading-7 text-base font-normal shadow-xs text-gray-900 bg-transparent border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none "
-                                    placeholder="Your Google Review Link">
-                            </div>
-                            <div class="relative mb-6">
-                                <label class="flex  items-center mb-2 text-gray-600 text-sm font-medium">Contact Number
-                                    <svg width="7" height="7" class="ml-1" viewBox="0 0 7 7" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M3.11222 6.04545L3.20668 3.94744L1.43679 5.08594L0.894886 4.14134L2.77415 3.18182L0.894886 2.2223L1.43679 1.2777L3.20668 2.41619L3.11222 0.318182H4.19105L4.09659 2.41619L5.86648 1.2777L6.40838 2.2223L4.52912 3.18182L6.40838 4.14134L5.86648 5.08594L4.09659 3.94744L4.19105 6.04545H3.11222Z"
-                                            fill="#EF4444" />
-                                    </svg>
-                                </label>
-                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none mt-4 ">
-                                    <svg class="stroke-current ml-1 mt-1" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M5.02623 10.2611L12.7387 17.9736C14.4091 19.6439 17.1173 19.6439 18.7877 17.9736C19.4559 17.3054 19.4559 16.2221 18.7877 15.554L16.6454 13.4116C16.1582 12.9244 15.3683 12.9244 14.8811 13.4116C14.3939 13.8988 13.604 13.8988 13.1168 13.4116L9.23534 9.53015C8.74814 9.04295 8.74814 8.25305 9.23534 7.76585C9.72253 7.27865 9.72253 6.48875 9.23534 6.00155L7.44584 4.21205C6.77768 3.5439 5.69439 3.5439 5.02623 4.21205C3.35584 5.88244 3.35584 8.59067 5.02623 10.2611Z"
-                                            stroke="" stroke-width="1.6" />
-                                    </svg>
-                                </div>
-                                <input type="text" id="default-search"
-                                    class="block w-full h-11 px-5 py-2.5 bg-white leading-7 text-base font-normal shadow-xs text-gray-900 bg-transparent border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none "
-                                    placeholder="Your Phone Number">
+                                    placeholder="Update Your Serial Id">
                             </div>
 
                             <div class="relative mb-6 p-2 flex justify-center items-center gap-2">
@@ -299,7 +278,7 @@
                                         class="w-32 h-11 bg-indigo-600 hover:bg-indigo-800 transition-all duration-700 rounded-full shadow-xs text-white text-base font-semibold leading-6">Submit</button>
                                 </div>
                                 <div class="flex items-center">
-                                    <button type="reset"
+                                    <button type="reset" (click)="closeModal()"
                                         class="w-32 h-11 bg-red-600 hover:bg-red-800 transition-all duration-700 rounded-full shadow-xs text-white text-base font-semibold leading-6">Reset</button>
                                 </div>
                             </div>
@@ -308,11 +287,11 @@
                 </div>
             </div>
         </div>
-        <div id="popup-modal" tabindex="-1"
-            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div id="popup-modal" tabindex="-1" aria-hidden="true"
+            class="hidden overflow-y-auto overflow-x-hidden fixed -top-5 right-0 left-0 z-50 justify-center items-center w-full  h-full max-h-full">
             <div class="relative p-4 w-full max-w-md max-h-full">
                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                    <button type="button"
+                    <button type="button" (click)="closePopUpModal()"
                         class="absolute  top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                         data-modal-hide="popup-modal">
                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -332,11 +311,11 @@
                             delete
                             this User?</h3>
                         <div class="flex justify-center  items-center space-x-2">
-                            <button data-modal-hide="popup-modal" type="button" (click)="deleteUser()"
+                            <button data-modal-hide="popup-modal" type="submit" (click)="deleteUser()"
                                 class="text-white ms-3 w-28 h-11 bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex px-3 pt-3 pb-3  ">
                                 Yes, I'm sure
                             </button>
-                            <button data-modal-hide="popup-modal" type="button"
+                            <button data-modal-hide="popup-modal" type="reset" (click)="closeModal()"
                                 class="py-2.5 px-3 ms-3 w-28 h-11 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No,cancel
                             </button>
                         </div>
