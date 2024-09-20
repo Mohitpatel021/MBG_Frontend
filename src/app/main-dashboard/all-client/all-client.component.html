@@ -185,7 +185,7 @@
             </div>
         </main>
         <div id="authentication-modal" tabindex="-1" aria-hidden="true"
-            class="hidden overflow-y-auto  overflow-x-auto fixed -top-20 right-0 left-0 sm:top-32 z-50 justify-center items-center w-full md:top[70%] md:left-[30%] h-full">
+            class="hidden overflow-y-auto  overflow-x-auto fixed -top-20 right-0 left-0 sm:top-24 z-50 justify-center items-center w-full md:top[70%] md:left-[30%] h-full">
             <div class="relative min-w-[40%] max-w-md max-h-[50%] border rounded-lg">
                 <!-- Modal content -->
                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -271,6 +271,75 @@
                                     class="block w-full h-11 px-5 py-2.5 bg-white leading-7 text-base font-normal shadow-xs text-gray-900 bg-transparent border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none "
                                     placeholder="Update Your Serial Id">
                             </div>
+
+                            <div class="relative mb-6">
+                                <label class="flex  items-center mb-2 text-gray-600 text-sm font-medium">Payment Status
+                                    <svg width="7" height="7" class="ml-1" viewBox="0 0 7 7" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M3.11222 6.04545L3.20668 3.94744L1.43679 5.08594L0.894886 4.14134L2.77415 3.18182L0.894886 2.2223L1.43679 1.2777L3.20668 2.41619L3.11222 0.318182H4.19105L4.09659 2.41619L5.86648 1.2777L6.40838 2.2223L4.52912 3.18182L6.40838 4.14134L5.86648 5.08594L4.09659 3.94744L4.19105 6.04545H3.11222Z"
+                                            fill="#EF4444" />
+                                    </svg>
+                                </label>
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none mt-4 ">
+                                    <svg width="35px" height="23px" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg" stroke="#000000" stroke-width="1.08">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+                                        </g>
+                                        <g id="SVGRepo_iconCarrier">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M18.9809 9.25283C18.2198 7.32031 16.6794 5.77999 14.7469 5.01897C14.5229 5.27358 14.3413 5.56647 14.2133 5.88656C16.0226 6.54172 17.4581 7.97718 18.1133 9.7864C18.4334 9.6584 18.7263 9.47685 18.9809 9.25283ZM12.2276 5.50391C12.1521 5.50131 12.0762 5.5 12 5.5C8.41015 5.5 5.5 8.41015 5.5 12C5.5 15.5899 8.41015 18.5 12 18.5C15.5899 18.5 18.5 15.5899 18.5 12C18.5 11.9237 18.4987 11.8478 18.4961 11.7721C18.8387 11.6648 19.1655 11.5216 19.472 11.347C19.4905 11.5622 19.5 11.78 19.5 12C19.5 16.1421 16.1421 19.5 12 19.5C7.85786 19.5 4.5 16.1421 4.5 12C4.5 7.85786 7.85786 4.5 12 4.5C12.2199 4.5 12.4376 4.50946 12.6527 4.52801C12.4781 4.83451 12.3349 5.16128 12.2276 5.50391Z"
+                                                fill="#222222"></path>
+                                            <circle cx="17" cy="7" r="3" fill="#222222"></circle>
+                                        </g>
+                                    </svg>
+                                </div>
+                                <select formControlName="paymentStatus"
+                                    class="block w-full h-11 px-5 py-2.5 bg-white leading-7 text-base font-normal shadow-xs text-gray-900 bg-transparent border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none">
+                                    <option class="font-bold " value="" disabled selected>Select a Payment
+                                        Status
+                                    </option>
+                                    <option value="PAID">PAID</option>
+                                    <option value="CREATED">CREATED</option>
+                                </select>
+                            </div>
+
+
+                            <!-- <div class="relative mb-6">
+                                <label class="flex  items-center mb-2 text-gray-600 text-sm font-medium">Select Payment
+                                    Status
+                                    <svg width="7" height="7" class="ml-1" viewBox="0 0 7 7" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M3.11222 6.04545L3.20668 3.94744L1.43679 5.08594L0.894886 4.14134L2.77415 3.18182L0.894886 2.2223L1.43679 1.2777L3.20668 2.41619L3.11222 0.318182H4.19105L4.09659 2.41619L5.86648 1.2777L6.40838 2.2223L4.52912 3.18182L6.40838 4.14134L5.86648 5.08594L4.09659 3.94744L4.19105 6.04545H3.11222Z"
+                                            fill="#EF4444" />
+                                    </svg>
+                                </label>
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none mt-4 ">
+                                    <svg width="35px" height="23px" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg" stroke="#000000" stroke-width="1.08">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+                                        </g>
+                                        <g id="SVGRepo_iconCarrier">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M18.9809 9.25283C18.2198 7.32031 16.6794 5.77999 14.7469 5.01897C14.5229 5.27358 14.3413 5.56647 14.2133 5.88656C16.0226 6.54172 17.4581 7.97718 18.1133 9.7864C18.4334 9.6584 18.7263 9.47685 18.9809 9.25283ZM12.2276 5.50391C12.1521 5.50131 12.0762 5.5 12 5.5C8.41015 5.5 5.5 8.41015 5.5 12C5.5 15.5899 8.41015 18.5 12 18.5C15.5899 18.5 18.5 15.5899 18.5 12C18.5 11.9237 18.4987 11.8478 18.4961 11.7721C18.8387 11.6648 19.1655 11.5216 19.472 11.347C19.4905 11.5622 19.5 11.78 19.5 12C19.5 16.1421 16.1421 19.5 12 19.5C7.85786 19.5 4.5 16.1421 4.5 12C4.5 7.85786 7.85786 4.5 12 4.5C12.2199 4.5 12.4376 4.50946 12.6527 4.52801C12.4781 4.83451 12.3349 5.16128 12.2276 5.50391Z"
+                                                fill="#222222"></path>
+                                            <circle cx="17" cy="7" r="3" fill="#222222"></circle>
+                                        </g>
+                                    </svg>
+                                </div>
+                                <select
+                                    class="h-10 pl-10 text-gray-600 bg-white border sm:w-full w-full border-gray-300 rounded-full appearance-none hover:border-gray-400 focus:outline-none">
+                                    <option class="font-bold " value="" disabled selected>Select a Payment
+                                        Status
+                                    </option>
+                                    <option value="PAID">PAID</option>
+                                    <option class="" value="CREATED">CREATED</option>
+                                </select>
+
+                            </div> -->
 
                             <div class="relative mb-6 p-2 flex justify-center items-center gap-2">
                                 <div class="flex items-center">
