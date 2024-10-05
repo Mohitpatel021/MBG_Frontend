@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Admin Dashboard</title>
+</head>
+
+<body>
+    <div class="sidebar">
+        <a [routerLink]="['/d/dashboard',uuid]" [state]="{username:username,businessName:this.businessName}"
+            class="logo">
+            <i class='bx bx-code-alt'></i>
+            <div class="logo-name"><span>Review</span>Us</div>
+        </a>
+        <ul class="side-menu">
+            <li><a [routerLink]="['/d/dashboard',uuid]" [state]="{username:username,businessName:this.businessName}"><i
+                        class='bx bxs-dashboard'></i>Dashboard</a></li>
+            <li class="active"><a [routerLink]="['/d/bad-review',uuid]"
+                    [state]="{username:username,businessName:this.businessName,businessId}"><i
+                        class='bx bx-grid-alt'></i>Bad
+                    Reviews
+                </a></li>
+            <li><a [routerLink]="['/d/profile',uuid]"
+                    [state]="{username:username,businessName:this.businessName,businessId}"><i
+                        class='bx bx-message-square-dots'></i>Profile Overview</a></li>
+            <li><a [routerLink]="['/d/dashboard',uuid]" [state]="{username:username,businessName:this.businessName}"><i
+                        class='bx bx-cog'></i>Account
+                    Settings</a></li>
+            <li><img class="pic " src="../../../assets/pro.png"></li>
+        </ul>
+        <div class="relative top-40 upgrade">
+            <h5>Upgrade Your Plan</h5>
+            <div class="link">
+                <a [routerLink]="['/d/dashboard',uuid]" [state]="{username:username,businessName:this.businessName}">Go
+                    to <b>PRO</b></a>
+                <i class='bx bxs-chevron-right'></i>
+            </div>
+        </div>
+        <ul class="side-menu relative top-36">
+            <li>
+                <a href="https://forms.gle/K2UGTXiZLTGj8zK79" class="icon justify-center items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="30" viewBox="0 0 24 24" id="Arrow">
+                        <path
+                            d="M15 18c-.3 0-.5-.1-.7-.3-.4-.4-.4-1 0-1.4l5-5c.4-.4 1-.4 1.4 0s.4 1 0 1.4l-5 5c-.2.2-.4.3-.7.3z"
+                            fill="#ffffff" class="color000000 svgShape"></path>
+                        <path
+                            d="M20 13c-.3 0-.5-.1-.7-.3l-5-5c-.4-.4-.4-1 0-1.4s1-.4 1.4 0l5 5c.4.4.4 1 0 1.4-.2.2-.4.3-.7.3z"
+                            fill="#ffffff" class="color000000 svgShape"></path>
+                        <path d="M20 13H4c-.6 0-1-.4-1-1s.4-1 1-1h16c.6 0 1 .4 1 1s-.4 1-1 1z" fill="#ffffff"
+                            class="color000000 svgShape">
+                        </path>
+                    </svg>
+                    Support Form
+                </a>
+            </li>
+            <li >
+                <a (click)="logout()" class="logout justify-center items-center ">
+                    <i class='bx bx-log-out-circle'></i>
+                    Logout
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <nav>
+            <i class='bx bx-menu'></i>
+            <form action="#">
+                <div class="form-input">
+                    <input type="search" class=" border border-blue-700" placeholder="Search...">
+                    <button class="search-btn" type="submit"><i class='bx bx-search'></i></button>
+                </div>
+            </form>
+            <a [routerLink]="['/d/admin',uuid]" [state]="{username:username}" class="notif">
+                <i class='bx bx-bell'></i>
+                <!-- <span class="count">12</span> -->
+            </a>
+            <a [routerLink]="['/d/admin',uuid]" [state]="{username:username}" class="profile">
+                <img src="../../../assets/man (1).png">
+            </a>
+        </nav>
+
+        <!-- End of Navbar -->
+
+        <main class="h-[85vh]">
+            <div class="header">
+                <div class="left">
+                    <h1>Dashboard</h1>
+                    <ul class="breadcrumb">
+                        <!-- <li><a href="#">
+                                                    Analytics
+                                                </a></li> -->
+                        <!-- / -->
+                        <!-- <li><a href="#" class="active">Shop</a></li> -->
+                    </ul>
+                </div>
+                <a href="#" class="report">
+                    <i class='bx bx-cloud-download'></i>
+                    <span>Download</span>
+                </a>
+            </div>
+            <table
+                class="w-full text-sm text-left text-gray-500 border rtl:text-right dark:text-gray-400 sm:scroll-m-0">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="p-4">
+                            <!-- <div class="flex items-center">
+                                         <input id="checkbox-all-search" type="checkbox"
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="checkbox-all-search" class="sr-only">checkbox</label> 
+                                    </div> -->
+                            S.NO
+                        </th>
+                        <th scope="col" class="px-6 py-3 font-bold ">
+                            Reviewer Name
+                        </th>
+                        <th scope="col" class="px-6 py-3 font-bold">
+                            Contact Number
+                        </th>
+                        <th scope="col" class="px-6 py-3 font-bold">
+                            Rating
+                        </th>
+                        <th scope="col" class="px-6 py-3 font-bold">
+                            Review Content
+                        </th>
+                        <th scope="col" class="px-6 py-3 font-bold">
+                            TimeStamp
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let review of reviews; let i = index"
+                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <!-- <td class="w-3 p-4">
+                                    <div class="flex items-center">
+                                        <input id="checkbox-table-search-1" type="checkbox"
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                                    </div>
+                                </td> -->
+                        <td class="w-3 p-4">{{ i + 1 + pageNumber * elementSize}}</td>
+
+                        <th scope="row"
+                            class="flex items-center px-3 pt-2 space-x-4 text-gray-900 whitespace-nowrap dark:text-white">
+                            <img class="relative w-10 h-10 rounded-full top-2" src="../../../assets/user.png"
+                                alt="Jese image">
+                            <div class="relative ps-3 top-2">
+                                <div class="text-base font-semibold">{{review.reviewerName}}</div>
+                                <!-- <div class="font-normal text-gray-500">Email.com</div> -->
+                            </div>
+                        </th>
+                        <td class="px-3 ">
+                            {{ review.number }}
+                        </td>
+                        <td class="px-3">
+                            <div class="flex items-center">
+                                {{review.rating}}
+                            </div>
+                        </td>
+                        <td class="px-3 ">
+                            {{review.reviewContent | slice:0:15}} <span
+                                *ngIf="review.reviewContent.length> 10 ">...</span>
+                        </td>
+                        <td class="px-3 ">
+                            {{review.formattedCreatedDate}}
+                        </td>
+                    </tr>
+                    <tr *ngIf="!reviews.length">
+                        <td colspan="6" class="p-3 text-xl font-semibold text-center text-black">No reviews found</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Main content should be here -->
+            <div class="mt-2 flex items-center justify-center space-x-4 pb-2">
+                <!-- Previous Button -->
+                <button [ngClass]="{'bg-gray-300': pageNumber > 0, 'bg-gray-500 cursor-not-allowed': pageNumber === 0}"
+                    (click)="previousPage()" [disabled]="pageNumber === 0"
+                    class="flex items-center justify-center h-10 gap-2 px-4 text-base font-medium text-gray-500 bg-white border border-gray-300 rounded-lg me-3 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                    <svg class="w-3.5 h-3.5 me-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 14 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 5H1m0 0 4 4M1 5l4-4" />
+                    </svg>
+                    Prev
+                </button>
+                <button
+                    [ngClass]="{'bg-gray-300': pageNumber < totalPages - 1, 'bg-gray-500 cursor-not-allowed': pageNumber >= totalPages - 1}"
+                    (click)="nextPage()" [disabled]="pageNumber >= totalPages - 1"
+                    class="flex items-center justify-center h-10 gap-2 px-4 text-base font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                    Next
+                    <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 14 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M1 5h12m0 0L9 1m4 4L9 9" />
+                    </svg>
+                </button>
+            </div>
+        </main>
+
+    </div>
+
+</body>
+
+</html>

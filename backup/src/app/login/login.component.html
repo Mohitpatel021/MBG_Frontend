@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>HTML5 Login Page | Smarteyeapps.com</title>
+    <link rel="shortcut icon" href="assets/images/fav.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,600,700" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="flex items-center justify-center h-screen bg-gray-100">
+    <div class="w-full max-w-6xl p-6">
+        <div class="flex flex-wrap overflow-auto bg-white shadow-lg rounded-3xl">
+            <div class="flex items-center justify-center w-full p-6 bg-gray-100 lg:w-7/12">
+                <img src="../../assets/Images/login-banner.png" alt="Login Banner" class="w-full h-auto">
+            </div>
+            <form (ngSubmit)="onSubmit()" [formGroup]="loginForm"
+                class="flex flex-col justify-center w-full pl-8 pr-8 lg:w-5/12">
+                <div>
+                    <div class="mb-4">
+                        <div *ngIf="errorMessage" class="mb-4 text-center text-red-500">
+                            {{ errorMessage }}
+                        </div>
+                        <h5 class="mt-2 text-xl ">Welcome Back!</h5>
+                        <h2 class="mb-6 font-bold text-1xl ">Login Your Review Us Account</h2>
+                        <div class="mb-2"
+                            [ngClass]="{'border-red-500': loginForm.get('username')?.invalid && loginForm.get('username')?.touched}">
+                            <label for="username" class="block text-gray-700"><i
+                                    class="mr-2 fas fa-envelope"></i>Username</label>
+                            <input type="text" id="username" name="username" formControlName="username"
+                                class="w-full p-2 mt-2 border border-gray-300 rounded form-control form-control-sm">
+                        </div>
+                        <div *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.hasError('required')"
+                            class="text-sm text-red-500">
+                            Username is required !!
+                        </div>
+                        <div class="mt-4 mb-2"
+                            [ngClass]="{'border-red-500': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}">
+                            <label for="password" class="block text-gray-700"><i
+                                    class="mr-2 fas fa-unlock-alt"></i>Password</label>
+                            <input type="password" id="password" name="password" formControlName="password"
+                                class="w-full p-2 mt-2 border border-gray-300 rounded form-control form-control-sm">
+                        </div>
+                        <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.hasError('required')"
+                            class="text-sm text-red-500">
+                            Password is Required !!
+                        </div>
+                        <div class="flex items-center justify-between mb-4">
+                            <label class="inline-flex items-center pt-3">
+                                <input type="checkbox" class="text-indigo-600 form-checkbox">
+                                <span class="ml-2 text-gray-700">Remember Me</span>
+                            </label>
+                            <a href="" class="text-indigo-600 hover:underline">Forget Password?</a>
+                        </div>
+                        <div class="flex items-center justify-center">
+                            <button class="w-full h-10 text-white bg-indigo-600 rounded-3xl" id="submit">Sign
+                                In</button>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

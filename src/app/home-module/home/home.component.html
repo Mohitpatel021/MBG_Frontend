@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Us</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100">
+    <!-- Navbar -->
+    <div class="flex items-center justify-center w-full px-4 bg-white shadow md:px-48">
+        <header class="w-full">
+            <nav class="container flex items-center justify-between px-6 py-3 mx-auto">
+                <div class="flex justify-start gap-2">
+
+                    <img class="h-10 w-13" src="../../../assets/Images/Logo.png" alt="logo" />
+
+                    <a [routerLink]="['/guest/home']" class="text-2xl font-bold text-black nav-elements">Review Us</a>
+                </div>
+                <div class="hidden space-x-4 md:space-x-8 md:flex">
+                    <a [routerLink]="['/guest/home']" class="text-black hover:text-black nav-element">Home</a>
+                    <a [routerLink]="['/guest/privacy-policy']"
+                        class="text-black hover:text-black nav-element">Privacy-Policy</a>
+                    <a href="mailto:raj@mbgcard.com" class="text-black hover:text-black nav-element">Contact</a>
+                    <a [routerLink]="['/register/login']" class="text-black hover:text-black nav-element">Login</a>
+                </div>
+            </nav>
+        </header>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="h-screen bg-center bg-cover"
+        style="background-image: url('../../../assets/Images/BusinessLogo.jpg');">
+        <div class="flex items-center justify-center h-full bg-gray-900 bg-opacity-50">
+            <div class="text-center text-white">
+                <!-- <h1 class="mb-4 text-4xl font-bold">Boost Your Business with QR Reviews</h1>
+                <p class="mb-8">Collect valuable feedback from your customers to help your business grow.</p>
+                <a href="#" class="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">Get Started</a> -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="container px-4 py-12 mx-auto">
+        <h2 class="mb-8 text-3xl font-bold text-center">Why Use Our QR Service?</h2>
+        <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+            <div class="p-6 text-center bg-white rounded-lg shadow-md">
+                <h3 class="mb-4 text-2xl font-semibold">Easy to Use</h3>
+                <p class="text-gray-600">Our QR codes make it simple for customers to leave reviews quickly and
+                    effortlessly. With just a scan, your customers can provide their feedback, saving them time and
+                    encouraging more responses.</p>
+            </div>
+            <div class="p-6 text-center bg-white rounded-lg shadow-md">
+                <h3 class="mb-4 text-2xl font-semibold">Real-Time Feedback</h3>
+                <p class="text-gray-600">Get instant feedback from your customers to make immediate improvements. This
+                    allows you to address issues as they arise and continuously improve your service.</p>
+            </div>
+            <div class="p-6 text-center bg-white rounded-lg shadow-md">
+                <h3 class="mb-4 text-2xl font-semibold">Increase Visibility</h3>
+                <p class="text-gray-600">Boost your online presence with more positive reviews and grow your business.
+                    More reviews can improve your rankings on search engines and review sites, making it easier for new
+                    customers to find you.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed Features Section -->
+    <section class="container px-4 py-12 mx-auto">
+        <h2 class="mb-8 text-3xl font-bold text-center">How It Works</h2>
+        <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+            <div class="p-6 text-center bg-white rounded-lg shadow-md">
+                <h3 class="mb-4 text-2xl font-semibold">Step 1: Generate QR Code</h3>
+                <p class="text-gray-600">Create a unique QR code for your business using our simple generator. This QR
+                    code will be linked directly to your review page, making it easy for customers to provide feedback.
+                </p>
+            </div>
+            <div class="p-6 text-center bg-white rounded-lg shadow-md">
+                <h3 class="mb-4 text-2xl font-semibold">Step 2: Display QR Code</h3>
+                <p class="text-gray-600">Place the QR code in prominent locations within your business premises. This
+                    could be on receipts, menus, business cards, or signage to ensure maximum visibility.</p>
+            </div>
+            <div class="p-6 text-center bg-white rounded-lg shadow-md">
+                <h3 class="mb-4 text-2xl font-semibold">Step 3: Collect Reviews</h3>
+                <p class="text-gray-600">Encourage customers to scan the QR code and leave their feedback. You can offer
+                    incentives like discounts or freebies for customers who complete a review.</p>
+            </div>
+            <div class="p-6 text-center bg-white rounded-lg shadow-md">
+                <h3 class="mb-4 text-2xl font-semibold">Step 4: Analyze Feedback</h3>
+                <p class="text-gray-600">Analyze the feedback to understand your customers' needs and improve services.
+                    Use the insights gained to make informed decisions that enhance customer satisfaction and loyalty.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Additional Services Section -->
+    <section class="container px-4 py-12 mx-auto">
+        <h2 class="mb-8 text-3xl font-bold text-center">Our Additional Services</h2>
+        <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+            <div class="p-6 text-center bg-white rounded-lg shadow-md">
+                <h3 class="mb-4 text-2xl font-semibold">Custom QR Code Designs</h3>
+                <p class="text-gray-600">We offer personalized QR code designs that match your brand identity, making it
+                    easier for customers to recognize and engage with your business. A well-designed QR code can enhance
+                    your brand image and attract more attention.</p>
+            </div>
+            <div class="p-6 text-center bg-white rounded-lg shadow-md">
+                <h3 class="mb-4 text-2xl font-semibold">In-depth Analytics</h3>
+                <p class="text-gray-600">Gain access to comprehensive analytics that provide insights into customer
+                    behavior and feedback patterns. Our analytics tools help you track the performance of your reviews
+                    and identify areas for improvement.</p>
+            </div>
+            <div class="p-6 text-center bg-white rounded-lg shadow-md">
+                <h3 class="mb-4 text-2xl font-semibold">Integration with Social Media</h3>
+                <p class="text-gray-600">Easily share your positive reviews on social media platforms to increase your
+                    online presence and attract more customers. Social proof is a powerful tool in attracting new
+                    customers and building trust.</p>
+            </div>
+            <div class="p-6 text-center bg-white rounded-lg shadow-md">
+                <h3 class="mb-4 text-2xl font-semibold">Customer Support</h3>
+                <p class="text-gray-600">Our dedicated customer support team is here to assist you with any questions or
+                    issues you may encounter. We ensure a smooth experience from setup to ongoing use, helping you get
+                    the most out of our services.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="py-12 text-white bg-blue-500">
+        <div class="container px-4 mx-auto text-center">
+            <h2 class="mb-4 text-3xl font-bold">Ready to Enhance Your Business?</h2>
+            <p class="mb-8">Sign up today and start collecting valuable reviews from your customers. Our easy-to-use
+                system will help you grow your business and strengthen your online presence.</p>
+            <button [routerLink]="['/r']" class="px-4 py-2 font-bold text-blue-500 bg-white rounded">Sign
+                Up
+                Now</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-6 text-white bg-gray-800">
+        <div class="container px-4 mx-auto text-center">
+            <p>© 2023 MBG Card India Pvt. Ltd. All rights reserved.</p>
+
+            <span>Our Privacy Policy <a class="text-blue-600"
+                    [routerLink]="['/guest/privacy-policy']">Privacy-Policy</a>
+            </span>
+        </div>
+    </footer>
+</body>
+
+</html>
