@@ -262,6 +262,7 @@ export class AllClientComponent implements OnInit {
     const popup = document.getElementById('popup-modal');
     if (popup) {
       popup.classList.remove('hidden')
+
       this.clientId = id;
     }
   }
@@ -271,6 +272,7 @@ export class AllClientComponent implements OnInit {
     const popup = document.getElementById('popup-modal');
     if (popup) {
       popup.classList.add('hidden');
+     
     }
   }
 
