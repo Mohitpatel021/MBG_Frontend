@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Admin Dashboard</title>
+</head>
+
+<body>
+    <div class="sidebar">
+        <a [routerLink]="['/d/dashboard',uuid]" [state]="{username:username,businessName:this.businessName}"
+            class="logo">
+            <i class='bx bx-code-alt'></i>
+            <div class="logo-name"><span>Review</span>Us</div>
+        </a>
+        <ul class="side-menu">
+            <li><a [routerLink]="['/d/dashboard',uuid]" [state]="{username:username,businessName:this.businessName}"><i
+                        class='bx bxs-dashboard'></i>Dashboard</a></li>
+            <li class="active"><a [routerLink]="['/d/bad-review',uuid]"
+                    [state]="{username:username,businessName:this.businessName,businessId}"><i
+                        class='bx bx-grid-alt'></i>Bad
+                    Reviews
+                </a></li>
+            <li><a [routerLink]="['/d/profile',uuid]"
+                    [state]="{username:username,businessName:this.businessName,businessId}"><i
+                        class='bx bx-message-square-dots'></i>Profile Overview</a></li>
+            <li><a [routerLink]="['/d/dashboard',uuid]" [state]="{username:username,businessName:this.businessName}"><i
+                        class='bx bx-cog'></i>Account
+                    Settings</a></li>
+            <li><img class="pic " src="../../../assets/pro.png"></li>
+        </ul>
+        <div class="relative top-40 upgrade">
+            <h5>Upgrade Your Plan</h5>
+            <div class="link">
+                <a [routerLink]="['/d/dashboard',uuid]" [state]="{username:username,businessName:this.businessName}">Go
+                    to <b>PRO</b></a>
+                <i class='bx bxs-chevron-right'></i>
+            </div>
+        </div>
+        <ul class="side-menu relative top-36">
+            <li class="flex ">
+                <a href="https://thiss.gle/K2UGTXiZLTGj8zK79" class="icon justify-center items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="30" viewBox="0 0 24 24" id="Arrow">
+                        <path
+                            d="M15 18c-.3 0-.5-.1-.7-.3-.4-.4-.4-1 0-1.4l5-5c.4-.4 1-.4 1.4 0s.4 1 0 1.4l-5 5c-.2.2-.4.3-.7.3z"
+                            fill="#ffffff" class="color000000 svgShape"></path>
+                        <path
+                            d="M20 13c-.3 0-.5-.1-.7-.3l-5-5c-.4-.4-.4-1 0-1.4s1-.4 1.4 0l5 5c.4.4.4 1 0 1.4-.2.2-.4.3-.7.3z"
+                            fill="#ffffff" class="color000000 svgShape"></path>
+                        <path d="M20 13H4c-.6 0-1-.4-1-1s.4-1 1-1h16c.6 0 1 .4 1 1s-.4 1-1 1z" fill="#ffffff"
+                            class="color000000 svgShape">
+                        </path>
+                    </svg>
+                    Support this
+                </a>
+            </li>
+            <li class="flex">
+                <a (click)="logout()" class="logout justify-center items-center ">
+                    <i class='bx bx-log-out-circle'></i>
+                    Logout
+                </a>
+            </li>
+        </ul>
+    </div>
+
+</body>
+
+</html>

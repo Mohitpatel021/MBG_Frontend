@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
-
-import { RateUsComponent } from './rate-us/rate-us.component';
-
-
 import { RouterModule, Routes } from '@angular/router';
-import { ScanQrComponent } from './scan-qr/scan-qr.component';
-import { NotfoundComponent } from './notfound/notfound.component';
-import { ResponseRecordedComponent } from './response-recorded/response-recorded.component';
+import { ResponseRecordedComponent } from './Modules/response-recorded/response-recorded.component';
+import { ScanQrComponent } from './Modules/scan-qr/scan-qr.component';
+import { RateUsComponent } from './Modules/rate-us/rate-us.component';
+import { NotfoundComponent } from './Modules/notfound/notfound.component';
+
 
 const routes: Routes = [
   {
@@ -16,15 +14,15 @@ const routes: Routes = [
   },
   {
     path: 'register',
-    loadChildren: () => import('./qr-user-module/qr-user-module.module').then(m => m.QrUserModuleModule),
+    loadChildren: () => import('./Modules/qr-user-module/qr-user-module.module').then(m => m.QrUserModuleModule),
   },
   {
     path: 'guest',
-    loadChildren: () => import('./home-module/home-module.module').then(m => m.HomeModuleModule)
+    loadChildren: () => import('./Modules/home-module/home-module.module').then(m => m.HomeModuleModule)
   },
   {
     path: 'd',
-    loadChildren: () => import('./main-dashboard/main-dashboard.module').then(m => m.MainDashboardModule)
+    loadChildren: () => import('./Modules/main-dashboard/main-dashboard.module').then(m => m.MainDashboardModule)
   },
   {
     path: 'login',

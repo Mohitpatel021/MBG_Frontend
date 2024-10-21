@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Admin Dashboard</title>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <a [routerLink]="['/d/admin',uuid]" [state]="{username:username}" class="logo">
+            <i class='bx bx-code-alt'></i>
+            <div class="logo-name"><span>Review</span>Us</div>
+        </a>
+        <ul class="side-menu">
+            <li><a [routerLink]="['/d/admin',uuid]" [state]="{username:username}"><i
+                        class='bx bxs-dashboard'></i>Dashboard</a></li>
+            <li class="active"><a [routerLink]="['/d/all-client',uuid]" [state]="{username:username}"><i
+                        class='bx bx-grid-alt'></i>Our Clients</a></li>
+            <li><a [routerLink]="['/d/admin',uuid]" [state]="{username:username}"><i
+                        class='bx bx-message-square-dots'></i>Order History</a></li>
+            <li><a [routerLink]="['/d/admin',uuid]" [state]="{username:username}"><i class='bx bx-cog'></i>Account
+                    Settings</a></li>
+            <li><img class="pic" src="../../../assets/Images/DealLogo.png"></li>
+        </ul>
+
+        <ul class="side-menu">
+            <li>
+                <div class="flex justify-center items-center relative top-72">
+                    <button (click)="logout()" class="cssbuttons-io-button w-full h-full justify-center items-center ">
+                        <i class='bx bx-log-out-circle'></i>
+                        <span class="text-lg">Logout</span>
+                    </button>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <!-- End of Sidebar -->
+
+    <!-- Main Content -->
+    <div class="content">
+        <!-- Navbar -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            <form action="#">
+                <div class="form-input">
+                    <input class="border border-blue-400" type="search" [(ngModel)]="searchParam" name="searchParam"
+                        placeholder=" Search...">
+                    <button class="search-btn" (click)="fetchUsers()" type="submit"><i
+                            class='bx bx-search'></i></button>
+                </div>
+            </form>
+            <!-- <input type="checkbox" id="theme-toggle" hidden> -->
+            <!-- <label for="theme-toggle" class="theme-toggle"></label> -->
+            <a [routerLink]="['/d/admin',uuid]" [state]="{username:username}" class="notif">
+                <i class='bx bx-bell'></i>
+                <!-- <span class="count">12</span> -->
+            </a>
+            <a [routerLink]="['/d/admin',uuid]" [state]="{username:username}" class="profile">
+                <img src="../../../assets/man (1).png">
+            </a>
+        </nav>
+
+        <!-- End of Navbar -->
+        <main [ngClass]="{ 'blurred-background': isModalOpen }">
+            <div class="mb-2 flex justify-end items-center ">
+                <button class="cssbuttons-io-button shadow-custom" (click)="downloadExcel(username)">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
+                        <path fill="none" d="M0 0h24v24H0z"></path>
+                        <path fill="currentColor"
+                            d="M1 14.5a6.496 6.496 0 0 1 3.064-5.519 8.001 8.001 0 0 1 15.872 0 6.5 6.5 0 0 1-2.936 12L7 21c-3.356-.274-6-3.078-6-6.5zm15.848 4.487a4.5 4.5 0 0 0 2.03-8.309l-.807-.503-.12-.942a6.001 6.001 0 0 0-11.903 0l-.12.942-.805.503a4.5 4.5 0 0 0 2.029 8.309l.173.013h9.35l.173-.013zM13 12h3l-4 5-4-5h3V8h2v4z">
+                        </path>
+                    </svg>
+                    <span>Download</span>
+                </button>
+            </div>
+            <table
+                class="w-full text-sm text-left text-gray-500 border rtl:text-right dark:text-gray-400 sm:scroll-m-0">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="p-4">
+                            S.NO
+                        </th>
+                        <th scope="col" class="p-2 font-bold ">
+                            Client Username
+                        </th>
+                        <th scope="col" class="p-2 font-bold">
+                            Contact Number
+                        </th>
+                        <th scope="col" class="p-2 font-bold">
+                            Business Name
+                        </th>
+                        <th scope="col" class="p-2 font-bold">
+                            TimeStamp
+                        </th>
+                        <th scope="col" class="p-2 font-bold">
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of users; let i = index"
+                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="w-3 p-4">{{ i + 1 + pageNumber * elementSizeInPage}}</td>
+
+                        <td
+                            class="flex items-center pr-3 pt-2 space-x-4 text-gray-900 whitespace-nowrap dark:text-white">
+                            <img class="relative w-10 h-10 rounded-full top-2" src="../../../assets/user.png"
+                                alt="User logo">
+                            <div class="relative ps-3 top-2">
+                                <div class="text-base font-semibold">{{user.owner_name}}</div>
+                                <div class="font-normal text-gray-500">{{user.owner_email}}</div>
+                            </div>
+                        </td>
+                        <td class="px-3 ">
+                            {{user.contact }}
+                        </td>
+                        <td class="px-3">
+                            <div class="flex items-center">
+                                {{user.businessname}}
+                            </div>
+                        </td>
+                        <td class="px-3 ">
+                            {{user.created_at}}
+                        </td>
+                        <td class="px-3 ">
+                            <div class="space-x-3 ">
+                                <button data-modal-target="authentication-modal" (click)="openModal(user.contact)"
+                                    data-modal-toggle=" authentication-modal" type="button"
+                                    class="hover:text-black transform transition-transform duration-300 hover:scale-125 focus:outline-none">
+                                    <i class="fa-solid fa-pen-to-square fa-lg"></i>
+                                </button>
+                                <button *ngIf="user.isEnable"
+                                    class="hover:text-black transform transition-transform duration-300 hover:scale-125 focus:outline-none"
+                                    (click)="accountEnableOrDisable(user.owner_name,username)">
+                                    <i class="fa-solid fa-unlock fa-lg"></i>
+                                </button>
+                                <button *ngIf="!user.isEnable"
+                                    class="hover:text-black transform transition-transform duration-300 hover:scale-125 focus:outline-none"
+                                    (click)="accountEnableOrDisable(user.owner_name,username)">
+                                    <i class="fa-solid fa-lock fa-lg"></i>
+                                </button>
+                                <button data-modal-target="popup-modal" data-modal-toggle="popup-modal"
+                                    (click)="openPopUpModal(user.id)"
+                                    class="hover:text-black transform transition-transform duration-300 hover:scale-125 focus:outline-none">
+                                    <i class="fa-solid fa-trash fa-lg"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr *ngIf="!users.length">
+                        <td colspan="6" class="p-3 text-xl font-semibold text-center text-black">No Clients found</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Main content should be here -->
+            <div class="mt-2 flex items-center justify-center space-x-4 pb-2">
+                <!-- Previous Button -->
+                <button [ngClass]="{'bg-gray-300': pageNumber > 0, 'bg-gray-500 cursor-not-allowed': pageNumber === 0}"
+                    (click)="previousPage()" [disabled]="pageNumber === 0"
+                    class="flex items-center justify-center h-10 gap-2 px-4 text-base font-medium text-gray-500 bg-white border border-gray-300 rounded-lg me-3 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                    <svg class="w-3.5 h-3.5 me-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 14 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 5H1m0 0 4 4M1 5l4-4" />
+                    </svg>
+                    Prev
+                </button>
+                <button
+                    [ngClass]="{'bg-gray-300': pageNumber < totalPages - 1, 'bg-gray-500 cursor-not-allowed': pageNumber >= totalPages - 1}"
+                    (click)="nextPage()" [disabled]="pageNumber >= totalPages - 1"
+                    class="flex items-center justify-center h-10 gap-2 px-4 text-base font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                    Next
+                    <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 14 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M1 5h12m0 0L9 1m4 4L9 9" />
+                    </svg>
+                </button>
+            </div>
+        </main>
+        <div id="authentication-modal" tabindex="-1" aria-hidden="true"
+            class="hidden overflow-y-auto  overflow-x-auto fixed -top-20 right-0 left-0 sm:top-24 z-50 justify-center items-center w-full md:top[70%] md:left-[30%] h-full">
+            <div class="relative min-w-[40%] max-w-md max-h-[50%] border rounded-lg">
+                <!-- Modal content -->
+                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                    <!-- Modal header -->
+                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                            Update User Profile
+                        </h3>
+                        <button type="button" (click)="closeModal()"
+                            class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                            data-modal-hide="authentication-modal">
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 14 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                            </svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="px-4 pt-4 md:px-5 md:pt-5">
+                        <form [formGroup]="updateUserForm" (ngSubmit)="updateUser()" class="space-y-4">
+                            <div class="relative mb-6">
+                                <label class="flex  items-center mb-2 text-gray-600 text-sm font-medium">Username
+                                    <svg width="7" height="7" class="ml-1" viewBox="0 0 7 7" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M3.11222 6.04545L3.20668 3.94744L1.43679 5.08594L0.894886 4.14134L2.77415 3.18182L0.894886 2.2223L1.43679 1.2777L3.20668 2.41619L3.11222 0.318182H4.19105L4.09659 2.41619L5.86648 1.2777L6.40838 2.2223L4.52912 3.18182L6.40838 4.14134L5.86648 5.08594L4.09659 3.94744L4.19105 6.04545H3.11222Z"
+                                            fill="#EF4444" />
+                                    </svg>
+                                </label>
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none mt-4 ">
+                                    <svg class="stroke-current ml-1 mt-1" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M20 21V20.1429C20 19.0805 20 18.5493 19.8997 18.1099C19.5578 16.6119 18.3881 15.4422 16.8901 15.1003C16.4507 15 15.9195 15 14.8571 15H10C8.13623 15 7.20435 15 6.46927 15.3045C5.48915 15.7105 4.71046 16.4892 4.30448 17.4693C4 18.2044 4 19.1362 4 21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
+                                            stroke="" stroke-width="1.6" stroke-linecap="round" />
+                                    </svg>
+                                </div>
+                                <input formControlName="username" type="text" id="default-search"
+                                    class="block w-full h-11 px-5 py-2.5 bg-white leading-7 text-base font-normal shadow-xs text-gray-900 bg-transparent border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none "
+                                    placeholder="Update Your UserName">
+                            </div>
+                            <div class="relative mb-6">
+                                <label class="flex  items-center mb-2 text-gray-600 text-sm font-medium">Email Address
+                                    <svg width="7" height="7" class="ml-1" viewBox="0 0 7 7" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M3.11222 6.04545L3.20668 3.94744L1.43679 5.08594L0.894886 4.14134L2.77415 3.18182L0.894886 2.2223L1.43679 1.2777L3.20668 2.41619L3.11222 0.318182H4.19105L4.09659 2.41619L5.86648 1.2777L6.40838 2.2223L4.52912 3.18182L6.40838 4.14134L5.86648 5.08594L4.09659 3.94744L4.19105 6.04545H3.11222Z"
+                                            fill="#EF4444" />
+                                    </svg>
+                                </label>
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none mt-4 ">
+                                    <svg width="20" height="16" viewBox="0 0 20 16" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg" class=" stroke-current ml-1 mt-1 ">
+                                        <path
+                                            d="M1.87651 3.83325L6.79885 7.07932C8.55702 8.13423 9.43612 8.66169 10.402 8.6387C11.3678 8.61572 12.2208 8.04705 13.9268 6.90971L18.1232 3.83325M8.33317 14.6666H11.6665C14.8092 14.6666 16.3805 14.6666 17.3569 13.6903C18.3332 12.714 18.3332 11.1426 18.3332 7.99992C18.3332 4.85722 18.3332 3.28587 17.3569 2.30956C16.3805 1.33325 14.8092 1.33325 11.6665 1.33325H8.33317C5.19047 1.33325 3.61913 1.33325 2.64281 2.30956C1.6665 3.28587 1.6665 4.85722 1.6665 7.99992C1.6665 11.1426 1.6665 12.714 2.64281 13.6903C3.61913 14.6666 5.19047 14.6666 8.33317 14.6666Z"
+                                            stroke="" stroke-width="1.5" stroke-linecap="round" />
+                                    </svg>
+                                </div>
+                                <input formControlName="email" type="text" id="default-search"
+                                    class="block w-full h-11 px-5 py-2.5 bg-white leading-7 text-base font-normal shadow-xs text-gray-900 bg-transparent border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none "
+                                    placeholder="Update Your Email Address">
+                            </div>
+                            <div class="relative mb-6">
+                                <label class="flex  items-center mb-2 text-gray-600 text-sm font-medium">Serial Id
+                                    <svg width="7" height="7" class="ml-1" viewBox="0 0 7 7" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M3.11222 6.04545L3.20668 3.94744L1.43679 5.08594L0.894886 4.14134L2.77415 3.18182L0.894886 2.2223L1.43679 1.2777L3.20668 2.41619L3.11222 0.318182H4.19105L4.09659 2.41619L5.86648 1.2777L6.40838 2.2223L4.52912 3.18182L6.40838 4.14134L5.86648 5.08594L4.09659 3.94744L4.19105 6.04545H3.11222Z"
+                                            fill="#EF4444" />
+                                    </svg>
+                                </label>
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none mt-4 ">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25x" height="20px"
+                                        viewBox="0 0 24 24" fill="none">
+                                        <path
+                                            d="M9.16488 17.6505C8.92513 17.8743 8.73958 18.0241 8.54996 18.1336C7.62175 18.6695 6.47816 18.6695 5.54996 18.1336C5.20791 17.9361 4.87912 17.6073 4.22153 16.9498C3.56394 16.2922 3.23514 15.9634 3.03767 15.6213C2.50177 14.6931 2.50177 13.5495 3.03767 12.6213C3.23514 12.2793 3.56394 11.9505 4.22153 11.2929L7.04996 8.46448C7.70755 7.80689 8.03634 7.47809 8.37838 7.28062C9.30659 6.74472 10.4502 6.74472 11.3784 7.28061C11.7204 7.47809 12.0492 7.80689 12.7068 8.46448C13.3644 9.12207 13.6932 9.45086 13.8907 9.7929C14.4266 10.7211 14.4266 11.8647 13.8907 12.7929C13.7812 12.9825 13.6314 13.1681 13.4075 13.4078M10.5919 10.5922C10.368 10.8319 10.2182 11.0175 10.1087 11.2071C9.57284 12.1353 9.57284 13.2789 10.1087 14.2071C10.3062 14.5492 10.635 14.878 11.2926 15.5355C11.9502 16.1931 12.279 16.5219 12.621 16.7194C13.5492 17.2553 14.6928 17.2553 15.621 16.7194C15.9631 16.5219 16.2919 16.1931 16.9495 15.5355L19.7779 12.7071C20.4355 12.0495 20.7643 11.7207 20.9617 11.3787C21.4976 10.4505 21.4976 9.30689 20.9617 8.37869C20.7643 8.03665 20.4355 7.70785 19.7779 7.05026C19.1203 6.39267 18.7915 6.06388 18.4495 5.8664C17.5212 5.3305 16.3777 5.3305 15.4495 5.8664C15.2598 5.97588 15.0743 6.12571 14.8345 6.34955"
+                                            stroke="#000000" stroke-width="2" stroke-linecap="round" />
+                                    </svg>
+                                </div>
+                                <input formControlName="serialId" type="text" id="default-search"
+                                    class="block w-full h-11 px-5 py-2.5 bg-white leading-7 text-base font-normal shadow-xs text-gray-900 bg-transparent border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none "
+                                    placeholder="Update Your Serial Id">
+                            </div>
+
+                            <div class="relative mb-6">
+                                <label class="flex  items-center mb-2 text-gray-600 text-sm font-medium">Payment Status
+                                    <svg width="7" height="7" class="ml-1" viewBox="0 0 7 7" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M3.11222 6.04545L3.20668 3.94744L1.43679 5.08594L0.894886 4.14134L2.77415 3.18182L0.894886 2.2223L1.43679 1.2777L3.20668 2.41619L3.11222 0.318182H4.19105L4.09659 2.41619L5.86648 1.2777L6.40838 2.2223L4.52912 3.18182L6.40838 4.14134L5.86648 5.08594L4.09659 3.94744L4.19105 6.04545H3.11222Z"
+                                            fill="#EF4444" />
+                                    </svg>
+                                </label>
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none mt-4 ">
+                                    <svg width="35px" height="23px" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg" stroke="#000000" stroke-width="1.08">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+                                        </g>
+                                        <g id="SVGRepo_iconCarrier">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M18.9809 9.25283C18.2198 7.32031 16.6794 5.77999 14.7469 5.01897C14.5229 5.27358 14.3413 5.56647 14.2133 5.88656C16.0226 6.54172 17.4581 7.97718 18.1133 9.7864C18.4334 9.6584 18.7263 9.47685 18.9809 9.25283ZM12.2276 5.50391C12.1521 5.50131 12.0762 5.5 12 5.5C8.41015 5.5 5.5 8.41015 5.5 12C5.5 15.5899 8.41015 18.5 12 18.5C15.5899 18.5 18.5 15.5899 18.5 12C18.5 11.9237 18.4987 11.8478 18.4961 11.7721C18.8387 11.6648 19.1655 11.5216 19.472 11.347C19.4905 11.5622 19.5 11.78 19.5 12C19.5 16.1421 16.1421 19.5 12 19.5C7.85786 19.5 4.5 16.1421 4.5 12C4.5 7.85786 7.85786 4.5 12 4.5C12.2199 4.5 12.4376 4.50946 12.6527 4.52801C12.4781 4.83451 12.3349 5.16128 12.2276 5.50391Z"
+                                                fill="#222222"></path>
+                                            <circle cx="17" cy="7" r="3" fill="#222222"></circle>
+                                        </g>
+                                    </svg>
+                                </div>
+                                <select formControlName="paymentStatus"
+                                    class="block w-full h-11 px-5 py-2.5 bg-white leading-7 text-base font-normal shadow-xs text-gray-900 bg-transparent border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none">
+                                    <option class="font-bold " value="" disabled selected>Select a Payment
+                                        Status
+                                    </option>
+                                    <option value="PAID">PAID</option>
+                                    <option value="CREATED">CREATED</option>
+                                </select>
+                            </div>
+                            <div class="relative mb-6 p-2 flex justify-center items-center gap-2">
+                                <div class="flex items-center">
+                                    <button type="submit"
+                                        class="w-32 h-11 bg-indigo-600 hover:bg-indigo-800 transition-all duration-700 rounded-full shadow-xs text-white text-base font-semibold leading-6">Submit</button>
+                                </div>
+                                <div class="flex items-center">
+                                    <button type="reset" (click)="closeModal()"
+                                        class="w-32 h-11 bg-red-600 hover:bg-red-800 transition-all duration-700 rounded-full shadow-xs text-white text-base font-semibold leading-6">Reset</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="popup-modal" tabindex="-1" aria-hidden="true"
+    class="hidden overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full h-full">
+    <div class="relative p-4 w-full max-w-md">
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <button type="button" (click)="closePopUpModal()"
+                class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                data-modal-hide="popup-modal">
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                </svg>
+                <span class="sr-only">Close modal</span>
+            </button>
+            <div class="p-4 md:p-5 text-center">
+                <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to delete
+                    this User?</h3>
+                <div class="flex justify-center items-center space-x-2">
+                    <button data-modal-hide="popup-modal" type="submit" (click)="deleteUser()"
+                        class="text-white ms-3 w-28 h-11 bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex px-3 pt-3 pb-3">
+                        Yes, I'm sure
+                    </button>
+                    <button data-modal-hide="popup-modal" type="reset" (click)="closeModal()"
+                        class="py-2.5 px-3 ms-3 w-28 h-11 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                        No, cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    </div>
+
+</body>
+
+</html>

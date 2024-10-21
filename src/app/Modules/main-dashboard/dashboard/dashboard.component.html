@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Admin Dashboard</title>
+</head>
+
+<body>
+    <div class="sidebar">
+        <a [routerLink]="['/d/dashboard',uuid]" [state]="{username:username,businessName:form.businessName}"
+            class="logo">
+            <i class='bx bx-code-alt'></i>
+            <div class="logo-name"><span>Review</span>Us</div>
+        </a>
+        <div class="flex flex-col justify-between items-between sm:h-[87%] ">
+            <ul class="side-menu">
+                <li class="active"><a [routerLink]="['/d/dashboard',uuid]"
+                        [state]="{username:username,businessName:form.businessName}"><i
+                            class='bx bxs-dashboard'></i>Dashboard</a>
+                </li>
+                <li><a [routerLink]="['/d/bad-review',uuid]"
+                        [state]="{username:username,businessName:form.businessName,businessId}"><i
+                            class='bx bx-line-chart'></i>Bad
+                        Reviews
+                    </a></li>
+                <li><a [routerLink]="['/d/upgrade/plan',uuid]"
+                        [state]="{username:username,businessName:form.businessName,businessId}"><i
+                            class='bx bx-grid-alt'></i>Upgrade Plan
+                    </a></li>
+                <li><a [routerLink]="['/d/profile',uuid]"
+                        [state]="{username:username,businessName:form.businessName,businessId}"><i
+                            class='bx bx-message-square-dots'></i>Profile Overview</a></li>
+                <li *ngIf=""><a [routerLink]="['/d/oauth/connect']"
+                        [state]="{username:username,businessName:form.businessName}"><i class='bx bx-cog'></i>Review
+                        AutoMation</a></li>
+                <li><img class="pic " src="../../../assets/pro.png"></li>
+            </ul>
+            <div *ngIf="" class="relative top-40 upgrade">
+                <h5>Upgrade Your Plan</h5>
+                <div class="link">
+                    <a [routerLink]="['/d/dashboard',uuid]"
+                        [state]="{username:username,businessName:form.businessName}">Go
+                        to <b>PRO</b></a>
+                    <i class='bx bxs-chevron-right'></i>
+                </div>
+            </div>
+            <ul class="side-menu relative ">
+                <li class="flex ">
+                    <a href="https://forms.gle/K2UGTXiZLTGj8zK79" class="icon justify-center items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="30" viewBox="0 0 24 24" id="Arrow">
+                            <path
+                                d="M15 18c-.3 0-.5-.1-.7-.3-.4-.4-.4-1 0-1.4l5-5c.4-.4 1-.4 1.4 0s.4 1 0 1.4l-5 5c-.2.2-.4.3-.7.3z"
+                                fill="#ffffff" class="color000000 svgShape"></path>
+                            <path
+                                d="M20 13c-.3 0-.5-.1-.7-.3l-5-5c-.4-.4-.4-1 0-1.4s1-.4 1.4 0l5 5c.4.4.4 1 0 1.4-.2.2-.4.3-.7.3z"
+                                fill="#ffffff" class="color000000 svgShape"></path>
+                            <path d="M20 13H4c-.6 0-1-.4-1-1s.4-1 1-1h16c.6 0 1 .4 1 1s-.4 1-1 1z" fill="#ffffff"
+                                class="color000000 svgShape">
+                            </path>
+                        </svg>
+                        Support Form
+                    </a>
+                </li>
+                <li class="flex">
+                    <a (click)="logout()" class="logout justify-center items-center ">
+                        <i class='bx bx-log-out-circle'></i>
+                        Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="content">
+        <nav>
+            <i class='bx bx-menu'></i>
+            <form action="#">
+                <div class="form-input">
+                    <input type="search" class=" border border-blue-700" placeholder="Search...">
+                    <button class="search-btn" type="submit"><i class='bx bx-search'></i></button>
+                </div>
+            </form>
+            <a [routerLink]="['/d/admin',uuid]" [state]="{username:username}" class="notif">
+                <i class='bx bx-bell'></i>
+                <!-- <span class="count">12</span> -->
+            </a>
+            <a [routerLink]="['/d/admin',uuid]" [state]="{username:username}" class="profile">
+                <img src="../../../assets/man (1).png">
+            </a>
+        </nav>
+
+        <!-- End of Navbar -->
+
+        <main>
+            <div class="header">
+                <div class="left">
+                    <h1>Dashboard</h1>
+                </div>
+                <!-- <a href="#" class="report">
+                    <i class='bx bx-cloud-download'></i>
+                    <span>Download CSV</span>
+                </a> -->
+            </div>
+
+            <!-- Insights -->
+            <ul class="insights">
+                <li>
+                    <i class='bx bx-calendar-check'></i>
+                    <span class="info">
+                        <h3>
+                            {{lastMonthReview}}
+                        </h3>
+                        <p>Last Month Reviews</p>
+                    </span>
+                </li>
+                <li><i class='bx bx-show-alt'></i>
+                    <span class="info">
+                        <h3>
+                            0
+                        </h3>
+                        <p>Current Month Reviews</p>
+                    </span>
+                </li>
+                <li><i class='bx bx-line-chart'></i>
+                    <span class="info">
+                        <h3>
+                            {{form.totalBadReviews}}
+                        </h3>
+                        <p>Overall Reviews</p>
+                    </span>
+                </li>
+                <!-- <li><i class='bx bx-dollar-circle'></i>
+                    <span class="info">
+                        <h3>
+                            $6,742
+                        </h3>
+                        <p>Total Sales</p>
+                    </span>
+                </li> -->
+            </ul>
+            <!-- End of Insights -->
+
+            <div class="bottom-data">
+                <div class="orders">
+                    <div class="header">
+                        <i class='bx bx-receipt'></i>
+                        <h3>Recent Reviews</h3>
+                        <i class='bx bx-filter'></i>
+                        <i class='bx bx-search'></i>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col" class="px-2">User</th>
+                                <th scope="col" class="px-2 ">Review Date</th>
+                                <th scope="col" class="px-2 ">Rating</th>
+                                <th scope="col" class="px-2">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let recent of recentReview; let i=index">
+                                <td class="pr-5">
+                                    <img src="../../../assets/man (1).png">
+                                    <p>{{recent.reviewerName | slice:0:10}} <span
+                                            *ngIf="recent.reviewerName.length> 10 ">...</span> </p>
+                                </td>
+                                <td class="">{{recent.formattedCreatedDate}}</td>
+                                <td class="sm:pl-2">{{recent.rating}}</td>
+                                <td class=""><span class="status completed">Negative</span></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Reminders -->
+                <div class="reminders">
+                    <div class="header">
+                        <i class='bx bx-note'></i>
+                        <h3>Remiders</h3>
+                        <i class='bx bx-filter'></i>
+                        <i class='bx bx-plus'></i>
+                    </div>
+                    <ul class="task-list">
+                        <li class="completed">
+                            <div class="task-title">
+                                <i class='bx bx-check-circle'></i>
+                                <p>Analyse Reviews</p>
+                            </div>
+                            <i class='bx bx-dots-vertical-rounded'></i>
+                        </li>
+                        <li class="completed">
+                            <div class="task-title">
+                                <i class='bx bx-check-circle'></i>
+                                <p>Analyse Our Site</p>
+                            </div>
+                            <i class='bx bx-dots-vertical-rounded'></i>
+                        </li>
+                        <li class="not-completed">
+                            <div class="task-title">
+                                <i class='bx bx-x-circle'></i>
+                                <p>Feedback Analysis</p>
+                            </div>
+                            <i class='bx bx-dots-vertical-rounded'></i>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- End of Reminders-->
+
+            </div>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>

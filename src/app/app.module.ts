@@ -5,18 +5,20 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LoginService } from './login.service';
-import { RateUsComponent } from './rate-us/rate-us.component';
-import { ShareServiceService } from './share-service.service';
+import { LoginService } from './Services/login.service';
+import { ShareServiceService } from './Services/share-service.service';
 import { NgxUiLoaderHttpModule, NgxUiLoaderModule } from 'ngx-ui-loader';
-import { NoCacheInterceptor } from './no-cache.interceptor';
-import { ScanQrComponent } from './scan-qr/scan-qr.component';
-import { NotFoundModalComponent } from './not-found-modal/not-found-modal.component';
-import { MainDashboardModule } from './main-dashboard/main-dashboard.module';
-import { NotfoundComponent } from './notfound/notfound.component';
+import { NoCacheInterceptor } from './Modals/no-cache.interceptor';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthConfig, OAuthModule, OAuthService } from 'angular-oauth2-oidc';
+import { MainDashboardModule } from './Modules/main-dashboard/main-dashboard.module';
+import { NotFoundModalComponent } from './Modules/not-found-modal/not-found-modal.component';
+import { NotfoundComponent } from './Modules/notfound/notfound.component';
+import { RateUsComponent } from './Modules/rate-us/rate-us.component';
+import { ScanQrComponent } from './Modules/scan-qr/scan-qr.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,6 +26,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NotfoundComponent,
     ScanQrComponent,
     NotFoundModalComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -39,6 +42,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       positionClass: 'toast-top-right',
       preventDuplicates: true
     }),
+    OAuthModule.forRoot(),
     ReactiveFormsModule,
     NgxUiLoaderModule.forRoot({
       "bgsColor": "#4bb1c8",
@@ -87,4 +91,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {
+  // constructor(private oauthService: OAuthService) {
+  //   this.oauthService.configure(authConfig);
+  //   this.oauthService.loadDiscoveryDocumentAndTryLogin();
+  // }
+}
